@@ -8,126 +8,104 @@
 </head>
 <body>
 <div id="application">
+	<div id="UI">
+		<div id="UI_content">
 
-<div id="UI">
-<div id="UI_content">
-
-
-
-	<h3>Partie locale</h3>
-	<p>
-		<a><i class="icon-trash"></i> reinitialiser le plateau </a>
-		
-		
-	</p>
-	<!--h3>Parties en ligne</h3>
-	<p>
-		Les parties en ligne sont disponible <a>ici</a>
-	</p-->
-	<h2>À propos de cet échiquier</h2>
-	<p>
-		Cet échiquier vituel est redigé et proposé par moi même; s1pierro. Il sagit pour moi d'un terrain d'experimentation et d'une vitrine de ma pratique de la programmation a travers les langages et normes web HTML, CSS, Javascript et SVG. Les divers objets représentants le jeu ont été modelisés a l'aide de <a href="https://www.blender.org/">Blender</a>.
-
-	</p>
-	<p>		L'utilisation d'un navigateur moderne et a jour est vivement recommandée.
-		Et pour cause, le moteur de rendu 3d "embarqué" utilise un document SVG modifié en temps reel a l'aide du langage javascript. Une pratique favorisée par les moteurs de rendus asynchrones des navigteurs modernes
-	</p>
-	
-
-
-	
-	<button id='close-menu'> Fermer </button>
-
-
-</div>
-</div>
-<div id='3DVIEW'>
-<svg
-   xmlns:dc="http://purl.org/dc/elements/1.1/"
-   xmlns:cc="http://creativecommons.org/ns#"
-   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
-   xmlns:svg="http://www.w3.org/2000/svg"
-   xmlns="http://www.w3.org/2000/svg"
-   width="100%"
-   viewBox="-100 -50 200 100"
-   version="1.1"
-   id="svg8"
-   shape-rendering="optimizeSpeed">
-  <defs
-     id="defs2">
-    <filter
-       height="1.0682667"
-       y="-0.034133333"
-       width="1.0877714"
-       x="-0.043885714"
-       id="filter4559"
-       style="color-interpolation-filters:sRGB">
-      <feGaussianBlur
-         id="feGaussianBlur4561"
-         stdDeviation="0.1" />
-    </filter>
-    <linearGradient
-       id="linearGradient4491">
-      <stop
-         id="stop4487"
-         offset="0"
-         style="stop-color:#aaf;stop-opacity:1;" />
-      <stop
-         id="stop4489"
-         offset="1"
-         style="stop-color:#fff;stop-opacity:1;" />
-    </linearGradient>
-    <linearGradient
-       gradientUnits="userSpaceOnUse"
-       y2="20"
-       x2="0"
-       y1="-4"
-       x1="0"
-       id="linearGradient4493"
-       xlink:href="#linearGradient4491" />
-  </defs>
-     <metadata
-     id="metadata998">
-    <rdf:RDF>
-      <cc:Work
-         rdf:about="">
-        <dc:format>image/svg+xml</dc:format>
-        <dc:type
-           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
-      </cc:Work>
-	</rdf:RDF>
-	</metadata> 
-	<rect
-     y="-100"
-     x="-100"
-     height="200"
-     width="200"
-     id="background"
-     style="opacity:1;vector-effect:none;fill:url(#linearGradient4493);fill-opacity:1.0;stroke:none;stroke-width:0.49999997;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.94618835;paint-order:fill markers stroke" />
-	<g id="renderbox">
-	</g>
-
-
-	
-
-
-	</svg>
-	
-
+			<h3>Partie locale</h3>
+			<p>
+				<a><i class="icon-trash"></i> reinitialiser le plateau </a>
+			</p>
+			<!--h3>Parties en ligne</h3>
+			<p>
+				Les parties en ligne sont disponible <a>ici</a>
+			</p-->
+			<h2>À propos de cet échiquier</h2>
+			<p>
+				Cet échiquier vituel est redigé et proposé par moi même; s1pierro.
+				Il sagit pour moi d'un terrain d'experimentation
+				et d'une vitrine de ma pratique de la programmation a travers les
+				langages et normes web HTML, CSS, Javascript et SVG.
+				Les divers objets représentants le jeu ont été modelisés a l'aide
+				 de <a href="https://www.blender.org/">Blender</a>.
+			</p>
+			<p>
+				L'utilisation d'un navigateur moderne et a jour est vivement recommandée.
+				Et pour cause, le moteur de rendu 3d "embarqué" utilise un document SVG
+				modifié en temps reel a l'aide du langage javascript. Une pratique favorisée
+				par les moteurs de rendus asynchrones des navigteurs modernes
+			</p>
+			<button id='close-menu'> Fermer </button>
+		</div>
 	</div>
-	
-<div id="navhelper" >
-	<span class="left-side" >
-		<a href="http://s1pierro.free.fr/index.php"><i class="icon-s1p-fnt-c"></i> s1pierro </a>
-	</span>
-	<span id='show-menu' class="right-side" >
-		<i class="icon-cog"></i>
-	</span>	
-
-</div>
-
+	<div id='3DVIEW'>
+		<svg
+			xmlns:dc="http://purl.org/dc/elements/1.1/"
+			xmlns:cc="http://creativecommons.org/ns#"
+			xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+			xmlns:svg="http://www.w3.org/2000/svg"
+			xmlns="http://www.w3.org/2000/svg"
+			width="100%"
+			viewBox="-100 -50 200 100"
+			version="1.1"
+			id="svg8"
+			shape-rendering="optimizeSpeed">
+		<defs id="defs2">
+			<filter
+				height="1.0682667"
+				y="-0.034133333"
+				width="1.0877714"
+				x="-0.043885714"
+				id="filter4559"
+				style="color-interpolation-filters:sRGB">
+				<feGaussianBlur
+					id="feGaussianBlur4561"
+					stdDeviation="0.1" />
+			</filter>
+			<linearGradient id="linearGradient4491">
+				<stop
+					id="stop4487"
+					offset="0"
+					style="stop-color:#aaf;stop-opacity:1;" />
+				<stop
+					id="stop4489"
+					offset="1"
+					style="stop-color:#fff;stop-opacity:1;" />
+			</linearGradient>
+			<linearGradient
+				gradientUnits="userSpaceOnUse"
+				y2="20"
+				x2="0"
+				y1="-4"
+				x1="0"
+				id="linearGradient4493"
+				xlink:href="#linearGradient4491" />
+		</defs>
+		<metadata id="metadata998">
+			<rdf:RDF>
+			<cc:Work
+			rdf:about="">
+			<dc:format>image/svg+xml</dc:format>
+			<dc:type
+			rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+			<dc:title></dc:title>
+			</cc:Work>
+			</rdf:RDF>
+		</metadata> 
+		<rect id="background" y="-100" x="-100" height="200" width="200"
+			style="opacity:1;vector-effect:none;fill:url(#linearGradient4493);fill-opacity:1.0;stroke:none;stroke-width:0.49999997;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.94618835;paint-order:fill markers stroke" />
+		<g id="renderbox">
+		</g>
+		</svg>
 	</div>
+	<div id="navhelper" >
+		<span class="left-side" >
+			<a href="http://s1pierro.free.fr/index.php"><i class="icon-s1p-fnt-c"></i> s1pierro </a>
+		</span>
+		<span id='show-menu' class="right-side" >
+			<i class="icon-cog"></i>
+		</span>	
+	</div>
+</div>
 <div id="board" hidden >
 # Blender v2.79 (sub 0) OBJ File: ''
 # www.blender.org
