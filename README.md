@@ -1,14 +1,11 @@
 ## Echiquier js 
 
-a little 3d chess game usin svg and js;
+[L'échquier de s1pierro](https://s1pierro.github.io/echiquierJS/echiquier.html)
 
-### howto play
-
-
-nothing to sy
+a little 3d chess game
 
 ### code
-paperseed is HTML, CSS, SVG, Javascript, jQUERY, and Hammer js madden
+HTML, CSS, SVG, Javascript, jQUERY, and Hammer js
 
 ### state
 unusable
