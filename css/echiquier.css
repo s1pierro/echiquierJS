@@ -31,6 +31,11 @@ body {
 	color: #333;
 	font: 800 5vh Lato, sans-serif !important;
 	text-decoration: none;
+	cursor:pointer;
+}
+.face
+{
+	cursor:pointer;
 }
 #navhelper a:hover
 {
@@ -63,9 +68,14 @@ body {
 	opacity: 1.0;
 	padding:0em;
 	width: 100%;
-	
 
 }
+#close-menu
+{
+	color:#000;
+	cursor:pointer;
+}
+
 #close-menu:hover
 {
 	color:#0d0;

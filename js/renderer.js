@@ -189,15 +189,9 @@ function disposeapplicationlayers (option)
 	$('#svg8').attr('width', w);
 	$('#svg8').attr('height', h);	
  	$("#svg8").attr('viewBox', '-'+((zoom/2))+' -'+(zoom/ratio/2)+' '+zoom+' '+(zoom/ratio));
- //	$("#svg8").attr('viewBox', '-'+(w/2)+' -'+(h/2)+' '+w+' '+h;
-
-	$('#UI').css('display' , 'block' );
-	$('#closelayer').css('display' , 'none' );
-	$('#navhelper').css('display' , 'none' );
-
 
 }
-function showMenu (option)
+function showMenu ()
 {		
 	$('#UI').css('display' , 'block' );
 	$('#navhelper').css('display' , 'none' );

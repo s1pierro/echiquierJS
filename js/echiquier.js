@@ -49,19 +49,12 @@ $(window).on("load", function() {
 	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="../chesssound/start1.ogg"><param name="filename" value="../chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
 	disposeapplicationlayers(170/297);
-
+	showMenu();
 
 	loadPiecesWavefront();
 	loadBoardWavefront();
 	initViewZlock();
 
-
-	
-	addToWayables(1, 1, 0);
-
-	console.log(plateau[1][1]);
-
-	
 	$('body').on('click', '#close-menu', function() {
 		closeMenu();
 	});
