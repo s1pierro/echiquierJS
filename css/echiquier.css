@@ -30,14 +30,23 @@ body {
 
 	color: #000;
 	font: 800 5vh Lato, sans-serif !important;
-	background-color: #0000 !important;
-	opacity: 0.8;
+	background-color: #fff1 !important;
+	opacity: 1.0;
 	position: fixed;
 	top: 0;
 	left: 0;
 	z-index: 1200;
 	width: 100%;
 
+}
+#close-menu:hover
+{
+	color:#0d0;
+}
+
+#show-menu:hover
+{
+color:#fff;
 }
 .right-side
 {
@@ -158,6 +167,11 @@ background-color: #9f9 !important;
 
 	fill: #000 !important;
 	opacity: 0.0 !important;
+}
+.way0, .way1, .way2, .way3, .way4, .way5, .way6, .way7  {
+
+	fill: #0d0 !important;
+	opacity: 0.5 !important;
 }
 .selectedPiece {
 

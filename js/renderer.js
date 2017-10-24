@@ -31,7 +31,7 @@ function initView(x, y, z)
 function initViewZlock(x, y, z)
 {
 	pmat = gentmat(0, 22, 0);
-	tmat = gentmat(0, 0, 1210);
+	tmat = gentmat(0, 0, 900);
 	rmat = genrmat( ZlockANGx, ZlockANGy, ZlockANGz);
 	genfmat();
 	viewChessBoard();

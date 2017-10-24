@@ -1,3 +1,4 @@
+
 var wvft = {};
 var buffer = {};
 var boardwvft = {};
@@ -88,6 +89,7 @@ function parsewavefront(objText) {
 			return vertices;
 		});
 	}
+			console.log('nv: '+nv);
 	if (triMatches) {
 		obj.triangles = triMatches.map(function(tri) {
 			nt++;
@@ -207,4 +209,45 @@ function loadBoardWavefront() {
 			//movetoviewable ();
 
 }
+function clearWayables ()
+{
+			var contents = $('#board').text();
+			var obj = parsewavefront(contents);
+			boardwvft = $.extend(true, {}, obj);
+			gennormalesboard();
+			boardbuffer = $.extend(true, {}, boardwvft);
+	
+}
+function addToWayables (x, y, i)
+{
+	var xs = 224;
+	var ys = 224;
+	var mrg = 32;
+	var stp = 64;
+	var z = 0;
+	var v = [-y*stp-mrg+xs, z, -x*stp-mrg+ys ];
+	boardwvft.vertices.push(v);
+	var v1 = [-y*stp-mrg+xs, z, -x*stp+mrg+ys ];
+	boardwvft.vertices.push(v1);
+	var v2 = [-y*stp+mrg+xs, z, -x*stp+mrg+ys ];
+	boardwvft.vertices.push(v2);
+	var v3 = [-y*stp+mrg+xs, z, -x*stp-mrg+ys ];
+	boardwvft.vertices.push(v3);
 
+	var tmp = boardwvft.nv;
+	var t = [tmp+2, tmp+4, tmp+1];
+	boardwvft.triangles.push(t);
+	t = [tmp+4, tmp+2, tmp+3];
+	boardwvft.triangles.push(t);
+
+	boardwvft.nt = boardwvft.nt+2;
+	boardwvft.nv = boardwvft.nv+4;
+
+	var n = [ 0.0, 1.0, 0.0];
+	boardwvft.triangles[boardwvft.nt-1].mat = "way"+i;
+	boardwvft.triangles[boardwvft.nt-1].n=n;
+	boardwvft.triangles[boardwvft.nt-2].mat = "way"+i;
+	boardwvft.triangles[boardwvft.nt-2].n=n;
+
+	boardbuffer = $.extend(true, {}, boardwvft);	
+}

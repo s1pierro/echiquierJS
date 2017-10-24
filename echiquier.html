@@ -8,22 +8,12 @@
 </head>
 <body>
 <div id="application">
-	<div id="UI">
+	<div id="UI" hidden>
 		<div id="UI_content">
 
-			<h3>Partie locale</h3>
-			<p>
-				<a><i class="icon-trash"></i> reinitialiser le plateau </a>
-			</p>
-			<!--h3>Parties en ligne</h3>
-			<p>
-				Les parties en ligne sont disponible <a>ici</a>
-			</p-->
 			<h2>À propos de cet échiquier</h2>
 			<p>
-				Cet échiquier vituel est redigé et proposé par moi même; s1pierro.
-				Il sagit pour moi d'un terrain d'experimentation
-				et d'une vitrine de ma pratique de la programmation a travers les
+				Cet échiquier est un terrain d'experimentation des
 				langages et normes web HTML, CSS, Javascript et SVG.
 				Les divers objets représentants le jeu ont été modelisés a l'aide
 				 de <a href="https://www.blender.org/">Blender</a>.
@@ -34,6 +24,14 @@
 				modifié en temps reel a l'aide du langage javascript. Une pratique favorisée
 				par les moteurs de rendus asynchrones des navigteurs modernes
 			</p>
+			<h3>Partie locale</h3>
+			<p>
+				<a><i class="icon-trash"></i> reinitialiser le plateau </a>
+			</p>
+			<!--h3>Parties en ligne</h3>
+			<p>
+				Les parties en ligne sont disponible <a>ici</a>
+			</p-->
 
 		</div>
 	</div>
@@ -105,9 +103,9 @@
 			<i class="icon-info"></i>
 		</span>	
 	</div>
-	<div id="closelayer" >
+	<div id="closelayer" hidden >
 		<span id='close-menu' class="right-side" >
-			<i class="icon-ok"></i>
+			ok <i class="icon-ok"></i>
 		</span>	
 	</div>
 </div>

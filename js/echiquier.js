@@ -12,7 +12,7 @@ var spinning = true;
 	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
 	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
 	  [["bp1"],["bp2"],["bp3"],["bp4"],["bp5"],["bp6"],["bp7"],["bp8"]],
-	  [["bt1"],["bk1"],["bf1"],["wk"],["wq"],["bf2"],["bk2"],["bt2"]]];
+	  [["bt1"],["bk1"],["bf1"],["bk"],["bq"],["bf2"],["bk2"],["bt2"]]];
 
 function Log(s)
 {
@@ -63,6 +63,13 @@ $(window).on("load", function() {
 	loadBoardWavefront();
 	initViewZlock();
 //	fullview();
+	closeMenu();
+	
+	addToWayables(1, 1, 0);
+
+	console.log(plateau[1][1]);
+
+	
 	$('body').on('click', '#close-menu', function() {
 		closeMenu();
 	});
@@ -100,15 +107,7 @@ $(window).on("load", function() {
 	});
 	mc.on("singletap", function(ev) {
 		//
-		$(this).addClass('active');
-		var f = getfaceid(this);
-		var m = getfacematerial(this);
-		
-		$('#csl').text('face '+f+'\n'+m);
-		selectedfaces[nselectedfaces] = f;
-		nselectedfaces++;
-		console.log(selectedfaces);
-		switchMaterial (m, "BLUE");
+	
 	});
 	mc.on("pan", function(ev) {
 	
@@ -135,6 +134,8 @@ $(window).on("load", function() {
 		nselectedfaces++;
 		if (selectedPiece != "none") switchMaterial ("selectedPiece", selectedPiece );
 		selectedPiece = m;
+		clearWayables ()
+		addToWayables(getPiecePositionX(selectedPiece), getPiecePositionY(selectedPiece), 0);
 		switchMaterial (m, "selectedPiece");
 		 viewChessBoard();
 	});
