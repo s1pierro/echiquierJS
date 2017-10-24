@@ -177,6 +177,7 @@ function drawboard() {
 function disposeapplicationlayers (option)
 {		
 	$('#UI').css('display' , 'block' );
+	$('#closelayer').css('display' , 'block' );
 	$('#navhelper').css('display' , 'none' );
 
 	var w = $(window).width();
@@ -210,13 +211,14 @@ function showMenu (option)
 {		
 	$('#UI').css('display' , 'block' );
 	$('#navhelper').css('display' , 'none' );
-
+	$('#closelayer').css('display' , 'block' );
 }
 
 function closeMenu ()
 {
 	$('#UI').css('display' , 'none' );
 	$('#navhelper').css('display' , 'block' );
+	$('#closelayer').css('display' , 'none' );
 }
 
 

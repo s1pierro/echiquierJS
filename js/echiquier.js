@@ -3,21 +3,6 @@ var nselectedfaces = 0;
 var selectedPiece = "none";
 var playspin;
 var spinning = true;
-
-function Log(s)
-{
-	console.log(s);
-}
-function showPmoves(x, y)
-{
-
-
-
-}
-$(window).on("load", function() {
-
-	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="../chesssound/start1.ogg"><param name="filename" value="../chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
-
 	var plateau = [ 
 
 	  [["wt2"],["wk2"],["wf2"],["wk"],["wq"],["wf1"],["wk1"],["wt1"]],
@@ -29,10 +14,46 @@ $(window).on("load", function() {
 	  [["bp1"],["bp2"],["bp3"],["bp4"],["bp5"],["bp6"],["bp7"],["bp8"]],
 	  [["bt1"],["bk1"],["bf1"],["wk"],["wq"],["bf2"],["bk2"],["bt2"]]];
 
+function Log(s)
+{
+	console.log(s);
+}
+function showPmoves(x, y)
+{
+
+
+
+}
+function getPiecePositionX  ( p )
+{
+	for ( var j = 0 ;  j < 8 ; j++ )
+		for ( var i = 0 ; i < 8 ; i++ )
+			if ( plateau[i][j] == p ) return i;
+	
+
+
+}
+function getPiecePositionY  ( p )
+{
+	for ( var i = 0 ; i < 8 ; i++ )
+		for ( var j = 0 ;  j < 8 ; j++ )
+			if ( plateau[i][j] == p ) return j;
+	
+
+
+
+
+}
+$(window).on("load", function() {
+
+	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="../chesssound/start1.ogg"><param name="filename" value="../chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
+
+
 
 	console.log(plateau.join('\n') + '\n\n');
 
-
+	console.log(plateau[1][0]);
+	console.log(plateau[1][0]+':'+getPiecePositionX(plateau[1][0])+','+getPiecePositionY(plateau[1][0]));
 
 
 	disposeapplicationlayers(170/297);
