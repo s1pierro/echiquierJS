@@ -176,49 +176,39 @@ function drawboard() {
 }
 function disposeapplicationlayers (option)
 {		
-	$('#UI').css('display' , 'block' );
-	$('#closelayer').css('display' , 'block' );
-	$('#navhelper').css('display' , 'none' );
-
 	var w = $(window).width();
 	var h = $(window).height();
+	var zoom = 80;
+	var ratio = w/h;
+ 	
+	$('#UI').css({'top' : 0 });
+	$('#UI').css({'left' : 0 });
+	$('#UI').css({'width' : w });
+	$('#UI').css({'height' : h });
 
-	var UIw = w;
-	var UIh = h;
-	var UIpositionX = 0;
-	var UIpositiony = 0;
-	
-	$('#UI').css({'top' : UIpositiony });
-	$('#UI').css({'left' : UIpositionX });
-	$('#UI').css({'width' : UIw });
-	$('#UI').css({'height' : UIh });
-
-
-
-	//$('#UI').css({'' : ''});
-
-
-	
 	$('#svg8').attr('width', w);
 	$('#svg8').attr('height', h);	
+ 	$("#svg8").attr('viewBox', '-'+((zoom/2))+' -'+(zoom/ratio/2)+' '+zoom+' '+(zoom/ratio));
+ //	$("#svg8").attr('viewBox', '-'+(w/2)+' -'+(h/2)+' '+w+' '+h;
 
-	var ratio = $('#svg8').attr('width')/$('#svg8').attr('height');
-	var zoom = 80;
-  	$("#svg8").attr('viewBox', '-'+((zoom/2))+' -'+(zoom/ratio/2)+' '+zoom+' '+(zoom/ratio));
+	$('#UI').css('display' , 'block' );
+	$('#closelayer').css('display' , 'none' );
+	$('#navhelper').css('display' , 'none' );
+
 
 }
 function showMenu (option)
 {		
 	$('#UI').css('display' , 'block' );
 	$('#navhelper').css('display' , 'none' );
-	$('#closelayer').css('display' , 'block' );
+	//$('#closelayer').css('display' , 'block' );
 }
 
 function closeMenu ()
 {
 	$('#UI').css('display' , 'none' );
 	$('#navhelper').css('display' , 'block' );
-	$('#closelayer').css('display' , 'none' );
+	//$('#closelayer').css('display' , 'none' );
 }
 
 

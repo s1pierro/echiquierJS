@@ -48,22 +48,14 @@ $(window).on("load", function() {
 
 	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="../chesssound/start1.ogg"><param name="filename" value="../chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
-
-
-	console.log(plateau.join('\n') + '\n\n');
-
-	console.log(plateau[1][0]);
-	console.log(plateau[1][0]+':'+getPiecePositionX(plateau[1][0])+','+getPiecePositionY(plateau[1][0]));
-
-
 	disposeapplicationlayers(170/297);
-	//document.getElementById('fileinput').addEventListener('change', readWavefrontFile, false);
+
 
 	loadPiecesWavefront();
 	loadBoardWavefront();
 	initViewZlock();
-//	fullview();
-	closeMenu();
+
+
 	
 	addToWayables(1, 1, 0);
 

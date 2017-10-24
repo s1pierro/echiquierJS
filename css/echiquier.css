@@ -15,7 +15,8 @@ body {
 {
 
 	color: #000;
-	font: 800 5vh Lato, sans-serif !important;
+	font: 800 7vh Lato, sans-serif !important;
+	line-height: 5vh;
 	background-color: #0000 !important;
 	opacity: 0.8;
 	position: fixed;
@@ -25,6 +26,20 @@ body {
 	width: 100%;
 
 }
+#navhelper a
+{
+	color: #333;
+	font: 800 5vh Lato, sans-serif !important;
+	text-decoration: none;
+}
+#navhelper a:hover
+{
+	color: #fff;
+	font: 800 5vh Lato, sans-serif !important;
+	text-decoration: none;
+}
+
+
 #closelayer
 {
 
@@ -37,6 +52,18 @@ body {
 	left: 0;
 	z-index: 1200;
 	width: 100%;
+
+}
+#close-footer
+{
+
+	color: #000;
+	font: 800 5vh Lato, sans-serif !important;
+	background-color: #fff !important;
+	opacity: 1.0;
+	padding:0em;
+	width: 100%;
+	
 
 }
 #close-menu:hover
@@ -59,22 +86,18 @@ color:#fff;
 	float:left;
 	margin-left:0.5em;
 }
-#navhelper a
-{
-	color: #000;
-	font: 800 5vh Lato, sans-serif !important;
-	text-decoration: none;
-}
 
 #UI
 {
 
 	color: #444;
 	background-color: #fff !important;
-	opacity: 0.75;
+	opacity: 0.8;
 	position: fixed;
 	z-index: 1100;
 	overflow: scroll  !important;
+
+
 }
 
 #UI_content
@@ -82,6 +105,8 @@ color:#fff;
 	font: 400 5vh Lato, sans-serif !important;
 	margin: 1em;
 	text-align: justify;
+	overflow: hidden  !important;
+
 	
 }
 #UI_content button
