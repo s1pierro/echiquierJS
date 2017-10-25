@@ -94,7 +94,7 @@ function showWay(p)
 }
 $(window).on("load", function() {
 
-	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="../chesssound/start1.ogg"><param name="filename" value="../chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
+	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="/chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
 	disposeapplicationlayers();
 	//showMenu();
@@ -104,6 +104,7 @@ $(window).on("load", function() {
 
 	console.log("-- move wp1 --");
 	MovePiece("wp1", 4, 0);
+	MovePiece("wp3", 4, 0);
 	console.log("--------------");
 
 
@@ -192,6 +193,28 @@ $(window).on("load", function() {
 		showWay(selectedPiece);
 		switchMaterial (m, "selectedPiece");
 		 viewChessBoard();
+	});
+	$('body').on('click', '.way', function() {
+
+		
+		var tmp = $(this).attr('class');
+		
+		var tmp2 = tmp.match(/way\d+/)+"";
+		var selectedway = parseInt(tmp2.match(/\d+/))
+		console.log( tmp2);
+		console.log( 'way : '+selectedway );
+	
+		var mx = 0;
+		var my = 0;
+		mx = way [selectedway][0]-getPiecePositionX(selectedPiece);
+		my = way [selectedway][1]-getPiecePositionY(selectedPiece);
+		MovePiece(selectedPiece, mx, -my);
+		
+		switchMaterial ("selectedPiece", selectedPiece );
+		selectedPiece = "none";
+		clearWayables();
+		 viewChessBoard();
+
 	});
 	$('#svg8').on('mousewheel', function(event) {
 		 console.log(event.deltaX, event.deltaY, event.deltaFactor);

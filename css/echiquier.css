@@ -200,10 +200,10 @@ background-color: #9f9 !important;
 }
 .dead {
 
-	fill: #000 !important;
-	opacity: 0.0 !important;
+	fill: #A00 !important;
+	opacity: 0.03 !important;
 }
-.way0, .way1, .way2, .way3, .way4, .way5, .way6, .way7  {
+.way {
 
 	fill: #0d0 !important;
 	opacity: 0.5 !important;

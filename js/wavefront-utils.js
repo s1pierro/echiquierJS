@@ -1,5 +1,7 @@
 
 var wvft = {};
+var way = [[0, 0][0, 0]];
+var nWay = 0;
 var buffer = {};
 var boardwvft = {};
 var boardbuffer = {};
@@ -220,7 +222,7 @@ function clearWayables ()
 			gennormalesboard();
 			boardbuffer = $.extend(true, {}, boardwvft);
 			nWay = 0;
-	
+			way.splice(0, way.length );
 }
 function addVtx ( v )
 {
@@ -267,16 +269,22 @@ function MovePiece (p, x, y)
 	}
 	console.log(plateau.join('\n') + '\n\n');
 	var newX = getPiecePositionX(p) +x;
-	var newY = getPiecePositionY(p) +y;
+	var newY = getPiecePositionY(p) -y;
 	
 	console.log ( newX+', '+newY );
 	plateau[ getPiecePositionX(p) ][ getPiecePositionY(p) ] = "free";
+	console.log (plateau[newX][newY]);
+	if (plateau[newX][newY] != "free" )
+	{
+		console.log ("capture");
+		var target = plateau[newX][newY]+"";
+		console.log ("capture "+ target);
+		switchMaterial ( target, "dead");
+	
+	}
 	plateau[newX][newY] = p;
 		console.log(plateau.join('\n') + '\n\n');
-
-
-	
-buffer = $.extend(true, {}, wvft);
+	//buffer = $.extend(true, {}, wvft);
 
 }
 
@@ -313,7 +321,9 @@ function addToWayables (x, y, i)
 	
 
 	boardbuffer = $.extend(true, {}, boardwvft);
-	
+	var tmp = [x, y]
+	way.push(tmp);
 	
 	nWay++;
+	console.log(way.join('\n') + '\n\n');
 }
