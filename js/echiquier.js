@@ -1,29 +1,76 @@
 var selectedfaces = [];
 var nselectedfaces = 0;
-var selectedPiece = "none";
 var playspin;
 var spinning = true;
+
+var nWay = 0;
+var selectedPiece = "none";
+var hand = "w";
+
+
 	var plateau = [ 
 
-	  [["wt2"],["wk2"],["wf2"],["wk"],["wq"],["wf1"],["wk1"],["wt1"]],
+	  [["wt2"],["wc2"],["wf2"],["wk"],["wq"],["wf1"],["wc1"],["wt1"]],
 	  [["wp8"],["wp7"],["wp6"],["wp5"],["wp4"],["wp3"],["wp2"],["wp1"]],
 	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
 	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
 	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
 	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
 	  [["bp1"],["bp2"],["bp3"],["bp4"],["bp5"],["bp6"],["bp7"],["bp8"]],
-	  [["bt1"],["bk1"],["bf1"],["bk"],["bq"],["bf2"],["bk2"],["bt2"]]];
+	  [["bt1"],["bc1"],["bf1"],["bk"],["bq"],["bf2"],["bc2"],["bt2"]]];
+
+function getPieceColor  ( p )
+{
+		if ( p.match(/^w/gi)) return "w";
+		if ( p.match(/^b/gi)) return "b";
+		if ( p.match(/^free/gi)) return "n";
+}
+function getPieceType  ( p )
+{
+		if ( p.match(/^[wb]p[1-8]/gi)) return "pawn";
+		if ( p.match(/^[wb]t[1-2]/gi)) return "tower";
+		if ( p.match(/^[wb]c[1-2]/gi)) return "knight";
+		if ( p.match(/^[wb]f[1-2]/gi)) return "bishop";
+		if ( p.match(/^[wb]q/gi)) return "queen";
+		if ( p.match(/^[wb]k/gi)) return "king";		
+}
+function showPawnWay ( c, x, y )
+{ //plateau[x][y]
+	if ( c=="w" )
+	{
+		if ( plateau[x+1][y] == "free")
+		{
+			addToWayables(x+1, y, 0);
+			if (x<2 && plateau[x+2][y] == "free") addToWayables(x+2, y, 1);
+		}
+		var pce = plateau[x+1][y+1]+"";
+		if (y < 7 )
+		if ( getPieceColor  ( pce )== "b") addToWayables(x+1, y+1, 0);
+		pce = plateau[x+1][y-1]+"";
+		if (y > 0 )
+		if ( getPieceColor  ( pce )== "b") addToWayables(x+1, y-1, 0);
+	}
+	else
+	{	
+		if ( plateau[x-1][y] == "free")
+		{
+			addToWayables(x-1, y, 0);
+			if (x>5 && plateau[x-2][y] == "free") addToWayables(x-2, y, 1);
+		}
+		var pce = plateau[x-1][y+1]+"";
+		if (y < 7 )
+		if ( getPieceColor  ( pce )== "w") addToWayables(x-1, y+1, 0);
+		pce = plateau[x-1][y-1]+"";
+		if (y > 0 )
+		if ( getPieceColor  ( pce )== "w") addToWayables(x-1, y-1, 0);
+	}
+}
 
 function Log(s)
 {
 	console.log(s);
 }
-function showPmoves(x, y)
-{
 
-
-
-}
 function getPiecePositionX  ( p )
 {
 	for ( var j = 0 ;  j < 8 ; j++ )
@@ -38,23 +85,39 @@ function getPiecePositionY  ( p )
 	for ( var i = 0 ; i < 8 ; i++ )
 		for ( var j = 0 ;  j < 8 ; j++ )
 			if ( plateau[i][j] == p ) return j;
-	
-
-
-
+}
+function showWay(p)
+{
+	if ( getPieceType  ( p ) == "pawn")
+	showPawnWay ( getPieceColor  ( p ), getPiecePositionX  ( p ), getPiecePositionY  ( p ) );
 
 }
 $(window).on("load", function() {
 
 	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="../chesssound/start1.ogg"><param name="filename" value="../chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
-	disposeapplicationlayers(170/297);
-	showMenu();
+	disposeapplicationlayers();
+	//showMenu();
 
 	loadPiecesWavefront();
 	loadBoardWavefront();
-	initViewZlock();
 
+	console.log("-- move wp1 --");
+	MovePiece("wp1", 4, 0);
+	console.log("--------------");
+
+
+
+
+	initViewZlock();
+	console.log( 'wp2:'+getPieceColor("wp2")+'\n');
+	console.log( 'bp2:'+getPieceColor("bp2")+'\n');
+	console.log( 'bp2:'+getPieceType("bp2")+'\n');
+
+	showPawnWay ( getPieceColor("bp2"), getPiecePositionX("bp2"), getPiecePositionY("bp2") );
+	console.log( plateau[getPiecePositionX("bp3")][getPiecePositionY("bp3") ] );
+	
+	
 	$('body').on('click', '#close-menu', function() {
 		closeMenu();
 	});
@@ -117,10 +180,16 @@ $(window).on("load", function() {
 		$('#csl').text('face '+f+'\n '+m);
 		selectedfaces[nselectedfaces] = f;
 		nselectedfaces++;
-		if (selectedPiece != "none") switchMaterial ("selectedPiece", selectedPiece );
+		if (selectedPiece != "none")
+		{
+			switchMaterial ("selectedPiece", selectedPiece );
+			
+		}
 		selectedPiece = m;
-		clearWayables ()
-		addToWayables(getPiecePositionX(selectedPiece), getPiecePositionY(selectedPiece), 0);
+		//MovePiece(selectedPiece, 2, 0);
+		console.log( 'selectedPiece:'+getPieceType(selectedPiece)+'-'+getPieceColor(selectedPiece)+'\n');	
+		clearWayables ();
+		showWay(selectedPiece);
 		switchMaterial (m, "selectedPiece");
 		 viewChessBoard();
 	});
@@ -133,7 +202,7 @@ $(window).on("load", function() {
 		disposeapplicationlayers();
 	});
 	
-	playspin = setInterval(spinview, 1);
+	//playspin = setInterval(spinview, 1);
 	
 	function spinview(){	
 

@@ -13,6 +13,9 @@ var zmid = 0;
 	
 var viewangle = 100;
 
+	var vtxlist = [0, 1];
+	vtxlist.nv = 2;
+	
 function getfaceid(f) {
 	var tmp = $(f).attr('class');
 	var tmp2 = tmp.match(/fc\d+cf/) + '+';
@@ -216,8 +219,67 @@ function clearWayables ()
 			boardwvft = $.extend(true, {}, obj);
 			gennormalesboard();
 			boardbuffer = $.extend(true, {}, boardwvft);
+			nWay = 0;
 	
 }
+function addVtx ( v )
+{
+	var exist = false;
+	
+	for ( var i = 0 ; i < vtxlist.nv ; i++ )
+		if ( vtxlist[i] == v ) exist = true;
+		
+	if ( exist == false )
+	{
+		vtxlist.push(v);
+		vtxlist.nv++;
+	}
+
+}
+
+function MovePiece (p, x, y)
+{
+	vtxlist.splice(0, vtxlist.length );
+	
+
+	vtxlist.nv = 0;
+	console.log ("triangles to test : "+wvft.nt);
+	console.log ();
+	console.log ();
+	
+	for ( var i = 0 ; i <  wvft.nt ; i++ )
+		if ( wvft.triangles[i].mat == p )
+		{
+			addVtx ( wvft.triangles[i][0] );
+			addVtx ( wvft.triangles[i][1] );
+			addVtx ( wvft.triangles[i][2] );
+		
+		}
+	console.log (vtxlist);
+	for ( var i = 0 ; i < vtxlist.length ; i ++ )
+	{
+		console.log ('mod vtxlist['+i+'] : '+vtxlist[i]);
+	console.log ('      vtx.x : '+wvft.vertices[vtxlist[i]][0]);
+		wvft.vertices[vtxlist[i]-1][0] =  parseFloat(wvft.vertices[vtxlist[i]-1][0])+(y*64.0);
+		wvft.vertices[vtxlist[i]-1][2] =  parseFloat(wvft.vertices[vtxlist[i]-1][2])-(x*64.0);
+	console.log ('  new vtx.x : '+wvft.vertices[vtxlist[i]][0]);
+	
+	}
+	console.log(plateau.join('\n') + '\n\n');
+	var newX = getPiecePositionX(p) +x;
+	var newY = getPiecePositionY(p) +y;
+	
+	console.log ( newX+', '+newY );
+	plateau[ getPiecePositionX(p) ][ getPiecePositionY(p) ] = "free";
+	plateau[newX][newY] = p;
+		console.log(plateau.join('\n') + '\n\n');
+
+
+	
+buffer = $.extend(true, {}, wvft);
+
+}
+
 function addToWayables (x, y, i)
 {
 	var xs = 224;
@@ -244,10 +306,14 @@ function addToWayables (x, y, i)
 	boardwvft.nv = boardwvft.nv+4;
 
 	var n = [ 0.0, 1.0, 0.0];
-	boardwvft.triangles[boardwvft.nt-1].mat = "way"+i;
+	boardwvft.triangles[boardwvft.nt-1].mat = "way"+nWay;
 	boardwvft.triangles[boardwvft.nt-1].n=n;
-	boardwvft.triangles[boardwvft.nt-2].mat = "way"+i;
+	boardwvft.triangles[boardwvft.nt-2].mat = "way"+nWay;
 	boardwvft.triangles[boardwvft.nt-2].n=n;
+	
 
-	boardbuffer = $.extend(true, {}, boardwvft);	
+	boardbuffer = $.extend(true, {}, boardwvft);
+	
+	
+	nWay++;
 }

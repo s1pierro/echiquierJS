@@ -221,7 +221,7 @@ background-color: #9f9 !important;
 
 
 .wp1, .wp2, .wp3, .wp4, .wp5, .wp6, .wp7, .wp8,
-.wk, .wq, .wk1, .wk2, .wt1, .wt2, .wf1, .wf2
+.wk, .wq, .wc1, .wc2, .wt1, .wt2, .wf1, .wf2
 { fill: #cca !important;
 	 opacity: 1.0 !important;
 	 stroke: none !important;
@@ -229,37 +229,37 @@ background-color: #9f9 !important;
 }
 .wp1-step-10, .wp2-step-10, .wp3-step-10, .wp4-step-10,
 .wp5-step-10, .wp6-step-10, .wp7-step-10, .wp8-step-10,
-.wk-step-10, .wq-step-10, .wk1-step-10, .wk2-step-10,
+.wk-step-10, .wq-step-10, .wc1-step-10, .wc2-step-10,
 .wt1-step-10, .wt2-step-10, .wf1-step-10, .wf2-step-10
  { fill: #d8d8b8 !important; opacity: 1.0 !important; }
  
 .wp1-step-11, .wp2-step-11,.wp3-step-11, .wp4-step-11,
 .wp5-step-11, .wp6-step-11,.wp7-step-11, .wp8-step-11,
-.wk-step-11, .wq-step-11, .wk1-step-11, .wk2-step-11,
+.wk-step-11, .wq-step-11, .wc1-step-11, .wc2-step-11,
 .wt1-step-11, .wt2-step-11, .wf1-step-11, .wf2-step-11
 { fill: #dfdfbf !important; opacity: 1.0 !important; }
 
 .wp1-step-12, .wp2-step-12,.wp3-step-12, .wp4-step-12,
 .wp5-step-12, .wp6-step-12,.wp7-step-12, .wp8-step-12,
-.wk-step-12, .wq-step-12, .wk1-step-12, .wk2-step-12,
+.wk-step-12, .wq-step-12, .wc1-step-12, .wc2-step-12,
 .wt1-step-12, .wt2-step-12, .wf1-step-12, .wf2-step-12
 { fill: #e8e8c8 !important; opacity: 1.0 !important; }
 
 .wp1-step-13, .wp2-step-13,.wp3-step-13, .wp4-step-13,
 .wp5-step-13, .wp6-step-13,.wp7-step-13, .wp8-step-13,
-.wk-step-13, .wq-step-13, .wk1-step-13, .wk2-step-13,
+.wk-step-13, .wq-step-13, .wc1-step-13, .wc2-step-13,
 .wt1-step-13, .wt2-step-13, .wf1-step-13, .wf2-step-13
 { fill: #efefcf !important; opacity: 1.0 !important; }
 
 .wp1-step-14, .wp2-step-14,.wp3-step-14, .wp4-step-14,
 .wp5-step-14, .wp6-step-14,.wp7-step-14, .wp8-step-14,
-.wk-step-14, .wq-step-14, .wk1-step-14, .wk2-step-14,
+.wk-step-14, .wq-step-14, .wc1-step-14, .wc2-step-14,
 .wt1-step-14, .wt2-step-14, .wf1-step-14, .wf2-step-14
 { fill: #f8f8d8 !important; opacity: 1.0 !important; }
 
 .wp1-step-15, .wp2-step-15,.wp3-step-15, .wp4-step-15,
 .wp5-step-15, .wp6-step-15,.wp7-step-15, .wp8-step-15,
-.wk-step-15, .wq-step-15, .wk1-step-15, .wk2-step-15,
+.wk-step-15, .wq-step-15, .wc1-step-15, .wc2-step-15,
 .wt1-step-15, .wt2-step-15, .wf1-step-15, .wf2-step-15
 { fill: #ffffdf !important; opacity: 1.0 !important; }
 
@@ -267,7 +267,7 @@ background-color: #9f9 !important;
 
 
 .bp1, .bp2, .bp3, .bp4, .bp5, .bp6, .bp7, .bp8,
-.bk, .bq, .bk1, .bk2, .bt1, .bt2, .bf1, .bf2
+.bk, .bq, .bc1, .bc2, .bt1, .bt2, .bf1, .bf2
 {
 
 	fill: #3f3f3f !important;
@@ -277,92 +277,92 @@ background-color: #9f9 !important;
 }
 .bp1-step-1, .bp2-step-1, .bp3-step-1, .bp4-step-1,
 .bp5-step-1, .bp6-step-1, .bp7-step-1, .bp1-step-1,
-.bk-step-1, .bq-step-1, .bk1-step-1, .bk2-step-1,
+.bk-step-1, .bq-step-1, .bc1-step-1, .bc2-step-1,
 .bt1-step-1, .bt2-step-1, .bf1-step-1, .bf2-step-1
 {fill: #434343 !important }
 
 .bp1-step-2, .bp2-step-2, .bp3-step-2, .bp4-step-2,
 .bp5-step-2, .bp6-step-2, .bp7-step-2, .bp2-step-2,
-.bk-step-2, .bq-step-2, .bk1-step-2, .bk2-step-2,
+.bk-step-2, .bq-step-2, .bc1-step-2, .bc2-step-2,
 .bt1-step-2, .bt2-step-2, .bf1-step-2, .bf2-step-2
 {fill: #464646 !important }
 
 .bp1-step-3, .bp2-step-3, .bp3-step-3, .bp4-step-3,
 .bp5-step-3, .bp6-step-3, .bp7-step-3, .bp3-step-3,
-.bk-step-3, .bq-step-3, .bk1-step-3, .bk2-step-3,
+.bk-step-3, .bq-step-3, .bc1-step-3, .bc2-step-3,
 .bt1-step-3, .bt2-step-3, .bf1-step-3, .bf2-step-3
 {fill: #494949 !important }
 
 
 .bp1-step-4, .bp2-step-4, .bp3-step-4, .bp4-step-4,
 .bp5-step-4, .bp6-step-4, .bp7-step-4, .bp4-step-4,
-.bk-step-4, .bq-step-4, .bk1-step-4, .bk2-step-4,
+.bk-step-4, .bq-step-4, .bc1-step-4, .bc2-step-4,
 .bt1-step-4, .bt2-step-4, .bf1-step-4, .bf2-step-4
 {fill: #4c4c4c !important }
 
 .bp1-step-5, .bp2-step-5, .bp3-step-5, .bp4-step-5,
 .bp5-step-5, .bp6-step-5, .bp7-step-5, .bp5-step-5,
-.bk-step-5, .bq-step-5, .bk1-step-5, .bk2-step-5,
+.bk-step-5, .bq-step-5, .bc1-step-5, .bc2-step-5,
 .bt1-step-5, .bt2-step-5, .bf1-step-5, .bf2-step-5
 {fill: #4f4f4f !important }
 
 .bp1-step-6, .bp2-step-6, .bp3-step-6, .bp4-step-6,
 .bp5-step-6, .bp6-step-6, .bp7-step-6, .bp6-step-6,
-.bk-step-6, .bq-step-6, .bk1-step-6, .bk2-step-6,
+.bk-step-6, .bq-step-6, .bc1-step-6, .bc2-step-6,
 .bt1-step-6, .bt2-step-6, .bf1-step-6, .bf2-step-6
 {fill: #535353 !important }
 
 .bp1-step-7, .bp2-step-7, .bp3-step-7, .bp4-step-7,
 .bp5-step-7, .bp6-step-7, .bp7-step-7, .bp7-step-7,
-.bk-step-7, .bq-step-7, .bk1-step-7, .bk2-step-7,
+.bk-step-7, .bq-step-7, .bc1-step-7, .bc2-step-7,
 .bt1-step-7, .bt2-step-7, .bf1-step-7, .bf2-step-7
 {fill: #565656 !important }
 
 .bp1-step-8, .bp2-step-8, .bp3-step-8, .bp4-step-8,
 .bp5-step-8, .bp6-step-8, .bp7-step-8, .bp8-step-8,
-.bk-step-8, .bq-step-8, .bk1-step-8, .bk2-step-8,
+.bk-step-8, .bq-step-8, .bc1-step-8, .bc2-step-8,
 .bt1-step-8, .bt2-step-8, .bf1-step-8, .bf2-step-8
 {fill: #595959 !important }
 
 .bp1-step-9, .bp2-step-9, .bp3-step-9, .bp4-step-9,
 .bp5-step-9, .bp6-step-9, .bp7-step-9, .bp8-step-9,
-.bk-step-9, .bq-step-9, .bk1-step-9, .bk2-step-9,
+.bk-step-9, .bq-step-9, .bc1-step-9, .bc2-step-9,
 .bt1-step-9, .bt2-step-9, .bf1-step-9, .bf2-step-9
 {fill: #5c5c5c !important }
  
 .bp1-step-10, .bp2-step-10, .bp3-step-10, .bp4-step-10,
 .bp5-step-10, .bp6-step-10, .bp7-step-10, .bp8-step-10,
-.bk-step-10, .bq-step-10, .bk1-step-10, .bk2-step-10,
+.bk-step-10, .bq-step-10, .bc1-step-10, .bc2-step-10,
 .bt1-step-10, .bt2-step-10, .bf1-step-10, .bf2-step-10
 {fill: #5f5f5f !important }
  
 .bp1-step-11, .bp2-step-11,.bp3-step-11, .bp4-step-11,
 .bp5-step-11, .bp6-step-11,.bp7-step-11, .bp8-step-11,
-.bk-step-11, .bq-step-11, .bk1-step-11, .bk2-step-11,
+.bk-step-11, .bq-step-11, .bc1-step-11, .bc2-step-11,
 .bt1-step-11, .bt2-step-11, .bf1-step-11, .bf2-step-11
 {fill: #636363 !important }
 
 .bp1-step-12, .bp2-step-12,.bp3-step-12, .bp4-step-12,
 .bp5-step-12, .bp6-step-12,.bp7-step-12, .bp8-step-12,
-.bk-step-12, .bq-step-12, .bk1-step-12, .bk2-step-12,
+.bk-step-12, .bq-step-12, .bc1-step-12, .bc2-step-12,
 .bt1-step-12, .bt2-step-12, .bf1-step-12, .bf2-step-12
 {fill: #666666 !important }
 
 .bp1-step-13, .bp2-step-13,.bp3-step-13, .bp4-step-13,
 .bp5-step-13, .bp6-step-13,.bp7-step-13, .bp8-step-13,
-.bk-step-13, .bq-step-13, .bk1-step-13, .bk2-step-13,
+.bk-step-13, .bq-step-13, .bc1-step-13, .bc2-step-13,
 .bt1-step-13, .bt2-step-13, .bf1-step-13, .bf2-step-13
 {fill: #999 !important }
 
 .bp1-step-14, .bp2-step-14,.bp3-step-14, .bp4-step-14,
 .bp5-step-14, .bp6-step-14,.bp7-step-14, .bp8-step-14,
-.bk-step-14, .bq-step-14, .bk1-step-14, .bk2-step-14,
+.bk-step-14, .bq-step-14, .bc1-step-14, .bc2-step-14,
 .bt1-step-14, .bt2-step-14, .bf1-step-14, .bf2-step-14
 {fill: #999 !important }
 
 .bp1-step-15, .bp2-step-15,.bp3-step-15, .bp4-step-15,
 .bp5-step-15, .bp6-step-15,.bp7-step-15, .bp8-step-15,
-.bk-step-15, .bq-step-15, .bk1-step-15, .bk2-step-15,
+.bk-step-15, .bq-step-15, .bc1-step-15, .bc2-step-15,
 .bt1-step-15, .bt2-step-15, .bf1-step-15, .bf2-step-15
 {fill: #999 !important }
 
