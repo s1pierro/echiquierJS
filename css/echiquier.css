@@ -1,6 +1,10 @@
-
+@font-face {
+    font-family: 'Cantarel'; /*a name to be used later*/
+    src: url('/fonts/Cantarel-Regular.ttf'); /*URL to font*/
+}
 body {
-	font: 400 1.6em Lato, sans-serif;
+
+	font: 400 1.6em Cantarel, sans-serif;
 	line-height: 1.8;
 	color: #434343;
 	background-color: #fff;
@@ -15,7 +19,7 @@ body {
 {
 
 	color: #000;
-	font: 800 7vh Lato, sans-serif !important;
+	font: 800 7vh Cantarel, sans-serif !important;
 	line-height: 5vh;
 	background-color: #0000 !important;
 	opacity: 0.8;
@@ -29,7 +33,7 @@ body {
 #navhelper a
 {
 	color: #333;
-	font: 800 5vh Lato, sans-serif !important;
+	font: 800 5vh Cantarel, sans-serif !important;
 	text-decoration: none;
 	cursor:pointer;
 }
@@ -40,7 +44,7 @@ body {
 #navhelper a:hover
 {
 	color: #fff;
-	font: 800 5vh Lato, sans-serif !important;
+	font: 800 5vh Cantarel, sans-serif !important;
 	text-decoration: none;
 }
 
@@ -49,7 +53,7 @@ body {
 {
 
 	color: #000;
-	font: 800 5vh Lato, sans-serif !important;
+	font: 800 5vh Cantarel, sans-serif !important;
 	background-color: #fff1 !important;
 	opacity: 1.0;
 	position: fixed;
@@ -63,7 +67,7 @@ body {
 {
 
 	color: #000;
-	font: 800 5vh Lato, sans-serif !important;
+	font: 800 5vh Cantarel, sans-serif !important;
 	background-color: #fff !important;
 	opacity: 1.0;
 	padding:0em;
@@ -112,7 +116,7 @@ color:#fff;
 
 #UI_content
 {
-	font: 400 5vh Lato, sans-serif !important;
+	font: 400 5vh Cantarel, sans-serif !important;
 	margin: 1em;
 	text-align: justify;
 	overflow: hidden  !important;
@@ -121,7 +125,7 @@ color:#fff;
 }
 #UI_content button
 {
-	font: 600 5vh Lato, sans-serif !important;
+	font: 600 5vh Cantarel, sans-serif !important;
 	padding: 0.5em;
 	text-align: center;
 	
@@ -201,7 +205,7 @@ background-color: #9f9 !important;
 .dead {
 
 	fill: #A00 !important;
-	opacity: 0.03 !important;
+	opacity: 0.50 !important;
 }
 .way {
 
@@ -211,7 +215,7 @@ background-color: #9f9 !important;
 .selectedPiece {
 
 	fill: #33a !important;
-	opacity: 8.0 !important;
+	opacity: 1.0 !important;
 }
 .selectedPiece-step-11 { fill: #88f !important; opacity: 8.0 !important; }
 .selectedPiece-step-12 { fill: #88f !important; opacity: 8.0 !important; }

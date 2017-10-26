@@ -242,13 +242,7 @@ function addVtx ( v )
 function MovePiece (p, x, y)
 {
 	vtxlist.splice(0, vtxlist.length );
-	
-
 	vtxlist.nv = 0;
-	console.log ("triangles to test : "+wvft.nt);
-	console.log ();
-	console.log ();
-	
 	for ( var i = 0 ; i <  wvft.nt ; i++ )
 		if ( wvft.triangles[i].mat == p )
 		{
@@ -257,29 +251,38 @@ function MovePiece (p, x, y)
 			addVtx ( wvft.triangles[i][2] );
 		
 		}
-	console.log (vtxlist);
 	for ( var i = 0 ; i < vtxlist.length ; i ++ )
 	{
-		console.log ('mod vtxlist['+i+'] : '+vtxlist[i]);
-	console.log ('      vtx.x : '+wvft.vertices[vtxlist[i]][0]);
 		wvft.vertices[vtxlist[i]-1][0] =  parseFloat(wvft.vertices[vtxlist[i]-1][0])+(y*64.0);
 		wvft.vertices[vtxlist[i]-1][2] =  parseFloat(wvft.vertices[vtxlist[i]-1][2])-(x*64.0);
-	console.log ('  new vtx.x : '+wvft.vertices[vtxlist[i]][0]);
-	
 	}
-	console.log(plateau.join('\n') + '\n\n');
+
 	var newX = getPiecePositionX(p) +x;
 	var newY = getPiecePositionY(p) -y;
 	
-	console.log ( newX+', '+newY );
 	plateau[ getPiecePositionX(p) ][ getPiecePositionY(p) ] = "free";
-	console.log (plateau[newX][newY]);
 	if (plateau[newX][newY] != "free" )
 	{
 		console.log ("capture");
 		var target = plateau[newX][newY]+"";
 		console.log ("capture "+ target);
+		vtxlist.splice(0, vtxlist.length );
+		vtxlist.nv = 0;
+		for ( var i = 0 ; i <  wvft.nt ; i++ )
+			if ( wvft.triangles[i].mat == target )
+			{
+				addVtx ( wvft.triangles[i][0] );
+				addVtx ( wvft.triangles[i][1] );
+				addVtx ( wvft.triangles[i][2] );
+		
+			}
+		for ( var i = 0 ; i < vtxlist.length ; i ++ )
+		{
+			wvft.vertices[vtxlist[i]-1][0] =  1000;
+			wvft.vertices[vtxlist[i]-1][2] =  1000;
+		}
 		switchMaterial ( target, "dead");
+
 	
 	}
 	plateau[newX][newY] = p;

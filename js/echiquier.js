@@ -6,18 +6,16 @@ var spinning = true;
 var nWay = 0;
 var selectedPiece = "none";
 var hand = "w";
+var plateau = [ 
 
-
-	var plateau = [ 
-
-	  [["wt2"],["wc2"],["wf2"],["wk"],["wq"],["wf1"],["wc1"],["wt1"]],
-	  [["wp8"],["wp7"],["wp6"],["wp5"],["wp4"],["wp3"],["wp2"],["wp1"]],
-	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
-	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
-	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
-	  [["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
-	  [["bp1"],["bp2"],["bp3"],["bp4"],["bp5"],["bp6"],["bp7"],["bp8"]],
-	  [["bt1"],["bc1"],["bf1"],["bk"],["bq"],["bf2"],["bc2"],["bt2"]]];
+	[["wt2"],["wc2"],["wf2"],["wk"],["wq"],["wf1"],["wc1"],["wt1"]],
+	[["wp8"],["wp7"],["wp6"],["wp5"],["wp4"],["wp3"],["wp2"],["wp1"]],
+	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
+	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
+	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
+	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
+	[["bp1"],["bp2"],["bp3"],["bp4"],["bp5"],["bp6"],["bp7"],["bp8"]],
+	[["bt1"],["bc1"],["bf1"],["bk"],["bq"],["bf2"],["bc2"],["bt2"]]];
 
 function getPieceColor  ( p )
 {
@@ -94,36 +92,24 @@ function showWay(p)
 }
 $(window).on("load", function() {
 
-	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="/chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
+	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
 	disposeapplicationlayers();
-	//showMenu();
+	showMenu();
 
 	loadPiecesWavefront();
 	loadBoardWavefront();
-
-	console.log("-- move wp1 --");
-	MovePiece("wp1", 4, 0);
-	MovePiece("wp3", 4, 0);
-	console.log("--------------");
-
-
-
-
 	initViewZlock();
-	console.log( 'wp2:'+getPieceColor("wp2")+'\n');
-	console.log( 'bp2:'+getPieceColor("bp2")+'\n');
-	console.log( 'bp2:'+getPieceType("bp2")+'\n');
-
-	showPawnWay ( getPieceColor("bp2"), getPiecePositionX("bp2"), getPiecePositionY("bp2") );
-	console.log( plateau[getPiecePositionX("bp3")][getPiecePositionY("bp3") ] );
 	
 	
 	$('body').on('click', '#close-menu', function() {
 		closeMenu();
+		window.clearInterval(playspin);
+		
 	});
 	$('body').on('click', '#show-menu', function() {
 		showMenu();
+		playspin = setInterval(spinview, 1);
 	});
 
 	$('body').on('click', '#spin', function() {
@@ -174,29 +160,20 @@ $(window).on("load", function() {
 
 	});
 	$('body').on('click', '.face', function() {
-		$(this).addClass('active');
-		var f = getfaceid(this);
+	
 		var m = getfacematerial(this);
 		
-		$('#csl').text('face '+f+'\n '+m);
-		selectedfaces[nselectedfaces] = f;
-		nselectedfaces++;
+
 		if (selectedPiece != "none")
-		{
 			switchMaterial ("selectedPiece", selectedPiece );
-			
-		}
 		selectedPiece = m;
-		//MovePiece(selectedPiece, 2, 0);
-		console.log( 'selectedPiece:'+getPieceType(selectedPiece)+'-'+getPieceColor(selectedPiece)+'\n');	
 		clearWayables ();
 		showWay(selectedPiece);
 		switchMaterial (m, "selectedPiece");
-		 viewChessBoard();
+		viewChessBoard();
 	});
 	$('body').on('click', '.way', function() {
 
-		
 		var tmp = $(this).attr('class');
 		
 		var tmp2 = tmp.match(/way\d+/)+"";
@@ -213,19 +190,19 @@ $(window).on("load", function() {
 		switchMaterial ("selectedPiece", selectedPiece );
 		selectedPiece = "none";
 		clearWayables();
-		 viewChessBoard();
+		viewChessBoard();
 
 	});
 	$('#svg8').on('mousewheel', function(event) {
-		 console.log(event.deltaX, event.deltaY, event.deltaFactor);
-		 translateView (0, 0,event.deltaY*event.deltaFactor );
-	 viewChessBoard()
+
+		translateView (0, 0, event.deltaY*event.deltaFactor );
+		viewChessBoard()
 	});
 	$(window).on('resize', function() {
 		disposeapplicationlayers();
 	});
 	
-	//playspin = setInterval(spinview, 1);
+	playspin = setInterval(spinview, 1);
 	
 	function spinview(){	
 
