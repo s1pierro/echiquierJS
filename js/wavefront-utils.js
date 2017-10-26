@@ -284,7 +284,7 @@ function MovePiece (p, x, y)
 		switchMaterial ( target, "dead");
 
 	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
-
+console.log("capture");
 	}
 	else $("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="chesssound/mov2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
