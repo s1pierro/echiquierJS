@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'Cantarel'; /*a name to be used later*/
-    src: url('font/Cantarell-Regular.ttf'); /*URL to font*/
+    src: url('../font/Cantarell-Regular.ttf'); /*URL to font*/
 }
 body {
 
