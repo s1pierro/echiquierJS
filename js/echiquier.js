@@ -117,7 +117,7 @@ console.log("capture");
 	$('body').on('click', '#spin', function() {
 		var spin = setInterval(showOBJ, 100);
 	});
-	
+	/*
 	var singleTap = new Hammer.Tap({
 		event: 'singletap'
 	});
@@ -133,7 +133,9 @@ console.log("capture");
 	doubleTap.recognizeWith(singleTap);
 	doubleTap.requireFailure(tripleTap);
 	singleTap.requireFailure([tripleTap, doubleTap]);
-
+	
+	*/
+	//hammertime.get('pinch').set({ enable: true });
 	var myElement = document.getElementById('svg8');
 	var mc = new Hammer(myElement);
 	mc.get('pan').set({
@@ -208,7 +210,7 @@ console.log("capture");
 	
 	function spinview(){	
 
-		 rotateViewZlock (0, increment, 0 );
+		 rotateViewZlock (0, increment*2, 0 );
 		 viewChessBoard()
 	 }
 

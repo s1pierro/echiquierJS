@@ -4,8 +4,8 @@
 }
 body {
 
-	font: 400 1.6em Cantarel, sans-serif;
-	line-height: 1.8;
+	font: 400 1.4em Cantarel, sans-serif;
+	line-height: 1.6;
 	color: #434343;
 	background-color: #fff;
 	margin: 0px !important;
@@ -116,7 +116,7 @@ color:#fff;
 
 #UI_content
 {
-	font: 400 5vh Cantarel, sans-serif !important;
+	font: 400 Cantarel, sans-serif !important;
 	margin: 1em;
 	text-align: justify;
 	overflow: hidden  !important;
