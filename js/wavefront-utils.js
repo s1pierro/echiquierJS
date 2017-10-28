@@ -284,12 +284,13 @@ function MovePiece (p, x, y)
 		switchMaterial ( target, "dead");
 
 
-	$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
+	//$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 console.log("capture");
 	}
+$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
-	$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/move1.ogg"><param name="filename" value="chesssound/move1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
-console.log("capture");
+
+
 	plateau[newX][newY] = p;
 		console.log(plateau.join('\n') + '\n\n');
 	//buffer = $.extend(true, {}, wvft);
