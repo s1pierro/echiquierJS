@@ -257,10 +257,10 @@ function MovePiece (p, x, y)
 		wvft.vertices[vtxlist[i]-1][2] =  parseFloat(wvft.vertices[vtxlist[i]-1][2])-(x*64.0);
 	}
 
-	var newX = getPiecePositionX(p) +x;
-	var newY = getPiecePositionY(p) -y;
+	var newX = ChessPiece(p).position.x +x;
+	var newY = ChessPiece(p).position.y -y;
 	
-	plateau[ getPiecePositionX(p) ][ getPiecePositionY(p) ] = "free";
+	plateau[ ChessPiece(p).position.x ][ ChessPiece(p).position.y ] = "free";
 	if (plateau[newX][newY] != "free" )
 	{
 		console.log ("capture");
@@ -297,6 +297,20 @@ $("body").append('<object id="capture" hidden type="audio/mpeg" width="100" heig
 
 }
 
+function getTargetFromMove (fm)
+{
+
+	var f = fm;
+	while ( f.length > 2 ) f = f.slice (1, f.length);
+	return f;
+
+}
+function addToWayables_BoardPosition (pos)
+{
+	console.log(pos);
+	
+
+}
 function addToWayables (x, y, i)
 {
 	var xs = 224;
@@ -334,5 +348,5 @@ function addToWayables (x, y, i)
 	way.push(tmp);
 	
 	nWay++;
-	console.log(way.join('\n') + '\n\n');
+	//console.log(way.join('\n') + '\n\n');
 }

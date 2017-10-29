@@ -6,6 +6,7 @@ var spinning = true;
 var nWay = 0;
 var selectedPiece = "none";
 var hand = "w";
+var chess = new Chess();
 var plateau = [ 
 
 	[["wt2"],["wc2"],["wf2"],["wk"],["wq"],["wf1"],["wc1"],["wt1"]],
@@ -17,51 +18,41 @@ var plateau = [
 	[["bp1"],["bp2"],["bp3"],["bp4"],["bp5"],["bp6"],["bp7"],["bp8"]],
 	[["bt1"],["bc1"],["bf1"],["bk"],["bq"],["bf2"],["bc2"],["bt2"]]];
 
-function getPieceColor  ( p )
-{
-		if ( p.match(/^w/gi)) return "w";
-		if ( p.match(/^b/gi)) return "b";
-		if ( p.match(/^free/gi)) return "n";
-}
-function getPieceType  ( p )
-{
-		if ( p.match(/^[wb]p[1-8]/gi)) return "pawn";
-		if ( p.match(/^[wb]t[1-2]/gi)) return "tower";
-		if ( p.match(/^[wb]c[1-2]/gi)) return "knight";
-		if ( p.match(/^[wb]f[1-2]/gi)) return "bishop";
-		if ( p.match(/^[wb]q/gi)) return "queen";
-		if ( p.match(/^[wb]k/gi)) return "king";		
-}
+
 function showPawnWay ( c, x, y )
 { //plateau[x][y]
-	if ( c=="w" )
+	if ( x > 0 && x < 7 )
 	{
-		if ( plateau[x+1][y] == "free")
+		if ( c=="w" )
 		{
-			addToWayables(x+1, y, 0);
-			if (x<2 && plateau[x+2][y] == "free") addToWayables(x+2, y, 1);
+			if ( plateau[x+1][y] == "free")
+			{
+				addToWayables(x+1, y, 0);
+				if (x<2 && plateau[x+2][y] == "free") addToWayables(x+2, y, 1);
+			}
+			var pce = plateau[x+1][y+1]+"";
+			if (y < 7 )
+			if ( ChessPiece(pce).color== "b") addToWayables(x+1, y+1, 0);
+			pce = plateau[x+1][y-1]+"";
+			if (y > 0 )
+			if ( ChessPiece(pce).color== "b") addToWayables(x+1, y-1, 0);
 		}
-		var pce = plateau[x+1][y+1]+"";
-		if (y < 7 )
-		if ( getPieceColor  ( pce )== "b") addToWayables(x+1, y+1, 0);
-		pce = plateau[x+1][y-1]+"";
-		if (y > 0 )
-		if ( getPieceColor  ( pce )== "b") addToWayables(x+1, y-1, 0);
-	}
-	else
-	{	
-		if ( plateau[x-1][y] == "free")
-		{
-			addToWayables(x-1, y, 0);
-			if (x>5 && plateau[x-2][y] == "free") addToWayables(x-2, y, 1);
+		else
+		{	
+			if ( plateau[x-1][y] == "free")
+			{
+				addToWayables(x-1, y, 0);
+				if (x>5 && plateau[x-2][y] == "free") addToWayables(x-2, y, 1);
+			}
+			var pce = plateau[x-1][y+1]+"";
+			if (y < 7 )
+			if ( ChessPiece(pce).color== "w") addToWayables(x-1, y+1, 0);
+			pce = plateau[x-1][y-1]+"";
+			if (y > 0 )
+			if ( ChessPiece(pce).color== "w") addToWayables(x-1, y-1, 0);
 		}
-		var pce = plateau[x-1][y+1]+"";
-		if (y < 7 )
-		if ( getPieceColor  ( pce )== "w") addToWayables(x-1, y+1, 0);
-		pce = plateau[x-1][y-1]+"";
-		if (y > 0 )
-		if ( getPieceColor  ( pce )== "w") addToWayables(x-1, y-1, 0);
 	}
+	else console.log ('position invalide');
 }
 
 function Log(s)
@@ -69,28 +60,207 @@ function Log(s)
 	console.log(s);
 }
 
-function getPiecePositionX  ( p )
+function ChessPiece  ( p )
 {
+
+	var px, py, ptype, pcolor;
 	for ( var j = 0 ;  j < 8 ; j++ )
 		for ( var i = 0 ; i < 8 ; i++ )
-			if ( plateau[i][j] == p ) return i;
+			if ( plateau[i][j] == p )
+			{
+				px = i;
+				py = j;
+			}
+	if ( p.match(/^[wb]p[1-8]/gi)) ptype = "pawn";
+	if ( p.match(/^[wb]t[1-2]/gi)) ptype = "tower";
+	if ( p.match(/^[wb]c[1-2]/gi)) ptype = "knight";
+	if ( p.match(/^[wb]f[1-2]/gi)) ptype = "bishop";
+	if ( p.match(/^[wb]q/gi)) ptype = "queen";
+	if ( p.match(/^[wb]k/gi)) ptype = "king";		
+	
+	if ( p.match(/^w/gi)) pcolor = "w";
+	if ( p.match(/^b/gi)) pcolor = "b";
+	if ( p.match(/^free/gi)) pcolor = "n";
+	
+	var hp0, hp1;
+	if ( py == 7 ) hp0 = 'a';
+	if ( py == 6 ) hp0 = 'b';
+	if ( py == 5 ) hp0 = 'c';
+	if ( py == 4 ) hp0 = 'd';
+	if ( py == 3 ) hp0 = 'e';
+	if ( py == 2 ) hp0 = 'f';
+	if ( py == 1 ) hp0 = 'g';
+	if ( py == 0 ) hp0 = 'h';
+
+	if ( px == 0 ) hp1 = '1';
+	if ( px == 1 ) hp1 = '2';
+	if ( px == 2 ) hp1 = '3';
+	if ( px == 3 ) hp1 = '4';
+	if ( px == 4 ) hp1 = '5';
+	if ( px == 5 ) hp1 = '6';
+	if ( px == 6 ) hp1 = '7';
+	if ( px == 7 ) hp1 = '8';
+	var bp = hp0+hp1;
+	
+	return {position:{x:px, y:py}, type:ptype, color:pcolor, boardposition : bp};
+	
 	
 
+}
+function XYToSquare (px, py)
+{
+	var hp0, hp1;
+	if ( py == 7 ) hp0 = 'a';
+	if ( py == 6 ) hp0 = 'b';
+	if ( py == 5 ) hp0 = 'c';
+	if ( py == 4 ) hp0 = 'd';
+	if ( py == 3 ) hp0 = 'e';
+	if ( py == 2 ) hp0 = 'f';
+	if ( py == 1 ) hp0 = 'g';
+	if ( py == 0 ) hp0 = 'h';
+
+	if ( px == 0 ) hp1 = '1';
+	if ( px == 1 ) hp1 = '2';
+	if ( px == 2 ) hp1 = '3';
+	if ( px == 3 ) hp1 = '4';
+	if ( px == 4 ) hp1 = '5';
+	if ( px == 5 ) hp1 = '6';
+	if ( px == 6 ) hp1 = '7';
+	if ( px == 7 ) hp1 = '8';
+	var bp = hp0+hp1;
+	
+	return bp;
+
 
 }
-function getPiecePositionY  ( p )
+function SquareToXY (s)
 {
-	for ( var i = 0 ; i < 8 ; i++ )
-		for ( var j = 0 ;  j < 8 ; j++ )
-			if ( plateau[i][j] == p ) return j;
+
+	var hp0 = s.slice(0, 1);
+	var hp1 = s.slice(1, 2);
+	
+	var px, py;
+	
+	Log (hp0+'-'+hp1);
+	if ( hp0 == 'a' ) py = 7;
+	if ( hp0 == 'b' ) py = 6;
+	if ( hp0 == 'c' ) py = 5;
+	if ( hp0 == 'd' ) py = 4;
+	if ( hp0 == 'e' ) py = 3;
+	if ( hp0 == 'f' ) py = 2;
+	if ( hp0 == 'g' ) py = 1;
+	if ( hp0 == 'h' ) py = 0;
+	
+	if ( hp1 == '1' ) px = 0;
+	if ( hp1 == '2' ) px = 1;
+	if ( hp1 == '3' ) px = 2;
+	if ( hp1 == '4' ) px = 3;
+	if ( hp1 == '5' ) px = 4;
+	if ( hp1 == '6' ) px = 5;
+	if ( hp1 == '7' ) px = 6;
+	if ( hp1 == '8' ) px = 7;
+	
+	return {x:px, y:py};
+	
+	/*
+	
+	if ( py == 7 ) hp0 = 'a';
+	if ( py == 6 ) hp0 = 'b';
+	if ( py == 5 ) hp0 = 'c';
+	if ( py == 4 ) hp0 = 'd';
+	if ( py == 3 ) hp0 = 'e';
+	if ( py == 2 ) hp0 = 'f';
+	if ( py == 1 ) hp0 = 'g';
+	if ( py == 0 ) hp0 = 'h';
+
+	if ( px == 0 ) hp1 = '1';
+	if ( px == 1 ) hp1 = '2';
+	if ( px == 2 ) hp1 = '3';
+	if ( px == 3 ) hp1 = '4';
+	if ( px == 4 ) hp1 = '5';
+	if ( px == 5 ) hp1 = '6';
+	if ( px == 6 ) hp1 = '7';
+	if ( px == 7 ) hp1 = '8';
+	var bp = hp0+hp1;
+	
+	return {x:px, y:py};
+	
+	*/
+
 }
+
 function showWay(p)
 {
-	if ( getPieceType  ( p ) == "pawn")
-	showPawnWay ( getPieceColor  ( p ), getPiecePositionX  ( p ), getPiecePositionY  ( p ) );
+/*
+	if (  ChessPiece(p).type == "pawn")
+	showPawnWay ( ChessPiece(p).color, ChessPiece(p).position.x, ChessPiece(p).position.y );
+	
+*/
+	
+	var moves = chess.moves({square: ChessPiece(p).boardposition});
+	console.log (ChessPiece(p).boardposition+' is allowed o go to :');
+	
 
+	for (var i = 0 ; i < moves.length ; i++)
+	{
+		Log (moves[i]);
+		Log (getTargetFromMove(moves[i]));
+		addToWayables(
+		
+		SquareToXY (getTargetFromMove(moves[i])).x, 
+		SquareToXY (getTargetFromMove(moves[i])).y, 
+		0
+		);	
+	}
 }
 $(window).on("load", function() {
+
+
+SquareToXY ('a2');
+
+
+console.log('a2 : '+SquareToXY ('a2').x+', '+ SquareToXY ('a2').y);
+/*
+
+	Log(ChessPiece("bf2").boardposition);
+	
+	
+
+  var moves = chess.moves({square: 'b8'});
+ 
+console.log(moves, moves.length);
+moves = chess.moves({square: 'b1'});
+ 
+console.log(moves, moves.length);
+
+
+moves = chess.moves();
+ 
+console.log(moves, moves.length);
+
+Log(chess.ascii());
+Log(chess.move({from: 'a2', to : 'a4'}));
+Log(chess.ascii());
+Log(chess.move({from: 'e7', to : 'e5'}));
+Log(chess.ascii());
+Log(chess.move({from: 'a4', to : 'a5'}));
+Log(chess.ascii());
+Log(chess.move({from: 'f8', to : 'b4'}));
+Log(chess.ascii());
+
+Log(chess.move({from: 'a5', to : 'a6'}));
+Log(chess.ascii());
+Log(chess.move({from: 'd2', to : 'd3'}));
+Log(chess.ascii());
+Log(chess.moves({square: 'd2'}));
+Log(chess.moves({square: 'b7'}));
+var mvmts = chess.moves({square: 'b7'})
+for (var i = 0 ; i < mvmts.length ; i++)
+{
+	Log (mvmts[i]);
+getTargetFromMove(mvmts[i]);
+}
+*/
 
 	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
@@ -187,14 +357,22 @@ console.log("capture");
 	
 		var mx = 0;
 		var my = 0;
-		mx = way [selectedway][0]-getPiecePositionX(selectedPiece);
-		my = way [selectedway][1]-getPiecePositionY(selectedPiece);
+		mx = way [selectedway][0]-ChessPiece(selectedPiece).position.x;
+		my = way [selectedway][1]-ChessPiece(selectedPiece).position.y;
+		
+		//chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(mx, my) });
+		console.log (chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(way [selectedway][0], way [selectedway][1]) }));
+		
+		
+		console.log ('move '+ChessPiece(selectedPiece).boardposition+' to '+XYToSquare(way [selectedway][0], way [selectedway][1]));
+		
 		MovePiece(selectedPiece, mx, -my);
 		
 		switchMaterial ("selectedPiece", selectedPiece );
 		selectedPiece = "none";
 		clearWayables();
 		viewChessBoard();
+		
 
 	});
 	$('#svg8').on('mousewheel', function(event) {
