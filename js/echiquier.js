@@ -244,12 +244,13 @@ $(window).on("load", function() {
 		my = way [selectedway][1]-ChessPiece(selectedPiece).position.y;
 		
 		//chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(mx, my) });
-		console.log (chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(way [selectedway][0], way [selectedway][1]) }));
+		var move = chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(way [selectedway][0], way [selectedway][1]) });
 		
 		
 		console.log ('move '+ChessPiece(selectedPiece).boardposition+' to '+XYToSquare(way [selectedway][0], way [selectedway][1]));
+		console.log (	move.flags );	
+		MovePiece(selectedPiece, mx, -my, move.flags);
 		
-		MovePiece(selectedPiece, mx, -my);
 		
 		switchMaterial ("selectedPiece", selectedPiece );
 		selectedPiece = "none";

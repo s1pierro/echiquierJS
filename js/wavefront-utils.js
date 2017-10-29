@@ -239,7 +239,7 @@ function addVtx ( v )
 
 }
 
-function MovePiece (p, x, y)
+function MovePiece (p, x, y, flags)
 {
 	vtxlist.splice(0, vtxlist.length );
 	vtxlist.nv = 0;
@@ -281,12 +281,43 @@ function MovePiece (p, x, y)
 			wvft.vertices[vtxlist[i]-1][0] =  1000;
 			wvft.vertices[vtxlist[i]-1][2] =  1000;
 		}
-		switchMaterial ( target, "dead");
-
-
+		
 	//$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 console.log("capture");
 	}
+		if ( flags == 'c')
+		{
+			switchMaterial ( target, "dead");
+			console.log('capture');
+		}
+		if ( flags == 'e')
+		{
+			console.log('en passant');
+			if ( newX > 4 )
+				target = plateau[newX-1][newY]+"";
+			else
+				target = plateau[newX+1][newY]+"";
+				vtxlist.splice(0, vtxlist.length );
+			vtxlist.nv = 0;
+			for ( var i = 0 ; i <  wvft.nt ; i++ )
+				if ( wvft.triangles[i].mat == target )
+				{
+					addVtx ( wvft.triangles[i][0] );
+					addVtx ( wvft.triangles[i][1] );
+					addVtx ( wvft.triangles[i][2] );
+		
+				}
+			for ( var i = 0 ; i < vtxlist.length ; i ++ )
+			{
+				wvft.vertices[vtxlist[i]-1][0] =  1000;
+				wvft.vertices[vtxlist[i]-1][2] =  1000;
+			}
+
+			switchMaterial ( target, "dead");
+		}
+
+
+
 $("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
 
