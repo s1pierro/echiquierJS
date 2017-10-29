@@ -19,41 +19,6 @@ var plateau = [
 	[["bt1"],["bc1"],["bf1"],["bk"],["bq"],["bf2"],["bc2"],["bt2"]]];
 
 
-function showPawnWay ( c, x, y )
-{ //plateau[x][y]
-	if ( x > 0 && x < 7 )
-	{
-		if ( c=="w" )
-		{
-			if ( plateau[x+1][y] == "free")
-			{
-				addToWayables(x+1, y, 0);
-				if (x<2 && plateau[x+2][y] == "free") addToWayables(x+2, y, 1);
-			}
-			var pce = plateau[x+1][y+1]+"";
-			if (y < 7 )
-			if ( ChessPiece(pce).color== "b") addToWayables(x+1, y+1, 0);
-			pce = plateau[x+1][y-1]+"";
-			if (y > 0 )
-			if ( ChessPiece(pce).color== "b") addToWayables(x+1, y-1, 0);
-		}
-		else
-		{	
-			if ( plateau[x-1][y] == "free")
-			{
-				addToWayables(x-1, y, 0);
-				if (x>5 && plateau[x-2][y] == "free") addToWayables(x-2, y, 1);
-			}
-			var pce = plateau[x-1][y+1]+"";
-			if (y < 7 )
-			if ( ChessPiece(pce).color== "w") addToWayables(x-1, y+1, 0);
-			pce = plateau[x-1][y-1]+"";
-			if (y > 0 )
-			if ( ChessPiece(pce).color== "w") addToWayables(x-1, y-1, 0);
-		}
-	}
-	else console.log ('position invalide');
-}
 
 function Log(s)
 {
@@ -103,9 +68,6 @@ function ChessPiece  ( p )
 	var bp = hp0+hp1;
 	
 	return {position:{x:px, y:py}, type:ptype, color:pcolor, boardposition : bp};
-	
-	
-
 }
 function XYToSquare (px, py)
 {
@@ -130,8 +92,6 @@ function XYToSquare (px, py)
 	var bp = hp0+hp1;
 	
 	return bp;
-
-
 }
 function SquareToXY (s)
 {
@@ -141,7 +101,6 @@ function SquareToXY (s)
 	
 	var px, py;
 	
-	Log (hp0+'-'+hp1);
 	if ( hp0 == 'a' ) py = 7;
 	if ( hp0 == 'b' ) py = 6;
 	if ( hp0 == 'c' ) py = 5;
@@ -161,42 +120,10 @@ function SquareToXY (s)
 	if ( hp1 == '8' ) px = 7;
 	
 	return {x:px, y:py};
-	
-	/*
-	
-	if ( py == 7 ) hp0 = 'a';
-	if ( py == 6 ) hp0 = 'b';
-	if ( py == 5 ) hp0 = 'c';
-	if ( py == 4 ) hp0 = 'd';
-	if ( py == 3 ) hp0 = 'e';
-	if ( py == 2 ) hp0 = 'f';
-	if ( py == 1 ) hp0 = 'g';
-	if ( py == 0 ) hp0 = 'h';
-
-	if ( px == 0 ) hp1 = '1';
-	if ( px == 1 ) hp1 = '2';
-	if ( px == 2 ) hp1 = '3';
-	if ( px == 3 ) hp1 = '4';
-	if ( px == 4 ) hp1 = '5';
-	if ( px == 5 ) hp1 = '6';
-	if ( px == 6 ) hp1 = '7';
-	if ( px == 7 ) hp1 = '8';
-	var bp = hp0+hp1;
-	
-	return {x:px, y:py};
-	
-	*/
-
 }
 
 function showWay(p)
 {
-/*
-	if (  ChessPiece(p).type == "pawn")
-	showPawnWay ( ChessPiece(p).color, ChessPiece(p).position.x, ChessPiece(p).position.y );
-	
-*/
-	
 	var moves = chess.moves({square: ChessPiece(p).boardposition});
 	console.log (ChessPiece(p).boardposition+' is allowed o go to :');
 	
@@ -216,56 +143,12 @@ function showWay(p)
 $(window).on("load", function() {
 
 
-SquareToXY ('a2');
-
-
-console.log('a2 : '+SquareToXY ('a2').x+', '+ SquareToXY ('a2').y);
-/*
-
-	Log(ChessPiece("bf2").boardposition);
-	
-	
-
-  var moves = chess.moves({square: 'b8'});
- 
-console.log(moves, moves.length);
-moves = chess.moves({square: 'b1'});
- 
-console.log(moves, moves.length);
-
-
-moves = chess.moves();
- 
-console.log(moves, moves.length);
-
-Log(chess.ascii());
-Log(chess.move({from: 'a2', to : 'a4'}));
-Log(chess.ascii());
-Log(chess.move({from: 'e7', to : 'e5'}));
-Log(chess.ascii());
-Log(chess.move({from: 'a4', to : 'a5'}));
-Log(chess.ascii());
-Log(chess.move({from: 'f8', to : 'b4'}));
-Log(chess.ascii());
-
-Log(chess.move({from: 'a5', to : 'a6'}));
-Log(chess.ascii());
-Log(chess.move({from: 'd2', to : 'd3'}));
-Log(chess.ascii());
-Log(chess.moves({square: 'd2'}));
-Log(chess.moves({square: 'b7'}));
-var mvmts = chess.moves({square: 'b7'})
-for (var i = 0 ; i < mvmts.length ; i++)
-{
-	Log (mvmts[i]);
-getTargetFromMove(mvmts[i]);
-}
-*/
 
 	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
 	$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
-console.log("capture");
+
+
 	disposeapplicationlayers();
 	showMenu();
 

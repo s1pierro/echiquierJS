@@ -299,8 +299,13 @@ $("body").append('<object id="capture" hidden type="audio/mpeg" width="100" heig
 
 function getTargetFromMove (fm)
 {
-
 	var f = fm;
+	if (f.includes('+') | f.includes('#')  )
+	{
+		f = f.slice (0, f.length-1);
+		console.log ('warning'+f);
+	}
+	
 	while ( f.length > 2 ) f = f.slice (1, f.length);
 	return f;
 
