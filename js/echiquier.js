@@ -2,7 +2,9 @@ var selectedfaces = [];
 var nselectedfaces = 0;
 var playspin;
 var spinning = true;
-
+		var mx = 0;
+		var my = 0;
+var selectedway;
 var nWay = 0;
 var selectedPiece = "none";
 var hand = "w";
@@ -24,7 +26,15 @@ function Log(s)
 {
 	console.log(s);
 }
-
+function getTargetFromMove (a)
+{
+	if (a.includes('+') | a.includes('#')  )
+		a = a.slice (0, a.length-1);
+	if (a.includes('=R') | a.includes('=Q') | a.includes('=R') | a.includes('=B') | a.includes('=N')  )
+		a = a.slice (0, a.length-2);
+	while ( a.length > 2 ) a = a.slice (1, a.length);
+	return a;
+}
 function ChessPiece  ( p )
 {
 
@@ -229,35 +239,37 @@ $(window).on("load", function() {
 		switchMaterial (m, "selectedPiece");
 		viewChessBoard();
 	});
+	$('body').on('click', '#QueenPromotion', function() {
+	
+		var move = chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(way [selectedway][0], way [selectedway][1]), promotion: 'q'  });
+		MovePiece(selectedPiece, mx, -my, move.flags);
+
+		switchMaterial ("selectedPiece", selectedPiece );
+		selectedPiece = "none";
+		clearWayables();
+		closePromotionUI();
+		viewChessBoard();
+	});
 	$('body').on('click', '.way', function() {
 
 		var tmp = $(this).attr('class');
 		
 		var tmp2 = tmp.match(/way\d+/)+"";
-		var selectedway = parseInt(tmp2.match(/\d+/))
-		console.log( tmp2);
-		console.log( 'way : '+selectedway );
+		selectedway = parseInt(tmp2.match(/\d+/))
 	
-		var mx = 0;
-		var my = 0;
 		mx = way [selectedway][0]-ChessPiece(selectedPiece).position.x;
 		my = way [selectedway][1]-ChessPiece(selectedPiece).position.y;
-		
-		//chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(mx, my) });
-		var move = chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(way [selectedway][0], way [selectedway][1]) });
-		
-		
-		console.log ('move '+ChessPiece(selectedPiece).boardposition+' to '+XYToSquare(way [selectedway][0], way [selectedway][1]));
-		console.log (	move.flags );	
-		MovePiece(selectedPiece, mx, -my, move.flags);
-		
-		
-		switchMaterial ("selectedPiece", selectedPiece );
-		selectedPiece = "none";
-		clearWayables();
-		viewChessBoard();
-		
-
+		if ( ( way [selectedway][0] == 7 | way [selectedway][0] == 0 ) && ChessPiece(selectedPiece).type == 'pawn' )
+			showPromotionUI ();
+		else
+		{
+			var move = chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(way [selectedway][0], way [selectedway][1])});
+			MovePiece(selectedPiece, mx, -my, move.flags);
+			switchMaterial ("selectedPiece", selectedPiece );
+			selectedPiece = "none";
+			clearWayables();
+			viewChessBoard();
+		}
 	});
 	$('#svg8').on('mousewheel', function(event) {
 

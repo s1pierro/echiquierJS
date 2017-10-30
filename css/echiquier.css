@@ -136,6 +136,41 @@ background-color: #9f9 !important;
 
 }
 
+#PromotionUI
+{
+
+	color: #444;
+	background-color: #fff !important;
+	opacity: 0.8;
+	position: fixed;
+	z-index: 1500;
+	overflow: scroll  !important;
+
+
+}
+
+#PromotionUI_content
+{
+	font: 400 Cantarel, sans-serif !important;
+	margin: 1em;
+	text-align: justify;
+	overflow: hidden  !important;
+
+	
+}
+#PromotionUI_content button
+{
+	font: 600 5vh Cantarel, sans-serif !important;
+	padding: 0.5em;
+	text-align: center;
+	
+}
+#PromotionUI_content button:hover
+{
+background-color: #9f9 !important;
+
+}
+
 
 
 .face

@@ -77,7 +77,6 @@ function readWavefrontFile(evt) {
 		alert("Failed to load file");
 	}
 }
-
 function parsewavefront(objText) {
 	var nv = 0;
 	var nt = 0;
@@ -94,7 +93,7 @@ function parsewavefront(objText) {
 			return vertices;
 		});
 	}
-			console.log('nv: '+nv);
+
 	if (triMatches) {
 		obj.triangles = triMatches.map(function(tri) {
 			nt++;
@@ -103,35 +102,28 @@ function parsewavefront(objText) {
 			return triangles;
 		});
 	}
-			console.log('nt: '+nt);
+
 	var mat = 'mat';
 	if (gMatches) {
 		gMatches.map(function(g) {
-		var inc = true;
-		var gMatch = g.split(" ");
-		
-		if (gMatch[0] == 'usemtl')
-		{
-			gMatch.shift();
-			inc = false;
-			mat = gMatch[0];
-			//console.log('group '+mat);
-		} else if (gMatch[0] == 'f')
-		{	
-			obj.triangles[ng].mat = mat;
-		//	console.log(ng+' : '+obj.triangles[ng].mat);
-			ng++;
-		}
-	
-		
-			
+			var inc = true;
+			var gMatch = g.split(" ");
+			if (gMatch[0] == 'usemtl')
+			{
+				gMatch.shift();
+				inc = false;
+				mat = gMatch[0];
+			} else if (gMatch[0] == 'f')
+			{	
+				obj.triangles[ng].mat = mat;
+				ng++;
+			}
 		});
 	}
 	genzmap(obj);
 	obj.nv = nv;
 	obj.nt = nt;
 	obj.ng = ng;
-	
 	return obj;
 }
 
@@ -151,17 +143,18 @@ function switchMaterial(target, value) {
 
 	for ( var j = 0 ; j < buffer.nt  ; j++)
 	if ( buffer.triangles[ j ].mat == target) buffer.triangles[ j ].mat = value;
-
 }
-
-
 function patchwvtf(o) {
 	for (var i = 0; i < o.nt ; i++)
 	for (var j = 0; j < 3 ; j++) 
 	o.triangles[i][j] = o.triangles[i][j] - 1;
 	
 }
-
+function genNormales(obj) {
+	for (var i = 0; i < obj.nt; i += 1) {
+		obj.triangles[i].n = normalisevertex(vectorproduct(vectfromvertices(obj.vertices[obj.triangles[i][0] - 1], obj.vertices[obj.triangles[i][2] - 1]).s, vectfromvertices(obj.vertices[obj.triangles[i][0] - 1], obj.vertices[obj.triangles[i][1] - 1]).s));
+	}
+}
 function gennormales() {
 	for (var i = 0; i < wvft.nt; i += 1) {
 		wvft.triangles[i].n = normalisevertex(vectorproduct(vectfromvertices(wvft.vertices[wvft.triangles[i][0] - 1], wvft.vertices[wvft.triangles[i][2] - 1]).s, vectfromvertices(wvft.vertices[wvft.triangles[i][0] - 1], wvft.vertices[wvft.triangles[i][1] - 1]).s));
@@ -172,19 +165,16 @@ function gennormalesboard() {
 		boardwvft.triangles[i].n = normalisevertex(vectorproduct(vectfromvertices(boardwvft.vertices[boardwvft.triangles[i][0] - 1], boardwvft.vertices[boardwvft.triangles[i][2] - 1]).s, vectfromvertices(boardwvft.vertices[boardwvft.triangles[i][0] - 1], boardwvft.vertices[boardwvft.triangles[i][1] - 1]).s));
 	}
 }
-function loadExempleWavefront() {
-			Log('getting wavefront demo');
-			var contents = $('#exemple').text();
-			Log('parsing wavefront demo');
+
+function loadWavefront(id) {
+	
+			Log('getting pieces wavefront');
+			var contents = $(id).text();
+			Log('parsing pieces wavefront');
 			var obj = parsewavefront(contents);
 			Log('creating buffer');
-			
-			wvft = $.extend(true, {}, obj);
-			gennormales();
-			//patchwvtf();
-			buffer = $.extend(true, {}, wvft);
-			//movetoviewable ();
-
+			genNormales(obj);			
+			return obj;
 }
 function loadPiecesWavefront() {
 			Log('getting pieces wavefront');
@@ -194,7 +184,7 @@ function loadPiecesWavefront() {
 			Log('creating buffer');
 			
 			wvft = $.extend(true, {}, obj);
-			gennormales();
+			genNormales(wvft);
 			//patchwvtf();
 			buffer = $.extend(true, {}, wvft);
 			//movetoviewable ();
@@ -208,21 +198,11 @@ function loadBoardWavefront() {
 			Log('creating buffer');
 			
 			boardwvft = $.extend(true, {}, obj);
-			gennormalesboard();
+			genNormales(boardwvft);
 			//patchwvtf();
 			boardbuffer = $.extend(true, {}, boardwvft);
 			//movetoviewable ();
 
-}
-function clearWayables ()
-{
-			var contents = $('#board').text();
-			var obj = parsewavefront(contents);
-			boardwvft = $.extend(true, {}, obj);
-			gennormalesboard();
-			boardbuffer = $.extend(true, {}, boardwvft);
-			nWay = 0;
-			way.splice(0, way.length );
 }
 function addVtx ( v )
 {
@@ -236,57 +216,62 @@ function addVtx ( v )
 		vtxlist.push(v);
 		vtxlist.nv++;
 	}
+}
+function addElementToList ( l, e )
+{
+	var exist = false;
+	for ( var i = 0 ; i < l.length ; i++ ) 	if ( l[i] == e ) exist = true;
+	if ( exist == false ) l.push(e);
 
+}
+
+function getVerticesByMaterial (m)
+{	
+
+	var tmp = [];
+	for ( var i = 0 ; i <  wvft.nt ; i++ )
+		if ( wvft.triangles[i].mat == m )
+		{
+			addElementToList ( tmp, wvft.triangles[i][0] );
+			addElementToList ( tmp, wvft.triangles[i][1] );
+			addElementToList ( tmp, wvft.triangles[i][2] );
+		}
+	return tmp;
+		
+}
+function clearWayables ()
+{
+			var contents = $('#board').text();
+			var obj = parsewavefront(contents);
+			boardwvft = $.extend(true, {}, obj);
+			gennormalesboard();
+			boardbuffer = $.extend(true, {}, boardwvft);
+			nWay = 0;
+			way.splice(0, way.length );
 }
 
 function MovePiece (p, x, y, flags)
 {
-	vtxlist.splice(0, vtxlist.length );
-	vtxlist.nv = 0;
-	for ( var i = 0 ; i <  wvft.nt ; i++ )
-		if ( wvft.triangles[i].mat == p )
-		{
-			addVtx ( wvft.triangles[i][0] );
-			addVtx ( wvft.triangles[i][1] );
-			addVtx ( wvft.triangles[i][2] );
-		
-		}
-	for ( var i = 0 ; i < vtxlist.length ; i ++ )
+	var tmp = getVerticesByMaterial (p);
+
+	for ( var i = 0 ; i < tmp.length ; i ++ )
 	{
-		wvft.vertices[vtxlist[i]-1][0] =  parseFloat(wvft.vertices[vtxlist[i]-1][0])+(y*64.0);
-		wvft.vertices[vtxlist[i]-1][2] =  parseFloat(wvft.vertices[vtxlist[i]-1][2])-(x*64.0);
-	}
+		wvft.vertices[tmp[i]-1][0] =  parseFloat(wvft.vertices[tmp[i]-1][0])+(y*64.0);
+		wvft.vertices[tmp[i]-1][2] =  parseFloat(wvft.vertices[tmp[i]-1][2])-(x*64.0);
+	}	
 
 	var newX = ChessPiece(p).position.x +x;
 	var newY = ChessPiece(p).position.y -y;
 	
 	plateau[ ChessPiece(p).position.x ][ ChessPiece(p).position.y ] = "free";
-	if (plateau[newX][newY] != "free" )
-	{
-		console.log ("capture");
+
 		var target = plateau[newX][newY]+"";
-		console.log ("capture "+ target);
-		vtxlist.splice(0, vtxlist.length );
-		vtxlist.nv = 0;
-		for ( var i = 0 ; i <  wvft.nt ; i++ )
-			if ( wvft.triangles[i].mat == target )
-			{
-				addVtx ( wvft.triangles[i][0] );
-				addVtx ( wvft.triangles[i][1] );
-				addVtx ( wvft.triangles[i][2] );
 		
-			}
-		for ( var i = 0 ; i < vtxlist.length ; i ++ )
+		if ( flags == 'c' | flags == 'cp' )
 		{
-			wvft.vertices[vtxlist[i]-1][0] =  1000;
-			wvft.vertices[vtxlist[i]-1][2] =  1000;
-		}
+			target = plateau[newX][newY]+"";
+			killPiece (plateau[newX][newY]);
 		
-	//$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
-console.log("capture");
-	}
-		if ( flags == 'c')
-		{
 			switchMaterial ( target, "dead");
 			console.log('capture');
 		}
@@ -297,56 +282,28 @@ console.log("capture");
 				target = plateau[newX-1][newY]+"";
 			else
 				target = plateau[newX+1][newY]+"";
-				vtxlist.splice(0, vtxlist.length );
-			vtxlist.nv = 0;
-			for ( var i = 0 ; i <  wvft.nt ; i++ )
-				if ( wvft.triangles[i].mat == target )
-				{
-					addVtx ( wvft.triangles[i][0] );
-					addVtx ( wvft.triangles[i][1] );
-					addVtx ( wvft.triangles[i][2] );
-		
-				}
-			for ( var i = 0 ; i < vtxlist.length ; i ++ )
-			{
-				wvft.vertices[vtxlist[i]-1][0] =  1000;
-				wvft.vertices[vtxlist[i]-1][2] =  1000;
-			}
-
-			switchMaterial ( target, "dead");
+			killPiece (target)
 		}
-
-
-
-$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
-
-
-
-	plateau[newX][newY] = p;
-		console.log(plateau.join('\n') + '\n\n');
-	//buffer = $.extend(true, {}, wvft);
+		$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
+		plateau[newX][newY] = p;
 
 }
-
-function getTargetFromMove (fm)
+function killPiece (p)
 {
-	var f = fm;
-	if (f.includes('+') | f.includes('#')  )
+
+	var x = 10;
+	var y = 10;
+
+	var tmp = getVerticesByMaterial (p);
+	for ( var i = 0 ; i < tmp.length ; i ++ )
 	{
-		f = f.slice (0, f.length-1);
-		console.log ('warning'+f);
+		wvft.vertices[tmp[i]-1][0] =  0;
+		wvft.vertices[tmp[i]-1][1] =  0;
+		wvft.vertices[tmp[i]-1][2] =  0;
 	}
-	
-	while ( f.length > 2 ) f = f.slice (1, f.length);
-	return f;
-
+	switchMaterial ( p, "dead");
 }
-function addToWayables_BoardPosition (pos)
-{
-	console.log(pos);
-	
 
-}
 function addToWayables (x, y, i)
 {
 	var xs = 224;
@@ -381,8 +338,7 @@ function addToWayables (x, y, i)
 
 	boardbuffer = $.extend(true, {}, boardwvft);
 	var tmp = [x, y]
-	way.push(tmp);
-	
+	way.push(tmp);	
 	nWay++;
 	//console.log(way.join('\n') + '\n\n');
 }
