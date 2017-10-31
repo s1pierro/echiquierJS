@@ -77,7 +77,7 @@ function ChessPiece  ( p )
 	if ( px == 7 ) hp1 = '8';
 	var bp = hp0+hp1;
 	
-	return {position:{x:px, y:py}, type:ptype, color:pcolor, boardposition : bp};
+	return {position:{x:px, y:py}, type:ptype, color:pcolor, square : bp};
 }
 function XYToSquare (px, py)
 {
@@ -134,8 +134,8 @@ function SquareToXY (s)
 
 function showWay(p)
 {
-	var moves = chess.moves({square: ChessPiece(p).boardposition});
-	console.log (ChessPiece(p).boardposition+' is allowed o go to :');
+	var moves = chess.moves({square: ChessPiece(p).square});
+	console.log (ChessPiece(p).square+' is allowed o go to :');
 	
 
 	for (var i = 0 ; i < moves.length ; i++)
@@ -150,10 +150,58 @@ function showWay(p)
 		);	
 	}
 }
+function generateMaterialsCSS (name, difuse, specular)
+{
+// TODO: generate material from parameters
+createClass('.selectedPiece',"fill: #33a !important;");
+createClass('.selectedPiece-step-11',"fill: #44b !important;");
+createClass('.selectedPiece-step-12',"fill: #55c !important;");
+createClass('.selectedPiece-step-13',"fill: #66d !important;");
+createClass('.selectedPiece-step-14',"fill: #7878e8 !important;");
+createClass('.selectedPiece-step-15',"fill: #88f !important;");
+
+}
+
+function showMenu ()
+{		
+	$('#UI').css('display' , 'block' );
+	$('#navhelper').css('display' , 'none' );
+	//$('#closelayer').css('display' , 'block' );
+}
+
+function closeMenu ()
+{
+	$('#UI').css('display' , 'none' );
+	$('#navhelper').css('display' , 'block' );
+	//$('#closelayer').css('display' , 'none' );
+}
+function showPromotionUI ()
+{		
+	$('#PromotionUI').css('display' , 'block' );
+	$('#navhelper').css('display' , 'none' );
+}
+function closePromotionUI ()
+{		
+	$('#PromotionUI').css('display' , 'none' );
+	$('#navhelper').css('display' , 'block' );
+}
+function createClass(name,rules){
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    document.getElementsByTagName('head')[0].appendChild(style);
+    if(!(style.sheet||{}).insertRule) 
+        (style.styleSheet || style.sheet).addRule(name, rules);
+    else
+        style.sheet.insertRule(name+"{"+rules+"}",0);
+}
+
+
+
+
+
 $(window).on("load", function() {
-
-
-
+		Log(document.getElementById("svg8").x);
+	generateMaterialsCSS ();
 	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
 	$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
@@ -241,7 +289,40 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#QueenPromotion', function() {
 	
-		var move = chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(way [selectedway][0], way [selectedway][1]), promotion: 'q'  });
+		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(way [selectedway][0], way [selectedway][1]), promotion: 'q'  });
+		MovePiece(selectedPiece, mx, -my, move.flags);
+
+		switchMaterial ("selectedPiece", selectedPiece );
+		selectedPiece = "none";
+		clearWayables();
+		closePromotionUI();
+		viewChessBoard();
+	});
+	$('body').on('click', '#RookPromotion', function() {
+	
+		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(way [selectedway][0], way [selectedway][1]), promotion: 'r'  });
+		MovePiece(selectedPiece, mx, -my, move.flags);
+
+		switchMaterial ("selectedPiece", selectedPiece );
+		selectedPiece = "none";
+		clearWayables();
+		closePromotionUI();
+		viewChessBoard();
+	});
+	$('body').on('click', '#KnightPromotion', function() {
+	
+		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(way [selectedway][0], way [selectedway][1]), promotion: 'n'  });
+		MovePiece(selectedPiece, mx, -my, move.flags);
+
+		switchMaterial ("selectedPiece", selectedPiece );
+		selectedPiece = "none";
+		clearWayables();
+		closePromotionUI();
+		viewChessBoard();
+	});
+	$('body').on('click', '#BishopPromotion', function() {
+	
+		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(way [selectedway][0], way [selectedway][1]), promotion: 'b'  });
 		MovePiece(selectedPiece, mx, -my, move.flags);
 
 		switchMaterial ("selectedPiece", selectedPiece );
@@ -263,7 +344,7 @@ $(window).on("load", function() {
 			showPromotionUI ();
 		else
 		{
-			var move = chess.move({ from: ChessPiece(selectedPiece).boardposition , to: XYToSquare(way [selectedway][0], way [selectedway][1])});
+			var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(way [selectedway][0], way [selectedway][1])});
 			MovePiece(selectedPiece, mx, -my, move.flags);
 			switchMaterial ("selectedPiece", selectedPiece );
 			selectedPiece = "none";
@@ -280,10 +361,10 @@ $(window).on("load", function() {
 		disposeapplicationlayers();
 	});
 	
-	playspin = setInterval(spinview, 1);
+	playspin = setInterval(spinview, 50);
 	
 	function spinview(){	
-
+		
 		 rotateViewZlock (0, increment*2, 0 );
 		 viewChessBoard()
 	 }

@@ -1,3 +1,4 @@
+var viewangle = 100;
 var fmat = genimat();
 var rmat = genimat();
 var tmat = gentmat(0, 0, 100);
@@ -138,9 +139,9 @@ function drawframe() {
 function drawpieces() {
 	
 
-	for (var i = 0; i < buffer.nv; i++)
+	for (var i = 0; i < wvft.nv; i++)
 		buffer.vertices[i] = applymatNpersp(fmat, wvft.vertices[i]);
-	for (var i = 0; i < buffer.nt; i++)
+	for (var i = 0; i < wvft.nt; i++)
 		buffer.triangles[i].n = applymat(rmat, wvft.triangles[i].n);
 	genzmap(buffer);
 
@@ -163,18 +164,18 @@ function drawpieces() {
 }
 function drawboard() {
 	
-	for (var i = 0; i < boardbuffer.nv; i++)
+	for (var i = 0; i < boardwvft.nv; i++)
 		boardbuffer.vertices[i] = applymatNpersp(fmat, boardwvft.vertices[i]);
    	container.innerHTML = "";
 	for (var j = 0; j < 76 ; j++) {
-		var n = boardbuffer.triangles[ j ].n[2];
+
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
     		svg.setAttribute('points',boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][1]);
 		svg.setAttribute('class', boardbuffer.triangles[ j ].mat);
 		container.appendChild(svg);
 	}
 	for (var j = 76; j < boardbuffer.nt ; j++) {
-		var n = boardbuffer.triangles[ j ].n[2];
+
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
     		svg.setAttribute('points',boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][1]);
 		svg.setAttribute('class', boardbuffer.triangles[ j ].mat+" way");
@@ -203,28 +204,4 @@ function disposeapplicationlayers (option)
  	$("#svg8").attr('viewBox', '-'+((zoom/2))+' -'+(zoom/ratio/2)+' '+zoom+' '+(zoom/ratio));
 
 }
-function showMenu ()
-{		
-	$('#UI').css('display' , 'block' );
-	$('#navhelper').css('display' , 'none' );
-	//$('#closelayer').css('display' , 'block' );
-}
-function showPromotionUI ()
-{		
-	$('#PromotionUI').css('display' , 'block' );
-	$('#navhelper').css('display' , 'none' );
-}
-function closePromotionUI ()
-{		
-	$('#PromotionUI').css('display' , 'none' );
-	$('#navhelper').css('display' , 'block' );
-}
-
-function closeMenu ()
-{
-	$('#UI').css('display' , 'none' );
-	$('#navhelper').css('display' , 'block' );
-	//$('#closelayer').css('display' , 'none' );
-}
-
 

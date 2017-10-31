@@ -13,11 +13,9 @@ var xmid = 0;
 var ymid = 0;
 var zmid = 0;
 	
-var viewangle = 100;
 
-	var vtxlist = [0, 1];
-	vtxlist.nv = 2;
-	
+
+
 function getfaceid(f) {
 	var tmp = $(f).attr('class');
 	var tmp2 = tmp.match(/fc\d+cf/) + '+';
@@ -185,10 +183,7 @@ function loadPiecesWavefront() {
 			
 			wvft = $.extend(true, {}, obj);
 			genNormales(wvft);
-			//patchwvtf();
 			buffer = $.extend(true, {}, wvft);
-			//movetoviewable ();
-
 }
 function loadBoardWavefront() {
 			Log('getting wavefront demo');
@@ -199,24 +194,9 @@ function loadBoardWavefront() {
 			
 			boardwvft = $.extend(true, {}, obj);
 			genNormales(boardwvft);
-			//patchwvtf();
 			boardbuffer = $.extend(true, {}, boardwvft);
-			//movetoviewable ();
+}
 
-}
-function addVtx ( v )
-{
-	var exist = false;
-	
-	for ( var i = 0 ; i < vtxlist.nv ; i++ )
-		if ( vtxlist[i] == v ) exist = true;
-		
-	if ( exist == false )
-	{
-		vtxlist.push(v);
-		vtxlist.nv++;
-	}
-}
 function addElementToList ( l, e )
 {
 	var exist = false;
@@ -239,6 +219,44 @@ function getVerticesByMaterial (m)
 	return tmp;
 		
 }
+function translateVertices (vertices, x, y, z)
+{
+	for ( var i = 0 ; i < vertices.length ; i ++ )
+	{
+		wvft.vertices[vertices[i]-1][0] =  parseFloat(wvft.vertices[vertices[i]-1][0])+x;
+		wvft.vertices[vertices[i]-1][1] =  parseFloat(wvft.vertices[vertices[i]-1][1])+y;
+		wvft.vertices[vertices[i]-1][2] =  parseFloat(wvft.vertices[vertices[i]-1][2])+z;
+	}	
+}
+function translateVerticesByMaterial (material, x, y, z)
+{
+	var vertices = getVerticesByMaterial (material);
+	translateVertices (vertices, x, y, z);
+}
+function deleteVerticeFromWavefront (v)
+{
+	for ( var i = 0 ; i < wvft.nt ; i++ )
+		for ( var j = 0 ; j < 3 ; j++ )
+			if (wvft.triangles[i][j] > v)
+				wvft.triangles[i][j] = wvft.triangles[i][j]-1;
+	wvft.vertices.splice(v, 1);
+}
+function deleteTrianglesFromWavefrontByMaterial (m)
+{
+	for ( var i = 0 ; i < wvft.nt ; i++ )
+		if (wvft.triangles[i].mat == m )
+		{
+			wvft.triangles.splice(i, 1);
+			wvft.nt--;
+			i--;
+		}
+	var vertices = getVerticesByMaterial (m);
+	for ( var i = 0 ; i < vertices.length ; i++ )
+		deleteVerticeFromWavefront (vertices[i]);
+	buffer = $.extend(true, {}, wvft);
+}
+
+// chessboard function
 function clearWayables ()
 {
 			var contents = $('#board').text();
@@ -252,56 +270,46 @@ function clearWayables ()
 
 function MovePiece (p, x, y, flags)
 {
-	var tmp = getVerticesByMaterial (p);
-
-	for ( var i = 0 ; i < tmp.length ; i ++ )
+	var q = 0.01;
+	for ( var i = 0 ; i < 100 ; i++ )
 	{
-		wvft.vertices[tmp[i]-1][0] =  parseFloat(wvft.vertices[tmp[i]-1][0])+(y*64.0);
-		wvft.vertices[tmp[i]-1][2] =  parseFloat(wvft.vertices[tmp[i]-1][2])-(x*64.0);
-	}	
+		translateVerticesByMaterial (p, y*64.0*q, 0, -x*64.0*q);
+
+	}
+	
+	//var q = 1;
+	//translateVerticesByMaterial (p, y*64.0*q, 0, -x*64.0*q);
+	
 
 	var newX = ChessPiece(p).position.x +x;
 	var newY = ChessPiece(p).position.y -y;
 	
 	plateau[ ChessPiece(p).position.x ][ ChessPiece(p).position.y ] = "free";
 
-		var target = plateau[newX][newY]+"";
-		
-		if ( flags == 'c' | flags == 'cp' )
-		{
-			target = plateau[newX][newY]+"";
-			killPiece (plateau[newX][newY]);
-		
-			switchMaterial ( target, "dead");
-			console.log('capture');
-		}
-		if ( flags == 'e')
-		{
-			console.log('en passant');
-			if ( newX > 4 )
-				target = plateau[newX-1][newY]+"";
-			else
-				target = plateau[newX+1][newY]+"";
-			killPiece (target)
-		}
-		$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
-		plateau[newX][newY] = p;
+	var target = plateau[newX][newY]+"";
+	
+	if ( flags == 'c' | flags == 'cp' )
+	{
+		target = plateau[newX][newY]+"";
+		killPiece (plateau[newX][newY]);
+		switchMaterial ( target, "dead");
+	}
+	if ( flags == 'e')
+	{
+		if ( newX > 4 )
+			target = plateau[newX-1][newY]+"";
+		else
+			target = plateau[newX+1][newY]+"";
+		killPiece (target)
+	}
+	$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
+	plateau[newX][newY] = p;
 
 }
 function killPiece (p)
 {
 
-	var x = 10;
-	var y = 10;
-
-	var tmp = getVerticesByMaterial (p);
-	for ( var i = 0 ; i < tmp.length ; i ++ )
-	{
-		wvft.vertices[tmp[i]-1][0] =  0;
-		wvft.vertices[tmp[i]-1][1] =  0;
-		wvft.vertices[tmp[i]-1][2] =  0;
-	}
-	switchMaterial ( p, "dead");
+	deleteTrianglesFromWavefrontByMaterial (p);
 }
 
 function addToWayables (x, y, i)
@@ -340,5 +348,5 @@ function addToWayables (x, y, i)
 	var tmp = [x, y]
 	way.push(tmp);	
 	nWay++;
-	//console.log(way.join('\n') + '\n\n');
+
 }
