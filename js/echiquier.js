@@ -185,6 +185,28 @@ function closePromotionUI ()
 	$('#PromotionUI').css('display' , 'none' );
 	$('#navhelper').css('display' , 'block' );
 }
+function disposeapplicationlayers (option)
+{		
+	var w = $(window).width();
+	var h = $(window).height();
+	var zoom = 80;
+	var ratio = w/h;
+ 	
+	$('#UI').css({'top' : 0 });
+	$('#UI').css({'left' : 0 });
+	$('#UI').css({'width' : w });
+	$('#UI').css({'height' : h });
+
+	$('#PromotionUI').css({'top' : 0 });
+	$('#PromotionUI').css({'left' : 0 });
+	$('#PromotionUI').css({'width' : w });
+	$('#PromotionUI').css({'height' : h });
+
+	$('#svg8').attr('width', w);
+	$('#svg8').attr('height', h);	
+ 	$("#svg8").attr('viewBox', '-'+((zoom/2))+' -'+(zoom/ratio/2)+' '+zoom+' '+(zoom/ratio));
+}
+
 function createClass(name,rules){
     var style = document.createElement('style');
     style.type = 'text/css';
