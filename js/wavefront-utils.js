@@ -145,8 +145,8 @@ function genzmap(obj) {
 }
 function switchMaterial(target, value) {
 
-	for ( var j = 0 ; j < buffer.triangles.length  ; j++)
-	if ( buffer.triangles[ j ].mat == target) buffer.triangles[ j ].mat = value;
+	for ( var j = 0 ; j < wvft.triangles.length  ; j++)
+	if ( wvft.triangles[ j ].mat == target) wvft.triangles[ j ].mat = value;
 }
 function patchwvtf(o) {
 	for (var i = 0; i < o.triangles.length ; i++)
