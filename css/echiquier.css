@@ -17,15 +17,21 @@ a
 	text-decoration: none;
 }
 
-h1
-{	font: 600 1.6em Cantarel, sans-serif;
-	line-height: 1.3;
+h1{
+	font: 600 1.6em Cantarel, sans-serif;
 	color: #434343;
 }
 h2
 {	font: 400 1.5em Cantarel, sans-serif;
-	line-height: 1.3;
+	border: solid black;
+	border-width: 0px 0px 1px 0px;
+	padding-bottom: 1em;
 	color: #434343;
+	margin-top: 2em;
+}
+h2:first-child {
+
+	margin-top: 0em;
 }
 h3
 {	font: 400 1.3em Cantarel, sans-serif;
@@ -55,7 +61,7 @@ p
 }
 #navhelper a {
 	color: #333;
-	font: 800 1.4em Cantarel, sans-serif !important;
+	font: 800 1.3em Cantarel, sans-serif !important;
 	text-decoration: none;
 	cursor: pointer;
 }
@@ -97,10 +103,13 @@ p
 	padding: 0px;
 
 }
+
+
 #UI_content {
 	font: 400 1.2em Cantarel, sans-serif !important;
 	margin: 0em;
 	padding: 1em;
+
 	color: #444;
 	background-color: #fff !important;
 	opacity: 0.8;
@@ -135,6 +144,15 @@ p
 #PromotionUI_content button:hover {
 	background-color: #9f9 !important;
 }
+@media screen and (min-width: 1000px) {
+
+	#UI_content {
+		padding-left: 20vh;
+		padding-right: 20vh;
+	}
+}
+
+/* 3D renderer */
 
 .HARDbrown {
 	fill: #773800 !important;
@@ -170,31 +188,12 @@ p
 .way {
 	fill: #0d0 !important;
 	opacity: 0.5 !important;
-}/*
-.selectedPiece {
-	fill: #33a !important;
-	opacity: 1.0 !important;
 }
-.selectedPiece-step-11 {
-	fill: #88f !important;
-}
-.selectedPiece-step-12 {
-	fill: #88f !important;
-}
-.selectedPiece-step-13 {
-	fill: #88f !important;
-}
-.selectedPiece-step-14 {
-	fill: #88f !important;
-}
-.selectedPiece-step-15 {
-	fill: #88f !important;
-}*/
 .wp1, .wp2, .wp3, .wp4, .wp5, .wp6, .wp7, .wp8, .wk, .wq, .wc1, .wc2, .wt1, .wt2, .wf1, .wf2 {
-	fill: #aa8 !important;
-	opacity: 1.0 !important;
-	stroke: none !important;
-	stroke-width: 0.07px !important;
+	fill: rgb(200, 200, 200) ;
+	opacity: 1.0 ;
+	stroke: none ;
+	stroke-width: 0.07px ;
 }
 .wp1-step-10, .wp2-step-10, .wp3-step-10, .wp4-step-10, .wp5-step-10, .wp6-step-10, .wp7-step-10, .wp8-step-10, .wk-step-10, .wq-step-10, .wc1-step-10, .wc2-step-10, .wt1-step-10, .wt2-step-10, .wf1-step-10, .wf2-step-10 {
 	fill: #d8d8b8 !important;
@@ -215,37 +214,10 @@ p
 	fill: #ffffdf !important;
 }
 .bp1, .bp2, .bp3, .bp4, .bp5, .bp6, .bp7, .bp8, .bk, .bq, .bc1, .bc2, .bt1, .bt2, .bf1, .bf2 {
-	fill: #000 !important;
-	opacity: 1.0 !important;
-	stroke: none !important;
-}/*
-.bp1-step-1, .bp2-step-1, .bp3-step-1, .bp4-step-1, .bp5-step-1, .bp6-step-1, .bp7-step-1, .bp1-step-1, .bk-step-1, .bq-step-1, .bc1-step-1, .bc2-step-1, .bt1-step-1, .bt2-step-1, .bf1-step-1, .bf2-step-1 {
-	fill: #434343 !important
+	fill: #000;
+	opacity: 1.0;
+	stroke: none;
 }
-.bp1-step-2, .bp2-step-2, .bp3-step-2, .bp4-step-2, .bp5-step-2, .bp6-step-2, .bp7-step-2, .bp2-step-2, .bk-step-2, .bq-step-2, .bc1-step-2, .bc2-step-2, .bt1-step-2, .bt2-step-2, .bf1-step-2, .bf2-step-2 {
-	fill: #464646 !important
-}
-.bp1-step-3, .bp2-step-3, .bp3-step-3, .bp4-step-3, .bp5-step-3, .bp6-step-3, .bp7-step-3, .bp3-step-3, .bk-step-3, .bq-step-3, .bc1-step-3, .bc2-step-3, .bt1-step-3, .bt2-step-3, .bf1-step-3, .bf2-step-3 {
-	fill: #494949 !important
-}
-.bp1-step-4, .bp2-step-4, .bp3-step-4, .bp4-step-4, .bp5-step-4, .bp6-step-4, .bp7-step-4, .bp4-step-4, .bk-step-4, .bq-step-4, .bc1-step-4, .bc2-step-4, .bt1-step-4, .bt2-step-4, .bf1-step-4, .bf2-step-4 {
-	fill: #4c4c4c !important
-}
-.bp1-step-5, .bp2-step-5, .bp3-step-5, .bp4-step-5, .bp5-step-5, .bp6-step-5, .bp7-step-5, .bp5-step-5, .bk-step-5, .bq-step-5, .bc1-step-5, .bc2-step-5, .bt1-step-5, .bt2-step-5, .bf1-step-5, .bf2-step-5 {
-	fill: #4f4f4f !important
-}
-.bp1-step-6, .bp2-step-6, .bp3-step-6, .bp4-step-6, .bp5-step-6, .bp6-step-6, .bp7-step-6, .bp6-step-6, .bk-step-6, .bq-step-6, .bc1-step-6, .bc2-step-6, .bt1-step-6, .bt2-step-6, .bf1-step-6, .bf2-step-6 {
-	fill: #535353 !important
-}
-.bp1-step-7, .bp2-step-7, .bp3-step-7, .bp4-step-7, .bp5-step-7, .bp6-step-7, .bp7-step-7, .bp7-step-7, .bk-step-7, .bq-step-7, .bc1-step-7, .bc2-step-7, .bt1-step-7, .bt2-step-7, .bf1-step-7, .bf2-step-7 {
-	fill: #565656 !important
-}
-.bp1-step-8, .bp2-step-8, .bp3-step-8, .bp4-step-8, .bp5-step-8, .bp6-step-8, .bp7-step-8, .bp8-step-8, .bk-step-8, .bq-step-8, .bc1-step-8, .bc2-step-8, .bt1-step-8, .bt2-step-8, .bf1-step-8, .bf2-step-8 {
-	fill: #595959 !important
-}
-.bp1-step-9, .bp2-step-9, .bp3-step-9, .bp4-step-9, .bp5-step-9, .bp6-step-9, .bp7-step-9, .bp8-step-9, .bk-step-9, .bq-step-9, .bc1-step-9, .bc2-step-9, .bt1-step-9, .bt2-step-9, .bf1-step-9, .bf2-step-9 {
-	fill: #5c5c5c !important
-}*/
 .bp1-step-10, .bp2-step-10, .bp3-step-10, .bp4-step-10, .bp5-step-10, .bp6-step-10, .bp7-step-10, .bp8-step-10, .bk-step-10, .bq-step-10, .bc1-step-10, .bc2-step-10, .bt1-step-10, .bt2-step-10, .bf1-step-10, .bf2-step-10 {
 	fill: #5f5f5f !important
 }
@@ -263,9 +235,4 @@ p
 }
 .bp1-step-15, .bp2-step-15, .bp3-step-15, .bp4-step-15, .bp5-step-15, .bp6-step-15, .bp7-step-15, .bp8-step-15, .bk-step-15, .bq-step-15, .bc1-step-15, .bc2-step-15, .bt1-step-15, .bt2-step-15, .bf1-step-15, .bf2-step-15 {
 	fill: #999 !important
-}
-.testingstyle
-{	fill: #d0d !important;
-	opacity: 1.0 !important;
-	stroke: none !important;
 }
