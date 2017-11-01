@@ -10,6 +10,26 @@ body {
 	margin: 0px !important;
 	overflow: hidden;
 }
+h1
+{	font: 700 1.5em Cantarel, sans-serif;
+	line-height: 1.3;
+	color: #434343;
+}
+h2
+{	font: 600 1.4em Cantarel, sans-serif;
+	line-height: 1.3;
+	color: #434343;
+}
+h3
+{	font: 400 1.3em Cantarel, sans-serif;
+	line-height: 1.3;
+	color: #434343;
+}
+h4
+{	font: 600 1.2em Cantarel, sans-serif;
+	line-height: 1.3;
+	color: #434343;
+}
 #navhelper {
 	color: #000;
 	font: 400 1.3em Cantarel, sans-serif !important;
@@ -42,7 +62,7 @@ body {
 }
 #close-footer {
 	color: #000;
-	font: 800 1.3 Cantarel, sans-serif !important;
+	font: 800 1.3em Cantarel, sans-serif !important;
 	background-color: #fff !important;
 	opacity: 1.0;
 	padding: 0em;
