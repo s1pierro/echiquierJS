@@ -237,7 +237,7 @@ $(window).on("load", function() {
 /*	wvft = $.extend(true, {},loadWavefront('#pieces'));
 	buffer = $.extend(true, {}, wvft);
 */	//loadPiecesWavefront();
-	wvft = loadWavefrontFromHTLM('#pieces');
+	wvft = $.extend(true, {}, loadWavefrontFromHTLM('#pieces'));
 	buffer = $.extend(true, {}, wvft);
 	boardwvft = loadWavefrontFromHTLM('#board');
 	boardbuffer = $.extend(true, {}, boardwvft);

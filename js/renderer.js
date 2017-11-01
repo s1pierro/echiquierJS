@@ -58,15 +58,15 @@ function drawpieces() {
 		buffer.triangles[i].n = applymat(rmat, wvft.triangles[i].n);
 	genzmap(buffer);
 
-	for (var i = 0; i < wvft.triangles.length ; i++)
+	for (var i = 0; i < buffer.triangles.length ; i++)
 	{
 		var j = buffer.zmap[i][0];
 		var n = buffer.triangles[ j ].n[2];
 		
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
-		var trigon = buffer.vertices[ wvft.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ wvft.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ wvft.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ wvft.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ wvft.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ wvft.triangles[ j ][2] - 1 ][1]
-      		svg.setAttribute('points',trigon);
-      		svg.setAttribute('class', 'fc'+j+'cf face '+wvft.triangles[ j ].mat+'-step-'+Math.floor(n*16)+' '+wvft.triangles[ j ].mat);
+		var trigon = buffer.vertices[ buffer.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][1]
+      svg.setAttribute('points',trigon);
+      svg.setAttribute('class', 'fc'+j+'cf face '+buffer.triangles[ j ].mat+'-step-'+Math.floor(n*16)+' '+buffer.triangles[ j ].mat);
 		container.appendChild(svg);
 
 	}
