@@ -30,6 +30,11 @@ h4
 	line-height: 1.3;
 	color: #434343;
 }
+p
+{
+	text-align: justify;
+
+}
 #navhelper {
 	color: #000;
 	font: 400 1.3em Cantarel, sans-serif !important;
@@ -91,7 +96,7 @@ h4
 #UI_content {
 	font: 400 1.2em Cantarel, sans-serif !important;
 	margin: 1em;
-	text-align: justify;
+
 	overflow: hidden !important;
 }
 #UI_content button {
