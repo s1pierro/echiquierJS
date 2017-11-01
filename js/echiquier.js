@@ -150,6 +150,18 @@ function showWay(p)
 		);	
 	}
 }
+function createClass(name,rules){
+    var style = document.createElement('style');
+    style.type = 'text/css';
+    document.getElementsByTagName('head')[0].appendChild(style);
+    if(!(style.sheet||{}).insertRule) 
+        (style.styleSheet || style.sheet).addRule(name, rules);
+    else
+        style.sheet.insertRule(name+"{"+rules+"}",0);
+}
+
+
+
 function generateMaterialsCSS (name, difuse, specular)
 {
 // TODO: generate material from parameters
@@ -207,22 +219,12 @@ function disposeapplicationlayers (option)
  	$("#svg8").attr('viewBox', '-'+((zoom/2))+' -'+(zoom/ratio/2)+' '+zoom+' '+(zoom/ratio));
 }
 
-function createClass(name,rules){
-    var style = document.createElement('style');
-    style.type = 'text/css';
-    document.getElementsByTagName('head')[0].appendChild(style);
-    if(!(style.sheet||{}).insertRule) 
-        (style.styleSheet || style.sheet).addRule(name, rules);
-    else
-        style.sheet.insertRule(name+"{"+rules+"}",0);
-}
-
-
 
 
 
 $(window).on("load", function() {
-		Log(document.getElementById("svg8").x);
+
+
 	generateMaterialsCSS ();
 	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
@@ -232,8 +234,16 @@ $(window).on("load", function() {
 	disposeapplicationlayers();
 	showMenu();
 
-	loadPiecesWavefront();
-	loadBoardWavefront();
+/*	wvft = $.extend(true, {},loadWavefront('#pieces'));
+	buffer = $.extend(true, {}, wvft);
+*/	//loadPiecesWavefront();
+	wvft = loadWavefrontFromHTLM('#pieces');
+	buffer = $.extend(true, {}, wvft);
+	boardwvft = loadWavefrontFromHTLM('#board');
+	boardbuffer = $.extend(true, {}, boardwvft);
+	
+	//loadBoardWavefront();
+	
 	initViewZlock();
 	
 	

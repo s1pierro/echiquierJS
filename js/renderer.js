@@ -52,21 +52,21 @@ function genfmat() {
 function drawpieces() {
 	
 
-	for (var i = 0; i < wvft.nv; i++)
+	for (var i = 0; i < wvft.vertices.length; i++)
 		buffer.vertices[i] = applymatNpersp(fmat, wvft.vertices[i]);
-	for (var i = 0; i < wvft.nt; i++)
+	for (var i = 0; i < wvft.triangles.length; i++)
 		buffer.triangles[i].n = applymat(rmat, wvft.triangles[i].n);
 	genzmap(buffer);
 
-	for (var i = 0; i < buffer.nt ; i++)
+	for (var i = 0; i < wvft.triangles.length ; i++)
 	{
 		var j = buffer.zmap[i][0];
 		var n = buffer.triangles[ j ].n[2];
 		
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
-		var trigon = buffer.vertices[ buffer.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][1]
-      svg.setAttribute('points',trigon);
-      svg.setAttribute('class', 'fc'+j+'cf face '+buffer.triangles[ j ].mat+'-step-'+Math.floor(n*16)+' '+buffer.triangles[ j ].mat);
+		var trigon = buffer.vertices[ wvft.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ wvft.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ wvft.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ wvft.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ wvft.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ wvft.triangles[ j ][2] - 1 ][1]
+      		svg.setAttribute('points',trigon);
+      		svg.setAttribute('class', 'fc'+j+'cf face '+wvft.triangles[ j ].mat+'-step-'+Math.floor(n*16)+' '+wvft.triangles[ j ].mat);
 		container.appendChild(svg);
 
 	}
@@ -77,7 +77,7 @@ function drawpieces() {
 }
 function drawboard() {
 	
-	for (var i = 0; i < boardwvft.nv; i++)
+	for (var i = 0; i < boardwvft.vertices.length; i++)
 		boardbuffer.vertices[i] = applymatNpersp(fmat, boardwvft.vertices[i]);
    	container.innerHTML = "";
 	for (var j = 0; j < 76 ; j++) {
@@ -87,7 +87,7 @@ function drawboard() {
 		svg.setAttribute('class', boardbuffer.triangles[ j ].mat);
 		container.appendChild(svg);
 	}
-	for (var j = 76; j < boardbuffer.nt ; j++) {
+	for (var j = 76; j < boardbuffer.triangles.length ; j++) {
 
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
     		svg.setAttribute('points',boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][1]);

@@ -1,7 +1,7 @@
 
 var wvft = {};
 var way = [[0, 0][0, 0]];
-var nWay = 0;
+
 var buffer = {};
 var boardwvft = {};
 var boardbuffer = {};
@@ -12,8 +12,6 @@ var zmax = 0, zmin = 0;
 var xmid = 0;
 var ymid = 0;
 var zmid = 0;
-	
-
 
 
 function getfaceid(f) {
@@ -119,16 +117,24 @@ function parsewavefront(objText) {
 		});
 	}
 	genzmap(obj);
-	obj.nv = nv;
-	obj.nt = nt;
+
 	obj.ng = ng;
 	return obj;
 }
 
+function loadWavefrontFromHTLM(id) {
+	
+			Log('getting wavefront from '+id);
+			var contents = $(id).text();
+			var obj = parsewavefront(contents);
+			Log('loaded : '+obj.vertices.length+' vertices, '+obj.triangles.length+' triangles');
+			genNormales(obj);			
+			return obj;
+}
 function genzmap(obj) {
 	var tmp = new Array();
 
-	for (var i = 0; i < obj.nt; i++) {
+	for (var i = 0; i < obj.triangles.length; i++) {
 		var tmp2 = new Array(i, (obj.vertices[obj.triangles[i][2] - 1][2] + obj.vertices[obj.triangles[i][1] - 1][2] + obj.vertices[obj.triangles[i][0] - 1][2]));
 		tmp.push(tmp2);
 	}
@@ -139,62 +145,19 @@ function genzmap(obj) {
 }
 function switchMaterial(target, value) {
 
-	for ( var j = 0 ; j < buffer.nt  ; j++)
+	for ( var j = 0 ; j < buffer.triangles.length  ; j++)
 	if ( buffer.triangles[ j ].mat == target) buffer.triangles[ j ].mat = value;
 }
 function patchwvtf(o) {
-	for (var i = 0; i < o.nt ; i++)
+	for (var i = 0; i < o.triangles.length ; i++)
 	for (var j = 0; j < 3 ; j++) 
 	o.triangles[i][j] = o.triangles[i][j] - 1;
 	
 }
 function genNormales(obj) {
-	for (var i = 0; i < obj.nt; i += 1) {
+	for (var i = 0; i < obj.triangles.length; i += 1) {
 		obj.triangles[i].n = normalisevertex(vectorproduct(vectfromvertices(obj.vertices[obj.triangles[i][0] - 1], obj.vertices[obj.triangles[i][2] - 1]).s, vectfromvertices(obj.vertices[obj.triangles[i][0] - 1], obj.vertices[obj.triangles[i][1] - 1]).s));
 	}
-}
-function gennormales() {
-	for (var i = 0; i < wvft.nt; i += 1) {
-		wvft.triangles[i].n = normalisevertex(vectorproduct(vectfromvertices(wvft.vertices[wvft.triangles[i][0] - 1], wvft.vertices[wvft.triangles[i][2] - 1]).s, vectfromvertices(wvft.vertices[wvft.triangles[i][0] - 1], wvft.vertices[wvft.triangles[i][1] - 1]).s));
-	}
-}
-function gennormalesboard() {
-	for (var i = 0; i < boardwvft.nt; i += 1) {
-		boardwvft.triangles[i].n = normalisevertex(vectorproduct(vectfromvertices(boardwvft.vertices[boardwvft.triangles[i][0] - 1], boardwvft.vertices[boardwvft.triangles[i][2] - 1]).s, vectfromvertices(boardwvft.vertices[boardwvft.triangles[i][0] - 1], boardwvft.vertices[boardwvft.triangles[i][1] - 1]).s));
-	}
-}
-
-function loadWavefront(id) {
-	
-			Log('getting pieces wavefront');
-			var contents = $(id).text();
-			Log('parsing pieces wavefront');
-			var obj = parsewavefront(contents);
-			Log('creating buffer');
-			genNormales(obj);			
-			return obj;
-}
-function loadPiecesWavefront() {
-			Log('getting pieces wavefront');
-			var contents = $('#pieces').text();
-			Log('parsing pieces wavefront');
-			var obj = parsewavefront(contents);
-			Log('creating buffer');
-			
-			wvft = $.extend(true, {}, obj);
-			genNormales(wvft);
-			buffer = $.extend(true, {}, wvft);
-}
-function loadBoardWavefront() {
-			Log('getting wavefront demo');
-			var contents = $('#board').text();
-			Log('parsing wavefront demo');
-			var obj = parsewavefront(contents);
-			Log('creating buffer');
-			
-			boardwvft = $.extend(true, {}, obj);
-			genNormales(boardwvft);
-			boardbuffer = $.extend(true, {}, boardwvft);
 }
 
 function addElementToList ( l, e )
@@ -209,7 +172,7 @@ function getVerticesByMaterial (m)
 {	
 
 	var tmp = [];
-	for ( var i = 0 ; i <  wvft.nt ; i++ )
+	for ( var i = 0 ; i <  wvft.triangles.length ; i++ )
 		if ( wvft.triangles[i].mat == m )
 		{
 			addElementToList ( tmp, wvft.triangles[i][0] );
@@ -235,7 +198,7 @@ function translateVerticesByMaterial (material, x, y, z)
 }
 function deleteVerticeFromWavefront (v)
 {
-	for ( var i = 0 ; i < wvft.nt ; i++ )
+	for ( var i = 0 ; i < wvft.triangles.length ; i++ )
 		for ( var j = 0 ; j < 3 ; j++ )
 			if (wvft.triangles[i][j] > v)
 				wvft.triangles[i][j] = wvft.triangles[i][j]-1;
@@ -243,11 +206,11 @@ function deleteVerticeFromWavefront (v)
 }
 function deleteTrianglesFromWavefrontByMaterial (m)
 {
-	for ( var i = 0 ; i < wvft.nt ; i++ )
+	for ( var i = 0 ; i < wvft.triangles.length ; i++ )
 		if (wvft.triangles[i].mat == m )
 		{
 			wvft.triangles.splice(i, 1);
-			wvft.nt--;
+			//wvft.nt--;
 			i--;
 		}
 	var vertices = getVerticesByMaterial (m);
@@ -255,34 +218,31 @@ function deleteTrianglesFromWavefrontByMaterial (m)
 		deleteVerticeFromWavefront (vertices[i]);
 	buffer = $.extend(true, {}, wvft);
 }
+
+
 function mergeWavefronts (a, b)
 {
-
-console.log ('struct : '+wvft);
 	var inc = a.vertices.length;
 	for ( var i = 0 ; i < b.vertices.length ; i++ )
 		a.vertices.push (b.vertices[i]);
 	for ( var i = 0 ; i < b.triangles.length ; i++ )
 	{
-	var tmp = [b.triangles[i][0]+inc,b.triangles[i][1]+inc,b.triangles[i][2]+inc ];
-	tmp.n = [0, 0, 0];
-	tmp.mat = b.triangles[i].mat;
+		var tmp = [b.triangles[i][0]+inc,b.triangles[i][1]+inc,b.triangles[i][2]+inc ];
+		tmp.n = [0, 0, 0];
+		tmp.mat = b.triangles[i].mat;
 		a.triangles.push(tmp);
-	
+		
 	}
 	// WTF'n here !!!???
+
 		
 }
 // chessboard function
 function clearWayables ()
 {
-			var contents = $('#board').text();
-			var obj = parsewavefront(contents);
-			boardwvft = $.extend(true, {}, obj);
-			gennormalesboard();
-			boardbuffer = $.extend(true, {}, boardwvft);
-			nWay = 0;
-			way.splice(0, way.length );
+	boardwvft = loadWavefrontFromHTLM('#board');
+	boardbuffer = $.extend(true, {}, boardwvft);	
+	way.splice(0, way.length );
 }
 
 function MovePiece (p, x, y, flags)
@@ -336,6 +296,7 @@ function addToWayables (x, y, i)
 	var mrg = 32;
 	var stp = 64;
 	var z = 0;
+	var tmp = boardwvft.vertices.length;
 	var v = [-y*stp-mrg+xs, z, -x*stp-mrg+ys ];
 	boardwvft.vertices.push(v);
 	var v1 = [-y*stp-mrg+xs, z, -x*stp+mrg+ys ];
@@ -345,25 +306,20 @@ function addToWayables (x, y, i)
 	var v3 = [-y*stp+mrg+xs, z, -x*stp-mrg+ys ];
 	boardwvft.vertices.push(v3);
 
-	var tmp = boardwvft.nv;
 	var t = [tmp+2, tmp+4, tmp+1];
 	boardwvft.triangles.push(t);
 	t = [tmp+4, tmp+2, tmp+3];
 	boardwvft.triangles.push(t);
 
-	boardwvft.nt = boardwvft.nt+2;
-	boardwvft.nv = boardwvft.nv+4;
-
 	var n = [ 0.0, 1.0, 0.0];
-	boardwvft.triangles[boardwvft.nt-1].mat = "way"+nWay;
-	boardwvft.triangles[boardwvft.nt-1].n=n;
-	boardwvft.triangles[boardwvft.nt-2].mat = "way"+nWay;
-	boardwvft.triangles[boardwvft.nt-2].n=n;
-	
+	boardwvft.triangles[boardwvft.triangles.length-1].mat = "way"+way.length;
+	boardwvft.triangles[boardwvft.triangles.length-1].n=n;
+	boardwvft.triangles[boardwvft.triangles.length-2].mat = "way"+way.length;
+	boardwvft.triangles[boardwvft.triangles.length-2].n=n;
 
 	boardbuffer = $.extend(true, {}, boardwvft);
 	var tmp = [x, y]
 	way.push(tmp);	
-	nWay++;
+
 
 }
