@@ -58,7 +58,7 @@ function drawpieces() {
 		buffer.triangles[i].n = applymat(rmat, wvft.triangles[i].n);
 	genzmap(buffer);
 
-	for (var i = 0; i < buffer.triangles.length ; i++)
+	for (var i = 0; i < wvft.triangles.length ; i++)
 	{
 		var j = buffer.zmap[i][0];
 		var n = buffer.triangles[ j ].n[2];

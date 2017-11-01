@@ -19,6 +19,10 @@ var plateau = [
 	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
 	[["bp1"],["bp2"],["bp3"],["bp4"],["bp5"],["bp6"],["bp7"],["bp8"]],
 	[["bt1"],["bc1"],["bf1"],["bk"],["bq"],["bf2"],["bc2"],["bt2"]]];
+	
+var audiostart = new Audio('chesssound/start1.ogg');
+var audiomove = new Audio('chesssound/move1.ogg');
+var audiocapture = new Audio('chesssound/capture1.ogg');
 
 
 
@@ -226,10 +230,8 @@ $(window).on("load", function() {
 
 
 	generateMaterialsCSS ();
-	$("body").append('<object hidden type="audio/mpeg" width="100" height="40" data="chesssound/start1.ogg"><param name="filename" value="chesssound/start1.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 
-	$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/capture2.ogg"><param name="filename" value="chesssound/capture2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
-
+	audiostart.play();
 
 	disposeapplicationlayers();
 	showMenu();
@@ -364,7 +366,7 @@ $(window).on("load", function() {
 		viewChessBoard();
 	});
 	$('body').on('click', '.way', function() {
-
+		//audiomove.play();
 		var tmp = $(this).attr('class');
 		
 		var tmp2 = tmp.match(/way\d+/)+"";

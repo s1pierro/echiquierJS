@@ -275,12 +275,15 @@ function MovePiece (p, x, y, flags)
 	plateau[ ChessPiece(p).position.x ][ ChessPiece(p).position.y ] = "free";
 
 	var target = plateau[newX][newY]+"";
+		//audiomove.play();
 	
 	if ( flags == 'c' | flags == 'cp' )
 	{
+		audiomove.play();
 		target = plateau[newX][newY]+"";
 		killPiece (plateau[newX][newY]);
 		switchMaterial ( target, "dead");
+	//	audiocapture.play();
 	}
 	if ( flags == 'e')
 	{
@@ -289,8 +292,8 @@ function MovePiece (p, x, y, flags)
 		else
 			target = plateau[newX+1][newY]+"";
 		killPiece (target)
+		audiocapture.play();
 	}
-	$("body").append('<object id="capture" hidden type="audio/mpeg" width="100" height="40" data="chesssound/mov2.ogg"><param name="filename" value="chesssound/mov2.ogg" /><param name="autostart" value="true" /><param name="loop" value="false" /></object>');
 	plateau[newX][newY] = p;
 
 }
