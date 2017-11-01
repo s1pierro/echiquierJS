@@ -255,7 +255,24 @@ function deleteTrianglesFromWavefrontByMaterial (m)
 		deleteVerticeFromWavefront (vertices[i]);
 	buffer = $.extend(true, {}, wvft);
 }
+function mergeWavefronts (a, b)
+{
 
+console.log ('struct : '+wvft);
+	var inc = a.vertices.length;
+	for ( var i = 0 ; i < b.vertices.length ; i++ )
+		a.vertices.push (b.vertices[i]);
+	for ( var i = 0 ; i < b.triangles.length ; i++ )
+	{
+	var tmp = [b.triangles[i][0]+inc,b.triangles[i][1]+inc,b.triangles[i][2]+inc ];
+	tmp.n = [0, 0, 0];
+	tmp.mat = b.triangles[i].mat;
+		a.triangles.push(tmp);
+	
+	}
+	// WTF'n here !!!???
+		
+}
 // chessboard function
 function clearWayables ()
 {
