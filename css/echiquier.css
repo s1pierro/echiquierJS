@@ -93,7 +93,7 @@ p
 #UI {
 	position: fixed;
 	z-index: 1100;
-	overflow: scroll !important;
+	overflow: auto !important;
 	padding: 0px;
 
 }
@@ -104,7 +104,7 @@ p
 	color: #444;
 	background-color: #fff !important;
 	opacity: 0.8;
-	overflow: hidden !important;
+	/*overflow: hidden !important;*/
 }
 #UI_content button {
 	font: 600 1.2em Cantarel, sans-serif !important;
