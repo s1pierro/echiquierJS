@@ -1,12 +1,10 @@
 @font-face {
 	font-family: 'Cantarel';
-	/*a name to be used later*/
 	src: url('../font/Cantarell-Regular.ttf');
-	/*URL to font*/
 }
 body {
-	font: 400 1.4em Cantarel, sans-serif;
-	line-height: 1.6;
+	font: 400 1.2em Cantarel, sans-serif;
+	line-height: 1.3;
 	color: #434343;
 	background-color: #fff;
 	margin: 0px !important;
@@ -14,8 +12,8 @@ body {
 }
 #navhelper {
 	color: #000;
-	font: 400 4vh Cantarel, sans-serif !important;
-	line-height: 5vh;
+	font: 400 1.3em Cantarel, sans-serif !important;
+	line-height: 1.4;
 	background-color: #0000 !important;
 	opacity: 0.8;
 	position: fixed;
@@ -26,13 +24,12 @@ body {
 }
 #navhelper a {
 	color: #333;
-	font: 800 5vh Cantarel, sans-serif !important;
+	font: 800 1.4em Cantarel, sans-serif !important;
 	text-decoration: none;
 	cursor: pointer;
 }
 #navhelper a:hover {
 	color: #fff;
-	font: 800 5vh Cantarel, sans-serif !important;
 	text-decoration: none;
 }
 .right-side {
@@ -45,7 +42,7 @@ body {
 }
 #close-footer {
 	color: #000;
-	font: 800 5vh Cantarel, sans-serif !important;
+	font: 800 1.3 Cantarel, sans-serif !important;
 	background-color: #fff !important;
 	opacity: 1.0;
 	padding: 0em;
@@ -72,13 +69,13 @@ body {
 	overflow: scroll !important;
 }
 #UI_content {
-	font: 400 5vh Cantarel, sans-serif !important;
+	font: 400 1.2em Cantarel, sans-serif !important;
 	margin: 1em;
 	text-align: justify;
 	overflow: hidden !important;
 }
 #UI_content button {
-	font: 600 5vh Cantarel, sans-serif !important;
+	font: 600 1.2em Cantarel, sans-serif !important;
 	padding: 0.5em;
 	text-align: center;
 }
@@ -94,13 +91,12 @@ body {
 	overflow: scroll !important;
 }
 #PromotionUI_content {
-	font: 400 5vh Cantarel, sans-serif !important;
 	margin: 1em;
 	text-align: justify;
 	overflow: hidden !important;
 }
 #PromotionUI_content button {
-	font: 600 5vh Cantarel, sans-serif !important;
+	font: 600 1.2em Cantarel, sans-serif !important;
 	padding: 0.5em;
 	text-align: center;
 }
