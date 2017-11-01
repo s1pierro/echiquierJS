@@ -1,4 +1,4 @@
-## Echiquier js 
+# Echiquier js 
 
 [L'échquier de s1pierro](https://s1pierro.github.io/echiquierJS/echiquier.html)
 
