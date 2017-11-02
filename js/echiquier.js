@@ -384,7 +384,7 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#QueenPromotion', function() {
 	
-		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(SquareToXY(way2[selectedway].square).x, SquareToXY(way2[selectedway].square).y), promotion: 'q'  });
+		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: way2[selectedway].square, promotion: 'q'  });
 		MovePiece(selectedPiece, mx, -my, move.flags);
 
 		switchMaterial ("selectedPiece", selectedPiece );
@@ -408,7 +408,7 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#RookPromotion', function() {
 	
-		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(SquareToXY(way2[selectedway].square).x, SquareToXY(way2[selectedway].square).y), promotion: 'r'  });
+		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: way2[selectedway].square, promotion: 'r'  });
 		MovePiece(selectedPiece, mx, -my, move.flags);
 
 		switchMaterial ("selectedPiece", selectedPiece );
@@ -431,7 +431,7 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#KnightPromotion', function() {
 	
-		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(SquareToXY(way2[selectedway].square).x, SquareToXY(way2[selectedway].square).y), promotion: 'n'  });
+		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: way2[selectedway].square, promotion: 'n'  });
 		MovePiece(selectedPiece, mx, -my, move.flags);
 
 		switchMaterial ("selectedPiece", selectedPiece );
@@ -454,7 +454,7 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#BishopPromotion', function() {
 	
-		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(SquareToXY(way2[selectedway].square).x, SquareToXY(way2[selectedway].square).y), promotion: 'b'  });
+		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: way2[selectedway].square, promotion: 'b'  });
 		MovePiece(selectedPiece, mx, -my, move.flags);
 
 		switchMaterial ("selectedPiece", selectedPiece );
@@ -481,10 +481,7 @@ $(window).on("load", function() {
 		
 		var tmp2 = tmp.match(/way\d+/)+"";
 		selectedway = parseInt(tmp2.match(/\d+/))
-	
-//		mx = way [selectedway][0]-ChessPiece(selectedPiece).position.x;
-//		my = way [selectedway][1]-ChessPiece(selectedPiece).position.y;
-		
+
 		mx = SquareToXY(way2 [selectedway].square).x-ChessPiece(selectedPiece).position.x;
 		my = SquareToXY(way2 [selectedway].square).y-ChessPiece(selectedPiece).position.y;
 		

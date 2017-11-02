@@ -125,8 +125,7 @@ p
 	background-color: #9f9 !important;
 }
 #PromotionUI {
-	color: #444;
-	background-color: #fff !important;
+	background-color: #000 !important;
 	opacity: 0.8;
 	position: fixed;
 	z-index: 1500;

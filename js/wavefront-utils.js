@@ -1,8 +1,7 @@
 
 var wvft = {};
-var way = [[0, 0][0, 0]];
 var way2 = [{square:'a4', move:'a4'}, {square:'a3', move:'a3'}];
-console.log('way[0]:'+way2[0].square);
+
 
 
 var nWay = 0;
@@ -270,8 +269,8 @@ function clearWayables ()
 	boardwvft = loadWavefrontFromHTLM('#board');
 	boardbuffer = $.extend(true, {}, boardwvft);
 			
-			nWay = 0;
-			way.splice(0, way.length );
+
+			way2.splice(0, way2.length );
 }
 
 function MovePiece (p, x, y, flags)
@@ -350,9 +349,7 @@ function addToWayables (x, y, i)
 	boardwvft.triangles[boardwvft.nt-2].n=n;
 	
 	boardbuffer = $.extend(true, {}, boardwvft);
-/*	var tmp = [x, y]
-	way.push(tmp);	
-	nWay++;*/
+
 }
 function putPieceWavefrontToSquare (pieceWavefront, square, id)
 {
