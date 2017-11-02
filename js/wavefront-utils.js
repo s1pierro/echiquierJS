@@ -344,20 +344,18 @@ function addToWayables (x, y, i)
 	boardwvft.nv = boardwvft.nv+4;
 
 	var n = [ 0.0, 1.0, 0.0];
-	boardwvft.triangles[boardwvft.nt-1].mat = "way"+nWay;
+	boardwvft.triangles[boardwvft.nt-1].mat = "way"+way2.length;
 	boardwvft.triangles[boardwvft.nt-1].n=n;
-	boardwvft.triangles[boardwvft.nt-2].mat = "way"+nWay;
+	boardwvft.triangles[boardwvft.nt-2].mat = "way"+way2.length;
 	boardwvft.triangles[boardwvft.nt-2].n=n;
 	
 	boardbuffer = $.extend(true, {}, boardwvft);
-	var tmp = [x, y]
+/*	var tmp = [x, y]
 	way.push(tmp);	
-	nWay++;
+	nWay++;*/
 }
 function putPieceWavefrontToSquare (pieceWavefront, square, id)
 {
-
-
 	var xs = 224;
 	var ys = 224;
 	var mrg = 0;
@@ -366,9 +364,6 @@ function putPieceWavefrontToSquare (pieceWavefront, square, id)
 	
 	var x = SquareToXY (square).x;
 	var y = SquareToXY (square).y;
-	
 
 	translateWavefront (pieceWavefront, -y*stp-mrg+xs, z, -x*stp-mrg+ys );
-
-
 }
