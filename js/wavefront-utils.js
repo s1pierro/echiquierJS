@@ -137,7 +137,7 @@ function loadWavefrontFromHTLM(id) {
 function genzmap(obj) {
 	var tmp = new Array();
 
-	for (var i = 0; i < obj.nt; i++) {
+	for (var i = 0; i < obj.triangles.length; i++) {
 		var tmp2 = new Array(i, (obj.vertices[obj.triangles[i][2] - 1][2] + obj.vertices[obj.triangles[i][1] - 1][2] + obj.vertices[obj.triangles[i][0] - 1][2]));
 		tmp.push(tmp2);
 	}
@@ -145,6 +145,11 @@ function genzmap(obj) {
 	obj.zmap.sort(function(a, b) {
 		return b[1] - a[1];
 	});
+}
+function switchMaterialInWavefront(w, target, value) {
+
+	for ( var j = 0 ; j < w.nt  ; j++)
+	if ( w.triangles[ j ].mat == target) w.triangles[ j ].mat = value;
 }
 function switchMaterial(target, value) {
 
@@ -194,6 +199,18 @@ function translateVertices (vertices, x, y, z)
 		wvft.vertices[vertices[i]-1][2] =  parseFloat(wvft.vertices[vertices[i]-1][2])+z;
 	}	
 }
+function translateWavefront (wavefront, x, y, z)
+{
+
+	for ( var i = 0 ; i < wavefront.vertices.length ; i ++ )
+	{
+
+		wavefront.vertices[i][0] =  parseFloat(wavefront.vertices[i][0])+x;
+		wavefront.vertices[i][1] =  parseFloat(wavefront.vertices[i][1])+y;
+		wavefront.vertices[i][2] =  parseFloat(wavefront.vertices[i][2])+z;
+
+	}	
+}
 function translateVerticesByMaterial (material, x, y, z)
 {
 	var vertices = getVerticesByMaterial (material);
@@ -223,23 +240,20 @@ function deleteTrianglesFromWavefrontByMaterial (m)
 }
 function mergeWavefronts (a, b)
 {
-
-
 	var inc = a.vertices.length;
 	for ( var i = 0 ; i < b.vertices.length ; i++ )
 		a.vertices.push (b.vertices[i]);
 	for ( var i = 0 ; i < b.triangles.length ; i++ )
 	{
-		var tmp = [b.triangles[i][0]+inc,b.triangles[i][1]+inc,b.triangles[i][2]+inc ];
-		tmp.n = [0, 0, 0];
+		var tmp = [parseInt(b.triangles[i][0])+inc,parseInt(b.triangles[i][1])+inc,parseInt(b.triangles[i][2])+inc ];
+		tmp.n = b.triangles[i].n;
 		tmp.mat = b.triangles[i].mat;
 		a.triangles.push(tmp);
 		
 	}
-	// WTF'n here !!!???
 	a.nt = a.nt+b.nt;
 	a.nv = a.nv+b.nv;
-		
+
 }
 // chessboard function
 function clearWayables ()
@@ -295,14 +309,11 @@ function MovePiece (p, x, y, flags)
 		audiocapture.play();
 	}
 	plateau[newX][newY] = p;
-
 }
 function killPiece (p)
 {
-
 	deleteTrianglesFromWavefrontByMaterial (p);
 }
-
 function addToWayables (x, y, i)
 {
 	var xs = 224;
@@ -334,10 +345,26 @@ function addToWayables (x, y, i)
 	boardwvft.triangles[boardwvft.nt-2].mat = "way"+nWay;
 	boardwvft.triangles[boardwvft.nt-2].n=n;
 	
-
 	boardbuffer = $.extend(true, {}, boardwvft);
 	var tmp = [x, y]
 	way.push(tmp);	
 	nWay++;
+}
+function putPieceWavefrontToSquare (pieceWavefront, square, id)
+{
+
+
+	var xs = 224;
+	var ys = 224;
+	var mrg = 0;
+	var stp = 64;
+	var z = 0;
+	
+	var x = SquareToXY (square).x;
+	var y = SquareToXY (square).y;
+	
+
+	translateWavefront (pieceWavefront, -y*stp-mrg+xs, z, -x*stp-mrg+ys );
+
 
 }

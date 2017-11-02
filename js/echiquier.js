@@ -4,6 +4,15 @@ var playspin;
 var spinning = true;
 		var mx = 0;
 		var my = 0;
+		
+var Pwvft = {};
+var Rwvft = {};
+var Nwvft = {};
+var Bwvft = {};
+var Qwvft = {};
+var Kwvft = {};
+var TMPwvft = {};
+
 var selectedway;
 var nWay = 0;
 var selectedPiece = "none";
@@ -234,16 +243,17 @@ $(window).on("load", function() {
 	audiostart.play();
 
 	disposeapplicationlayers();
-	showMenu();
+//	showMenu();
 
-/*	wvft = $.extend(true, {},loadWavefront('#pieces'));
-	buffer = $.extend(true, {}, wvft);
-*/	//loadPiecesWavefront();
-	wvft = $.extend(true, {}, loadWavefrontFromHTLM('#pieces'));
-	buffer = $.extend(true, {}, wvft);
-	boardwvft = loadWavefrontFromHTLM('#board');
-	boardbuffer = $.extend(true, {}, boardwvft);
+	Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop'));
+	Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#rook'));
+	Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#knight'));
+	Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#pawn'));
+	Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#queen'));
+	Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#king'));
+
 	
+	createBlankGame ();
 	//loadBoardWavefront();
 	
 	initViewZlock();
@@ -395,7 +405,7 @@ $(window).on("load", function() {
 		disposeapplicationlayers();
 	});
 	
-	playspin = setInterval(spinview, 50);
+//	playspin = setInterval(spinview, 50);
 	
 	function spinview(){	
 		
@@ -404,3 +414,171 @@ $(window).on("load", function() {
 	 }
 
 });
+function createBlankGame ()
+{
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'a2')
+	wvft = $.extend(true, {}, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'wp1');
+
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'b2')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'wp2');
+
+	
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'c2')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'wp3');
+
+	
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'd2')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'wp4');
+
+	
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'e2')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'wp5');
+
+	
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'f2')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'wp6');
+
+	
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'g2')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'wp7');
+
+	
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'h2')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'wp8');
+
+	
+	
+	TMPwvft = $.extend(true, {}, Bwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'c1')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'bishop', 'wf1');
+
+	
+	TMPwvft = $.extend(true, {}, Bwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'f1')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'bishop', 'wf2');
+
+
+	TMPwvft = $.extend(true, {}, 	Nwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'b1')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'knight', 'wc1');
+
+	TMPwvft = $.extend(true, {}, 	Nwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'g1')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'knight', 'wc2');
+	buffer = $.extend(true, {}, wvft);
+
+	TMPwvft = $.extend(true, {}, 	Rwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'a1')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'rook', 'wt1');
+
+	TMPwvft = $.extend(true, {}, 	Rwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'h1')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'rook', 'wt2');
+	buffer = $.extend(true, {}, wvft);
+
+	TMPwvft = $.extend(true, {}, 	Kwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'e1')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'king', 'wk');
+
+	TMPwvft = $.extend(true, {}, 	Qwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'd1')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'queen', 'wq');
+	
+	
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'h7')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'bp1');
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'g7')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'bp2');
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'f7')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'bp3');
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'e7')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'bp4');
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'd7')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'bp5');
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'c7')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'bp6');
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'b7')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'bp7');
+	TMPwvft = $.extend(true, {}, Pwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'a7')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'pawn', 'bp8');
+
+	TMPwvft = $.extend(true, {}, 	Kwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'e8')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'king', 'bk');
+	TMPwvft = $.extend(true, {}, 	Qwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'd8')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'queen', 'bq');
+
+	TMPwvft = $.extend(true, {}, 	Bwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'f8')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'bishop', 'bf1');
+	TMPwvft = $.extend(true, {}, 	Bwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'c8')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'bishop', 'bf2');
+
+	TMPwvft = $.extend(true, {}, 	Nwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'g8')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'knight', 'bc1');
+	TMPwvft = $.extend(true, {}, 	Nwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'b8')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'knight', 'bc2');
+
+	TMPwvft = $.extend(true, {}, 	Rwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'h8')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'rook', 'bt1');
+	TMPwvft = $.extend(true, {}, 	Rwvft);
+	putPieceWavefrontToSquare (TMPwvft, 'a8')
+	mergeWavefronts (wvft, TMPwvft);
+	switchMaterialInWavefront(wvft, 'rook', 'bt2');
+	
+	buffer = $.extend(true, {}, wvft);
+	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board'));
+	boardbuffer = $.extend(true, {}, boardwvft);
+}	
