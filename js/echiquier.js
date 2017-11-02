@@ -207,9 +207,11 @@ function createClass(name,rules){
 function generateMaterialsCSS (name, difuse)
 {
 // TODO: generate material from parameters
-console.log('## generate css rules for '+'.'+name+'-step-11');
+
 createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
-console.log('fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
+
+/*
+On Chromium web browser, framerate is dramaticaly affected by css rules quantity.
 
 createClass('.'+name+'-step-0', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-1', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
@@ -220,21 +222,13 @@ createClass('.'+name+'-step-5', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math
 createClass('.'+name+'-step-6', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-7', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-8', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');*/
 createClass('.'+name+'-step-10', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-11', 'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
 createClass('.'+name+'-step-12', 'fill: rgb('+Math.floor( difuse.r*0.7)+', '+Math.floor( difuse.g*0.7)+', '+Math.floor( difuse.b*0.7)+');');
 createClass('.'+name+'-step-13', 'fill: rgb('+Math.floor( difuse.r*0.8)+', '+Math.floor( difuse.g*0.8)+', '+Math.floor( difuse.b*0.8)+');');
 createClass('.'+name+'-step-14', 'fill: rgb('+Math.floor( difuse.r*0.9)+', '+Math.floor( difuse.g*0.9)+', '+Math.floor( difuse.b*0.9)+');');
 createClass('.'+name+'-step-15', 'fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');');
-
-
-
-createClass('.'+name+'-step-11','fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.v*0.6)+', '+Math.floor( difuse.b*0.6)+');');
-createClass('.'+name+'-step-12','fill: rgb('+Math.floor( difuse.r*0.7)+', '+Math.floor( difuse.v*0.7)+', '+Math.floor( difuse.b*0.7)+');');
-createClass('.'+name+'-step-13','fill: rgb('+Math.floor( difuse.r*0.8)+', '+Math.floor( difuse.v*0.8)+', '+Math.floor( difuse.b*0.8)+');');
-createClass('.'+name+'-step-14','fill: rgb('+Math.floor( difuse.r*0.9)+', '+Math.floor( difuse.v*0.9)+', '+Math.floor( difuse.b*0.9)+');');
-createClass('.'+name+'-step-15','fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.v)+', '+Math.floor( difuse.b)+');');
 
 }
 
@@ -282,10 +276,6 @@ function disposeapplicationlayers (option)
 	$('#svg8').attr('height', h);	
  	$("#svg8").attr('viewBox', '-'+((zoom/2))+' -'+(zoom/ratio/2)+' '+zoom+' '+(zoom/ratio));
 }
-
-
-
-
 $(window).on("load", function() {
 
 
@@ -491,11 +481,9 @@ $(window).on("load", function() {
 			showPromotionUI ();
 		else
 		{
-			//var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(way [selectedway][0], way [selectedway][1])});
-			
 			var move = chess.move(way2[selectedway].move);
 
-			if (move.flags == 'q')
+			if (move.flags == 'q') 
 			{
 				if (chess.turn() == 'b')
 				{
@@ -519,6 +507,7 @@ $(window).on("load", function() {
 				
 				}
 			}
+			
 			MovePiece(selectedPiece, mx, -my, move.flags);
 			switchMaterial ("selectedPiece", selectedPiece );
 			selectedPiece = "none";
@@ -548,24 +537,28 @@ function createBlankGame ()
 {
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'a2')
 	wvft = $.extend(true, {}, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp1');
 	generateMaterialsCSS ('wp1', white);
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'b2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp2');
 	generateMaterialsCSS ('wp2', white);
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'c2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp3');
 	generateMaterialsCSS ('wp3', white);
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'd2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp4');
@@ -573,6 +566,7 @@ function createBlankGame ()
 
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'e2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp5');
@@ -580,6 +574,7 @@ function createBlankGame ()
 
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'f2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp6');
@@ -587,6 +582,7 @@ function createBlankGame ()
 
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'g2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp7');
@@ -594,6 +590,7 @@ function createBlankGame ()
 
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'h2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp8');
@@ -602,24 +599,28 @@ function createBlankGame ()
 	
 	
 	TMPwvft = $.extend(true, {}, Bwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'c1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'bishop', 'wf1');
 	generateMaterialsCSS ('wf1', white);
 	
 	TMPwvft = $.extend(true, {}, Bwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'f1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'bishop', 'wf2');
 	generateMaterialsCSS ('wf2', white);
 
 	TMPwvft = $.extend(true, {}, 	Nwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'b1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'knight', 'wc1');
 	generateMaterialsCSS ('wc1', white);
 	
 	TMPwvft = $.extend(true, {}, 	Nwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'g1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'knight', 'wc2');
@@ -627,12 +628,14 @@ function createBlankGame ()
 	generateMaterialsCSS ('wc2', white);
 
 	TMPwvft = $.extend(true, {}, 	Rwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'a1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'rook', 'wt1');
 	generateMaterialsCSS ('wt1', white);
 
 	TMPwvft = $.extend(true, {}, 	Rwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'h1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'rook', 'wt2');
@@ -640,12 +643,14 @@ function createBlankGame ()
 	generateMaterialsCSS ('wt2', white);
 
 	TMPwvft = $.extend(true, {}, 	Kwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'e1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'king', 'wk');
 	generateMaterialsCSS ('wk', white);
 
 	TMPwvft = $.extend(true, {}, 	Qwvft);
+	rotateWavefront (TMPwvft, 0, 180, 0);
 	putPieceWavefrontToSquare (TMPwvft, 'd1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'queen', 'wq');

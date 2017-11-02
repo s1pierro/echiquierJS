@@ -214,6 +214,15 @@ function translateWavefront (wavefront, x, y, z)
 
 	}	
 }
+function rotateWavefront (wavefront, x, y, z)
+{
+	var tmpmat = genrmat(x, y, z);
+	var tmp = wavefront;
+	for (var i = 0; i < wavefront.vertices.length; i++)
+		wavefront.vertices[i] = applymat(tmpmat, wavefront.vertices[i]);
+	genNormales(wavefront); 
+
+}
 function translateVerticesByMaterial (material, x, y, z)
 {
 	var vertices = getVerticesByMaterial (material);
