@@ -4,7 +4,9 @@ var playspin;
 var spinning = true;
 		var mx = 0;
 		var my = 0;
-		
+		var white = {r:255, g:255, b:255};
+	var black = {r:100, g:100, b:100};
+	
 var Pwvft = {};
 var Rwvft = {};
 var Nwvft = {};
@@ -175,15 +177,37 @@ function createClass(name,rules){
 
 
 
-function generateMaterialsCSS (name, difuse, specular)
+function generateMaterialsCSS (name, difuse)
 {
 // TODO: generate material from parameters
-createClass('.selectedPiece',"fill: #33a !important;");
-createClass('.selectedPiece-step-11',"fill: #44b !important;");
-createClass('.selectedPiece-step-12',"fill: #55c !important;");
-createClass('.selectedPiece-step-13',"fill: #66d !important;");
-createClass('.selectedPiece-step-14',"fill: #7878e8 !important;");
-createClass('.selectedPiece-step-15',"fill: #88f !important;");
+console.log('## generate css rules for '+'.'+name+'-step-11');
+createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
+console.log('fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
+
+createClass('.'+name+'-step-0', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-1', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-2', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-3', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-4', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-5', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-6', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-7', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-8', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-10', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-11', 'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
+createClass('.'+name+'-step-12', 'fill: rgb('+Math.floor( difuse.r*0.7)+', '+Math.floor( difuse.g*0.7)+', '+Math.floor( difuse.b*0.7)+');');
+createClass('.'+name+'-step-13', 'fill: rgb('+Math.floor( difuse.r*0.8)+', '+Math.floor( difuse.g*0.8)+', '+Math.floor( difuse.b*0.8)+');');
+createClass('.'+name+'-step-14', 'fill: rgb('+Math.floor( difuse.r*0.9)+', '+Math.floor( difuse.g*0.9)+', '+Math.floor( difuse.b*0.9)+');');
+createClass('.'+name+'-step-15', 'fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');');
+
+
+
+createClass('.'+name+'-step-11','fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.v*0.6)+', '+Math.floor( difuse.b*0.6)+');');
+createClass('.'+name+'-step-12','fill: rgb('+Math.floor( difuse.r*0.7)+', '+Math.floor( difuse.v*0.7)+', '+Math.floor( difuse.b*0.7)+');');
+createClass('.'+name+'-step-13','fill: rgb('+Math.floor( difuse.r*0.8)+', '+Math.floor( difuse.v*0.8)+', '+Math.floor( difuse.b*0.8)+');');
+createClass('.'+name+'-step-14','fill: rgb('+Math.floor( difuse.r*0.9)+', '+Math.floor( difuse.v*0.9)+', '+Math.floor( difuse.b*0.9)+');');
+createClass('.'+name+'-step-15','fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.v)+', '+Math.floor( difuse.b)+');');
 
 }
 
@@ -238,7 +262,7 @@ function disposeapplicationlayers (option)
 $(window).on("load", function() {
 
 
-	generateMaterialsCSS ();
+	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:255});
 
 	audiostart.play();
 
@@ -337,8 +361,20 @@ $(window).on("load", function() {
 		MovePiece(selectedPiece, mx, -my, move.flags);
 
 		switchMaterial ("selectedPiece", selectedPiece );
+		killPiece (selectedPiece);
 		selectedPiece = "none";
 		clearWayables();
+
+
+		var newPiece = move.color+'q1';
+		TMPwvft = $.extend(true, {}, 	Qwvft);
+		putPieceWavefrontToSquare (TMPwvft, move.to)
+		mergeWavefronts (wvft, TMPwvft);
+		switchMaterialInWavefront(wvft, 'queen', newPiece);
+		buffer = $.extend(true, {}, wvft);
+		plateau[SquareToXY (move.to).x][SquareToXY (move.to).y] = newPiece;
+		if (move.color == 'w') generateMaterialsCSS (newPiece, white);
+		else if (move.color == 'b') generateMaterialsCSS (newPiece, black);
 		closePromotionUI();
 		viewChessBoard();
 	});
@@ -416,51 +452,58 @@ $(window).on("load", function() {
 });
 function createBlankGame ()
 {
+	
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'a2')
 	wvft = $.extend(true, {}, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp1');
-
+	generateMaterialsCSS ('wp1', white);
+	
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'b2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp2');
-
+	generateMaterialsCSS ('wp2', white);
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'c2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp3');
-
+	generateMaterialsCSS ('wp3', white);
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'd2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp4');
+	generateMaterialsCSS ('wp4', white);
 
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'e2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp5');
+	generateMaterialsCSS ('wp5', white);
 
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'f2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp6');
+	generateMaterialsCSS ('wp6', white);
 
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'g2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp7');
+	generateMaterialsCSS ('wp7', white);
 
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'h2')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'pawn', 'wp8');
+	generateMaterialsCSS ('wp8', white);
 
 	
 	
@@ -468,50 +511,58 @@ function createBlankGame ()
 	putPieceWavefrontToSquare (TMPwvft, 'c1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'bishop', 'wf1');
-
+	generateMaterialsCSS ('wf1', white);
 	
 	TMPwvft = $.extend(true, {}, Bwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'f1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'bishop', 'wf2');
-
+	generateMaterialsCSS ('wf2', white);
 
 	TMPwvft = $.extend(true, {}, 	Nwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'b1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'knight', 'wc1');
-
+	generateMaterialsCSS ('wc1', white);
+	
 	TMPwvft = $.extend(true, {}, 	Nwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'g1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'knight', 'wc2');
 	buffer = $.extend(true, {}, wvft);
+	generateMaterialsCSS ('wc2', white);
 
 	TMPwvft = $.extend(true, {}, 	Rwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'a1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'rook', 'wt1');
+	generateMaterialsCSS ('wt1', white);
 
 	TMPwvft = $.extend(true, {}, 	Rwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'h1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'rook', 'wt2');
 	buffer = $.extend(true, {}, wvft);
+	generateMaterialsCSS ('wt2', white);
 
 	TMPwvft = $.extend(true, {}, 	Kwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'e1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'king', 'wk');
+	generateMaterialsCSS ('wk', white);
 
 	TMPwvft = $.extend(true, {}, 	Qwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'd1')
 	mergeWavefronts (wvft, TMPwvft);
 	switchMaterialInWavefront(wvft, 'queen', 'wq');
+	generateMaterialsCSS ('wq', white);
 	
 	
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'h7')
 	mergeWavefronts (wvft, TMPwvft);
+	generateMaterialsCSS ('bp1', black);
+
 	switchMaterialInWavefront(wvft, 'pawn', 'bp1');
 	TMPwvft = $.extend(true, {}, Pwvft);
 	putPieceWavefrontToSquare (TMPwvft, 'g7')
@@ -581,4 +632,25 @@ function createBlankGame ()
 	buffer = $.extend(true, {}, wvft);
 	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board'));
 	boardbuffer = $.extend(true, {}, boardwvft);
+
+	generateMaterialsCSS ('bp2', black);
+	generateMaterialsCSS ('bp3', black);
+	generateMaterialsCSS ('bp4', black);
+	generateMaterialsCSS ('bp5', black);
+	generateMaterialsCSS ('bp6', black);
+	generateMaterialsCSS ('bp7', black);
+	generateMaterialsCSS ('bp8', black);
+	generateMaterialsCSS ('bt1', black);
+	generateMaterialsCSS ('bt2', black);
+	generateMaterialsCSS ('bf1', black);
+	generateMaterialsCSS ('bf2', black);
+	generateMaterialsCSS ('bc1', black);
+	generateMaterialsCSS ('bc2', black);
+	generateMaterialsCSS ('bq', black);
+	generateMaterialsCSS ('bk', black);
+
+
+
+
+
 }	

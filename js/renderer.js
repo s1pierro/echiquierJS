@@ -66,7 +66,7 @@ function drawpieces() {
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
 		var trigon = buffer.vertices[ buffer.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][1];
       svg.setAttribute('points',trigon);
-      svg.setAttribute('class', 'fc'+j+'cf face '+buffer.triangles[ j ].mat+'-step-'+Math.floor(n*16)+' '+buffer.triangles[ j ].mat);
+      svg.setAttribute('class', 'fc'+j+'cf face '+buffer.triangles[ j ].mat+' '+buffer.triangles[ j ].mat+'-step-'+Math.floor(n*16));
 		container.appendChild(svg);
 
 	}
