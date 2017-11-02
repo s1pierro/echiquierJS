@@ -1,6 +1,10 @@
 
 var wvft = {};
 var way = [[0, 0][0, 0]];
+var way2 = [{square:'a4', move:'a4'}, {square:'a3', move:'a3'}];
+console.log('way[0]:'+way2[0].square);
+
+
 var nWay = 0;
 var buffer = {};
 var boardwvft = {};

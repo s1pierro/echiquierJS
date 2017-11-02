@@ -47,6 +47,25 @@ function getTargetFromMove (a)
 		a = a.slice (0, a.length-1);
 	if (a.includes('=R') | a.includes('=Q') | a.includes('=R') | a.includes('=B') | a.includes('=N')  )
 		a = a.slice (0, a.length-2);
+		
+		console.log ('getting from : '+a);
+	
+	if ( a == 'O-O-O')
+	{
+		console.log ('little roque');
+		if (chess.turn() == 'w')
+			a = "c1";
+		else if (chess.turn() == 'b')
+			a = "c8";
+	}
+	if ( a == 'O-O' )
+	{
+		if (chess.turn() == 'w')
+			a = "g1";
+		else if (chess.turn() == 'b')
+			a = "g8";
+	}
+	
 	while ( a.length > 2 ) a = a.slice (1, a.length);
 	return a;
 }
@@ -151,12 +170,18 @@ function showWay(p)
 {
 	var moves = chess.moves({square: ChessPiece(p).square});
 	console.log (ChessPiece(p).square+' is allowed o go to :');
+	way2.splice(0, way2.length);
+	
 	
 
 	for (var i = 0 ; i < moves.length ; i++)
 	{
-		Log (moves[i]);
-		Log (getTargetFromMove(moves[i]));
+	//	Log (moves[i]);
+	//	Log (getTargetFromMove(moves[i]));
+		
+		var aWay = {square:getTargetFromMove(moves[i]), move: moves[i]};
+		way2.push(aWay);
+		Log (way2[i]);
 		addToWayables(
 		
 		SquareToXY (getTargetFromMove(moves[i])).x, 
@@ -164,6 +189,8 @@ function showWay(p)
 		0
 		);	
 	}
+	
+	
 }
 function createClass(name,rules){
     var style = document.createElement('style');
@@ -267,7 +294,7 @@ $(window).on("load", function() {
 	audiostart.play();
 
 	disposeapplicationlayers();
-//	showMenu();
+	showMenu();
 
 	Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop'));
 	Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#rook'));
@@ -461,7 +488,34 @@ $(window).on("load", function() {
 			showPromotionUI ();
 		else
 		{
-			var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(way [selectedway][0], way [selectedway][1])});
+			//var move = chess.move({ from: ChessPiece(selectedPiece).square , to: XYToSquare(way [selectedway][0], way [selectedway][1])});
+			
+			var move = chess.move(way2[selectedway].move);
+
+			if (move.flags == 'q')
+			{
+				if (chess.turn() == 'b')
+				{
+					MovePiece('wt1', 0, 3, move.flags);
+				}
+				else if (chess.turn() == 'w')
+				{
+					MovePiece('bt2', 0, 3, move.flags);
+				}
+			}
+			if (move.flags == 'k')
+			{
+				if (chess.turn() == 'b')
+				{
+					MovePiece('wt2', 0, -2, move.flags);
+				
+				}
+				else if (chess.turn() == 'w')
+				{
+					MovePiece('bt1', 0, -2, move.flags);
+				
+				}
+			}
 			MovePiece(selectedPiece, mx, -my, move.flags);
 			switchMaterial ("selectedPiece", selectedPiece );
 			selectedPiece = "none";
@@ -478,7 +532,7 @@ $(window).on("load", function() {
 		disposeapplicationlayers();
 	});
 	
-//	playspin = setInterval(spinview, 50);
+	playspin = setInterval(spinview, 50);
 	
 	function spinview(){	
 		

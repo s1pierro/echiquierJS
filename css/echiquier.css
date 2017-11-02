@@ -5,7 +5,7 @@
 body {
 	font: 400 1.2em Cantarel, sans-serif;
 	line-height: 1.3;
-	color: #434343;
+	color: #fff;
 	background-color: #fff;
 	margin: 0px !important;
 	overflow: hidden;
@@ -19,14 +19,14 @@ a
 
 h1{
 	font: 600 1.6em Cantarel, sans-serif;
-	color: #434343;
+	color: #fff;
 }
 h2
 {	font: 400 1.5em Cantarel, sans-serif;
-	border: solid black;
+	border: solid;
 	border-width: 0px 0px 1px 0px;
 	padding-bottom: 1em;
-	color: #434343;
+	color: #fff;
 	margin-top: 2em;
 }
 h2:first-child {
@@ -36,16 +36,17 @@ h2:first-child {
 h3
 {	font: 400 1.3em Cantarel, sans-serif;
 	line-height: 1.3;
-	color: #434343;
+	color: #fff;
 }
 h4
 {	font: 600 1.2em Cantarel, sans-serif;
 	line-height: 1.3;
-	color: #434343;
+	color: #ccc;
 }
 p
 {
 	text-align: justify;
+	color: #ddd;
 }
 #navhelper {
 	color: #000;
@@ -110,8 +111,8 @@ p
 	margin: 0em;
 	padding: 1em;
 
-	color: #444;
-	background-color: #fff !important;
+
+	background-color: #000 !important;
 	opacity: 0.8;
 	/*overflow: hidden !important;*/
 }
