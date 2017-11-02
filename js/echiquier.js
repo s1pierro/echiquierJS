@@ -375,6 +375,7 @@ $(window).on("load", function() {
 		plateau[SquareToXY (move.to).x][SquareToXY (move.to).y] = newPiece;
 		if (move.color == 'w') generateMaterialsCSS (newPiece, white);
 		else if (move.color == 'b') generateMaterialsCSS (newPiece, black);
+		
 		closePromotionUI();
 		viewChessBoard();
 	});
@@ -384,8 +385,20 @@ $(window).on("load", function() {
 		MovePiece(selectedPiece, mx, -my, move.flags);
 
 		switchMaterial ("selectedPiece", selectedPiece );
+		killPiece (selectedPiece);
 		selectedPiece = "none";
 		clearWayables();
+
+		var newPiece = move.color+'t3';
+		TMPwvft = $.extend(true, {}, 	Rwvft);
+		putPieceWavefrontToSquare (TMPwvft, move.to)
+		mergeWavefronts (wvft, TMPwvft);
+		switchMaterialInWavefront(wvft, 'rook', newPiece);
+		buffer = $.extend(true, {}, wvft);
+		plateau[SquareToXY (move.to).x][SquareToXY (move.to).y] = newPiece;
+		if (move.color == 'w') generateMaterialsCSS (newPiece, white);
+		else if (move.color == 'b') generateMaterialsCSS (newPiece, black);
+		
 		closePromotionUI();
 		viewChessBoard();
 	});
@@ -395,8 +408,20 @@ $(window).on("load", function() {
 		MovePiece(selectedPiece, mx, -my, move.flags);
 
 		switchMaterial ("selectedPiece", selectedPiece );
+		killPiece (selectedPiece);
 		selectedPiece = "none";
 		clearWayables();
+
+		var newPiece = move.color+'c3';
+		TMPwvft = $.extend(true, {}, 	Nwvft);
+		putPieceWavefrontToSquare (TMPwvft, move.to)
+		mergeWavefronts (wvft, TMPwvft);
+		switchMaterialInWavefront(wvft, 'knight', newPiece);
+		buffer = $.extend(true, {}, wvft);
+		plateau[SquareToXY (move.to).x][SquareToXY (move.to).y] = newPiece;
+		if (move.color == 'w') generateMaterialsCSS (newPiece, white);
+		else if (move.color == 'b') generateMaterialsCSS (newPiece, black);
+		
 		closePromotionUI();
 		viewChessBoard();
 	});
@@ -406,8 +431,20 @@ $(window).on("load", function() {
 		MovePiece(selectedPiece, mx, -my, move.flags);
 
 		switchMaterial ("selectedPiece", selectedPiece );
+		killPiece (selectedPiece);
 		selectedPiece = "none";
 		clearWayables();
+
+		var newPiece = move.color+'f3';
+		TMPwvft = $.extend(true, {}, 	Bwvft);
+		putPieceWavefrontToSquare (TMPwvft, move.to)
+		mergeWavefronts (wvft, TMPwvft);
+		switchMaterialInWavefront(wvft, 'bishop', newPiece);
+		buffer = $.extend(true, {}, wvft);
+		plateau[SquareToXY (move.to).x][SquareToXY (move.to).y] = newPiece;
+		if (move.color == 'w') generateMaterialsCSS (newPiece, white);
+		else if (move.color == 'b') generateMaterialsCSS (newPiece, black);
+		
 		closePromotionUI();
 		viewChessBoard();
 	});
