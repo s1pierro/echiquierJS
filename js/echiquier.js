@@ -20,17 +20,7 @@ var nWay = 0;
 var selectedPiece = "none";
 var hand = "w";
 var chess = new Chess();
-/*var plateau = [ 
 
-	[["wt2"],["wc2"],["wf2"],["wk"],["wq"],["wf1"],["wc1"],["wt1"]],
-	[["wp8"],["wp7"],["wp6"],["wp5"],["wp4"],["wp3"],["wp2"],["wp1"]],
-	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
-	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
-	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
-	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
-	[["bp1"],["bp2"],["bp3"],["bp4"],["bp5"],["bp6"],["bp7"],["bp8"]],
-	[["bt1"],["bc1"],["bf1"],["bk"],["bq"],["bf2"],["bc2"],["bt2"]]];
-*/	
 var plateau = [ 
 
 	["wt2","wc2","wf2","wk","wq","wf1","wc1","wt1"],
@@ -41,6 +31,7 @@ var plateau = [
 	["free","free","free","free","free","free","free","free"],
 	["bp1","bp2","bp3","bp4","bp5","bp6","bp7","bp8"],
 	["bt1","bc1","bf1","bk","bq","bf2","bc2","bt2"]];
+	
 var audiostart = new Audio('chesssound/start1.ogg');
 var audiomove = new Audio('chesssound/move1.ogg');
 var audiocapture = new Audio('chesssound/capture1.ogg');
@@ -304,8 +295,6 @@ $(window).on("load", function() {
 	Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#queen'));
 	Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#king'));
 
-	
-//	createBlankGame ();
 	disposeGameWavefrontsFrom_plateau ();
 
 	Log ('type plateau[][] : '+typeof(plateau[0][0]));
@@ -553,9 +542,7 @@ $(window).on("load", function() {
 });
 function disposeGameWavefrontsFrom_plateau ()
 {
-
-
-var firstAdd = true;
+	var firstAdd = true;
 
 	for ( var j = 0 ;  j < 8 ; j++ )
 		for ( var i = 0 ; i < 8 ; i++ )
@@ -571,7 +558,6 @@ var firstAdd = true;
 				if ( ChessPiece(piece).type == 'king'   ) TMPwvft = $.extend(true, {}, Kwvft);
 				if ( ChessPiece(piece).type == 'queen'  ) TMPwvft = $.extend(true, {}, Qwvft);
 
-	
 				if ( ChessPiece(piece).color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
 				putPieceWavefrontToSquare (TMPwvft, XYToSquare(i, j));
 	
@@ -585,7 +571,6 @@ var firstAdd = true;
 				switchMaterialInWavefront(wvft, ChessPiece(piece).type, plateau[i][j]);
 				if ( ChessPiece(piece).color == 'w') generateMaterialsCSS (plateau[i][j], white);
 				if ( ChessPiece(piece).color == 'b') generateMaterialsCSS (plateau[i][j], black);
-				
 			}
 	buffer = $.extend(true, {}, wvft);
 }
