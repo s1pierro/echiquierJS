@@ -20,7 +20,7 @@ var nWay = 0;
 var selectedPiece = "none";
 var hand = "w";
 var chess = new Chess();
-var plateau = [ 
+/*var plateau = [ 
 
 	[["wt2"],["wc2"],["wf2"],["wk"],["wq"],["wf1"],["wc1"],["wt1"]],
 	[["wp8"],["wp7"],["wp6"],["wp5"],["wp4"],["wp3"],["wp2"],["wp1"]],
@@ -30,7 +30,17 @@ var plateau = [
 	[["free"],["free"],["free"],["free"],["free"],["free"],["free"],["free"]],
 	[["bp1"],["bp2"],["bp3"],["bp4"],["bp5"],["bp6"],["bp7"],["bp8"]],
 	[["bt1"],["bc1"],["bf1"],["bk"],["bq"],["bf2"],["bc2"],["bt2"]]];
-	
+*/	
+var plateau = [ 
+
+	["wt2","wc2","wf2","wk","wq","wf1","wc1","wt1"],
+	["wp8","wp7","wp6","wp5","wp4","wp3","wp2","wp1"],
+	["free","free","free","free","free","free","free","free"],
+	["free","free","free","free","free","free","free","free"],
+	["free","free","free","free","free","free","free","free"],
+	["free","free","free","free","free","free","free","free"],
+	["bp1","bp2","bp3","bp4","bp5","bp6","bp7","bp8"],
+	["bt1","bc1","bf1","bk","bq","bf2","bc2","bt2"]];
 var audiostart = new Audio('chesssound/start1.ogg');
 var audiomove = new Audio('chesssound/move1.ogg');
 var audiocapture = new Audio('chesssound/capture1.ogg');
@@ -72,6 +82,7 @@ function getTargetFromMove (a)
 function ChessPiece  ( p )
 {
 
+	//p = p+"";
 	var px, py, ptype, pcolor;
 	for ( var j = 0 ;  j < 8 ; j++ )
 		for ( var i = 0 ; i < 8 ; i++ )
@@ -81,7 +92,7 @@ function ChessPiece  ( p )
 				py = j;
 			}
 	if ( p.match(/^[wb]p[1-8]/gi)) ptype = "pawn";
-	if ( p.match(/^[wb]t[1-2]/gi)) ptype = "tower";
+	if ( p.match(/^[wb]t[1-2]/gi)) ptype = "rook";
 	if ( p.match(/^[wb]c[1-2]/gi)) ptype = "knight";
 	if ( p.match(/^[wb]f[1-2]/gi)) ptype = "bishop";
 	if ( p.match(/^[wb]q/gi)) ptype = "queen";
@@ -179,7 +190,6 @@ function showWay(p)
 	//	Log (moves[i]);
 	//	Log (getTargetFromMove(moves[i]));
 		
-		Log (way2[i]);
 		addToWayables(
 		
 		SquareToXY (getTargetFromMove(moves[i])).x, 
@@ -188,6 +198,7 @@ function showWay(p)
 		);	
 		var aWay = {square:getTargetFromMove(moves[i]), move: moves[i]};
 		way2.push(aWay);
+
 	}
 	
 	
@@ -206,7 +217,6 @@ function createClass(name,rules){
 
 function generateMaterialsCSS (name, difuse)
 {
-// TODO: generate material from parameters
 
 createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
 
@@ -278,6 +288,7 @@ function disposeapplicationlayers (option)
 }
 $(window).on("load", function() {
 
+	
 
 	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:255});
 
@@ -294,8 +305,15 @@ $(window).on("load", function() {
 	Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#king'));
 
 	
-	createBlankGame ();
-	//loadBoardWavefront();
+//	createBlankGame ();
+	disposeGameWavefrontsFrom_plateau ();
+
+	Log ('type plateau[][] : '+typeof(plateau[0][0]));
+	Log ('type wvft.triangles[].mat : '+typeof(wvft.triangles[0].mat));
+
+
+	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board'));
+	boardbuffer = $.extend(true, {}, boardwvft);
 	
 	initViewZlock();
 	
@@ -533,223 +551,42 @@ $(window).on("load", function() {
 	 }
 
 });
-function createBlankGame ()
+function disposeGameWavefrontsFrom_plateau ()
 {
-	
-	TMPwvft = $.extend(true, {}, Pwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'a2')
-	wvft = $.extend(true, {}, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'wp1');
-	generateMaterialsCSS ('wp1', white);
-	
-	TMPwvft = $.extend(true, {}, Pwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'b2')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'wp2');
-	generateMaterialsCSS ('wp2', white);
-	
-	TMPwvft = $.extend(true, {}, Pwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'c2')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'wp3');
-	generateMaterialsCSS ('wp3', white);
-	
-	TMPwvft = $.extend(true, {}, Pwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'd2')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'wp4');
-	generateMaterialsCSS ('wp4', white);
+
+
+var firstAdd = true;
+
+	for ( var j = 0 ;  j < 8 ; j++ )
+		for ( var i = 0 ; i < 8 ; i++ )
+			if ( plateau[i][j] != "free" )
+			{
+				var piece = plateau[i][j];
+				Log ('found '+plateau[i][j]+' on '+i+', '+j+' > '+ChessPiece(plateau[i][j]+"").type);
+				
+				if ( ChessPiece(piece).type == 'pawn'   ) TMPwvft = $.extend(true, {}, Pwvft);
+				if ( ChessPiece(piece).type == 'rook'   ) TMPwvft = $.extend(true, {}, Rwvft);
+				if ( ChessPiece(piece).type == 'knight' ) TMPwvft = $.extend(true, {}, Nwvft);
+				if ( ChessPiece(piece).type == 'bishop' ) TMPwvft = $.extend(true, {}, Bwvft);
+				if ( ChessPiece(piece).type == 'king'   ) TMPwvft = $.extend(true, {}, Kwvft);
+				if ( ChessPiece(piece).type == 'queen'  ) TMPwvft = $.extend(true, {}, Qwvft);
 
 	
-	TMPwvft = $.extend(true, {}, Pwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'e2')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'wp5');
-	generateMaterialsCSS ('wp5', white);
+				if ( ChessPiece(piece).color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+				putPieceWavefrontToSquare (TMPwvft, XYToSquare(i, j));
+	
+				if ( firstAdd == false ) mergeWavefronts (wvft, TMPwvft);
 
-	
-	TMPwvft = $.extend(true, {}, Pwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'f2')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'wp6');
-	generateMaterialsCSS ('wp6', white);
-
-	
-	TMPwvft = $.extend(true, {}, Pwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'g2')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'wp7');
-	generateMaterialsCSS ('wp7', white);
-
-	
-	TMPwvft = $.extend(true, {}, Pwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'h2')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'wp8');
-	generateMaterialsCSS ('wp8', white);
-
-	
-	
-	TMPwvft = $.extend(true, {}, Bwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'c1')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'bishop', 'wf1');
-	generateMaterialsCSS ('wf1', white);
-	
-	TMPwvft = $.extend(true, {}, Bwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'f1')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'bishop', 'wf2');
-	generateMaterialsCSS ('wf2', white);
-
-	TMPwvft = $.extend(true, {}, 	Nwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'b1')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'knight', 'wc1');
-	generateMaterialsCSS ('wc1', white);
-	
-	TMPwvft = $.extend(true, {}, 	Nwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'g1')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'knight', 'wc2');
+				if ( firstAdd == true )
+				{
+					wvft = $.extend(true, {}, TMPwvft);
+					firstAdd = false;
+				}
+				switchMaterialInWavefront(wvft, ChessPiece(piece).type, plateau[i][j]);
+				if ( ChessPiece(piece).color == 'w') generateMaterialsCSS (plateau[i][j], white);
+				if ( ChessPiece(piece).color == 'b') generateMaterialsCSS (plateau[i][j], black);
+				
+			}
 	buffer = $.extend(true, {}, wvft);
-	generateMaterialsCSS ('wc2', white);
-
-	TMPwvft = $.extend(true, {}, 	Rwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'a1')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'rook', 'wt1');
-	generateMaterialsCSS ('wt1', white);
-
-	TMPwvft = $.extend(true, {}, 	Rwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'h1')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'rook', 'wt2');
-	buffer = $.extend(true, {}, wvft);
-	generateMaterialsCSS ('wt2', white);
-
-	TMPwvft = $.extend(true, {}, 	Kwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'e1')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'king', 'wk');
-	generateMaterialsCSS ('wk', white);
-
-	TMPwvft = $.extend(true, {}, 	Qwvft);
-	rotateWavefront (TMPwvft, 0, 180, 0);
-	putPieceWavefrontToSquare (TMPwvft, 'd1')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'queen', 'wq');
-	generateMaterialsCSS ('wq', white);
+}
 	
-	
-	TMPwvft = $.extend(true, {}, Pwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'h7')
-	mergeWavefronts (wvft, TMPwvft);
-	generateMaterialsCSS ('bp1', black);
-
-	switchMaterialInWavefront(wvft, 'pawn', 'bp1');
-	TMPwvft = $.extend(true, {}, Pwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'g7')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'bp2');
-	TMPwvft = $.extend(true, {}, Pwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'f7')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'bp3');
-	TMPwvft = $.extend(true, {}, Pwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'e7')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'bp4');
-	TMPwvft = $.extend(true, {}, Pwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'd7')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'bp5');
-	TMPwvft = $.extend(true, {}, Pwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'c7')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'bp6');
-	TMPwvft = $.extend(true, {}, Pwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'b7')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'bp7');
-	TMPwvft = $.extend(true, {}, Pwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'a7')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'pawn', 'bp8');
-
-	TMPwvft = $.extend(true, {}, 	Kwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'e8')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'king', 'bk');
-	TMPwvft = $.extend(true, {}, 	Qwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'd8')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'queen', 'bq');
-
-	TMPwvft = $.extend(true, {}, 	Bwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'f8')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'bishop', 'bf1');
-	TMPwvft = $.extend(true, {}, 	Bwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'c8')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'bishop', 'bf2');
-
-	TMPwvft = $.extend(true, {}, 	Nwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'g8')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'knight', 'bc1');
-	TMPwvft = $.extend(true, {}, 	Nwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'b8')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'knight', 'bc2');
-
-	TMPwvft = $.extend(true, {}, 	Rwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'h8')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'rook', 'bt1');
-	TMPwvft = $.extend(true, {}, 	Rwvft);
-	putPieceWavefrontToSquare (TMPwvft, 'a8')
-	mergeWavefronts (wvft, TMPwvft);
-	switchMaterialInWavefront(wvft, 'rook', 'bt2');
-	
-	buffer = $.extend(true, {}, wvft);
-	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board'));
-	boardbuffer = $.extend(true, {}, boardwvft);
-
-	generateMaterialsCSS ('bp2', black);
-	generateMaterialsCSS ('bp3', black);
-	generateMaterialsCSS ('bp4', black);
-	generateMaterialsCSS ('bp5', black);
-	generateMaterialsCSS ('bp6', black);
-	generateMaterialsCSS ('bp7', black);
-	generateMaterialsCSS ('bp8', black);
-	generateMaterialsCSS ('bt1', black);
-	generateMaterialsCSS ('bt2', black);
-	generateMaterialsCSS ('bf1', black);
-	generateMaterialsCSS ('bf2', black);
-	generateMaterialsCSS ('bc1', black);
-	generateMaterialsCSS ('bc2', black);
-	generateMaterialsCSS ('bq', black);
-	generateMaterialsCSS ('bk', black);
-
-
-
-
-
-}	
