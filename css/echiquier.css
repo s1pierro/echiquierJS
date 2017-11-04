@@ -29,9 +29,13 @@ h2
 	color: #fff;
 	margin-top: 2em;
 }
-h2:first-child {
+#UI_content h2:first-child {
 
 	margin-top: 0em;
+}
+#endGameLayer h2:first-child {
+
+	margin-top: 1em;
 }
 h3
 {	font: 400 1.3em Cantarel, sans-serif;
@@ -97,7 +101,14 @@ p
 	color: #fff;
 }
 
-#UI {
+#UI, #PromotionUI{
+	position: fixed;
+	z-index: 1100;
+	overflow: auto !important;
+	padding: 0px;
+
+}
+#RulesUI{
 	position: fixed;
 	z-index: 1100;
 	overflow: auto !important;
@@ -106,7 +117,7 @@ p
 }
 
 
-#UI_content {
+#UI_content, #PromotionUI_content {
 	font: 400 1.2em Cantarel, sans-serif !important;
 	margin: 0em;
 	padding: 1em;
@@ -116,37 +127,100 @@ p
 	opacity: 0.8;
 	/*overflow: hidden !important;*/
 }
-#UI_content button {
-	font: 600 1.2em Cantarel, sans-serif !important;
-	padding: 0.5em;
-	text-align: center;
-}
-#UI_content button:hover {
-	background-color: #9f9 !important;
-}
-#PromotionUI {
+
+#RulesUI_content {
+	font: 400 1.2em Cantarel, sans-serif !important;
+	margin: 0em;
+	padding: 1em;
+
+
 	background-color: #000 !important;
 	opacity: 0.8;
-	position: fixed;
-	z-index: 1500;
-	overflow: scroll !important;
+
 }
-#PromotionUI_content {
-	margin: 1em;
-	text-align: justify;
-	overflow: hidden !important;
-}
-#PromotionUI_content button {
-	font: 600 1.2em Cantarel, sans-serif !important;
-	padding: 0.5em;
-	text-align: center;
-}
-#PromotionUI_content button:hover {
-	background-color: #9f9 !important;
+.layer
+{
+		padding-left: 1em;
+		padding-right: 1em;
+
 }
 @media screen and (min-width: 1000px) {
 
-	#UI_content {
+	.layer
+	{
+			padding-left: 20vh;
+			padding-right: 20vh;
+
+	}
+}
+/*========================================================*/
+/*============      endGameLayer        =================*/
+/*======================================================*/
+
+#endGameLayer
+{
+	position: fixed;
+	z-index: 1100;
+	padding: 0px;
+
+	width: 70%;
+	height: 70vw;
+	top:0px;
+
+	overflow: hidden !important;
+  margin-top: 15vh; /* poussé de la moitié de hauteur de viewport */
+
+  margin-left: 15vw; /* poussé de la moitié de hauteur de viewport */
+
+
+}
+
+#endGameLayerContent
+{
+
+	background-color: #000 !important;
+	opacity: 0.8;
+	font: 400 1.2em Cantarel, sans-serif !important;
+	min-height: 50vh;
+	margin: 0em;	overflow: auto !important;
+	/*overflow: hidden !important;*/
+}
+#endGameLayer h1
+{
+	color: #fff;
+	font: 400 2em Cantarel, sans-serif !important;
+	padding: 0em;
+	margin: 0em;
+
+}
+#endGameLayer p
+{
+	color: #fff;
+	font: 400 1em Cantarel, sans-serif !important;
+	padding: 1em;
+	margin: 0em;
+
+}
+#endGameLayerFooter
+{
+	color: #000;
+	font: 800 1.6em Cantarel, sans-serif !important;
+  line-height: 20vh; /* hauteur de ligne (identique) */
+	background-color: #ccc !important;
+	opacity: 1.0;
+
+	text-align: center;
+	height: 20vh;
+
+  white-space: nowrap; /* interdiction de passer à la ligne */
+
+
+}
+/*=============================*/
+
+@media screen and (min-width: 1000px) {
+
+	#UI_content, #PromotionUI_content, #RulesUI_content {
 		padding-left: 20vh;
 		padding-right: 20vh;
 	}
@@ -165,6 +239,10 @@ p
 
 .way {
 	fill: #0d0 !important;
+	opacity: 0.5 !important;
+}
+.way.piece {
+	fill: #d00 !important;
 	opacity: 0.5 !important;
 }
 

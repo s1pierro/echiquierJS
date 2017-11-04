@@ -19,11 +19,11 @@ var zmid = 0;
 
 
 
-function getfaceid(f) {
+function getFaceId(f) {
 	var tmp = $(f).attr('class');
-	var tmp2 = tmp.match(/fc\d+cf/) + '+';
-	var faceid = parseInt(tmp2.match(/\d+/));
-	return faceid;
+	var tmp2 = tmp.match(/id.+id/gi) + '';
+	if (tmp2.includes('id')) tmp2=tmp2.slice(2, tmp2.length-2);
+	return tmp2;
 }
 function getfacematerial(f) {
 	var tmp = $(f).attr('class');
@@ -78,7 +78,7 @@ function readWavefrontFile(evt) {
 		alert("Failed to load file");
 	}
 }
-function parsewavefront(objText) {
+function parsewavefront(objText, id) {
 	var nv = 0;
 	var nt = 0;
 	var ng = 0;
@@ -121,6 +121,8 @@ function parsewavefront(objText) {
 			}
 		});
 	}
+	for (var i = 0 ; i < obj.triangles.length ; i++ )
+		obj.triangles[i].id  = id;
 	genzmap(obj);
 	obj.nv = nv;
 	obj.nt = nt;
@@ -128,11 +130,11 @@ function parsewavefront(objText) {
 	return obj;
 }
 
-function loadWavefrontFromHTLM(id) {
+function loadWavefrontFromHTLM(object, id) {
 	
 			Log('getting wavefront from '+id);
-			var contents = $(id).text();
-			var obj = parsewavefront(contents);
+			var contents = $(object).text();
+			var obj = parsewavefront(contents, id);
 			Log('loaded : '+obj.nv+' vertices, '+obj.nt+' triangles');
 			genNormales(obj);			
 			return obj;
@@ -153,6 +155,16 @@ function switchMaterialInWavefront(w, target, value) {
 
 	for ( var j = 0 ; j < w.nt  ; j++)
 	if ( w.triangles[ j ].mat == target) w.triangles[ j ].mat = value;
+}
+function switchMaterialInWavefrontById(w, id, value) {
+
+	for ( var j = 0 ; j < w.nt  ; j++)
+	if ( w.triangles[ j ].id == id) w.triangles[ j ].mat = value;
+}
+function changeId (w, target, value) {
+
+	for ( var j = 0 ; j < w.triangles.length  ; j++)
+		if ( w.triangles[ j ].id == target) w.triangles[ j ].id = value;
 }
 function switchMaterial(target, value) {
 
@@ -185,6 +197,20 @@ function getVerticesByMaterial (m)
 	var tmp = [];
 	for ( var i = 0 ; i <  wvft.nt ; i++ )
 		if ( wvft.triangles[i].mat == m )
+		{
+			addElementToList ( tmp, wvft.triangles[i][0] );
+			addElementToList ( tmp, wvft.triangles[i][1] );
+			addElementToList ( tmp, wvft.triangles[i][2] );
+		}
+	return tmp;
+		
+}
+function getVerticesById (id)
+{	
+
+	var tmp = [];
+	for ( var i = 0 ; i <  wvft.nt ; i++ )
+		if ( wvft.triangles[i].id == id )
 		{
 			addElementToList ( tmp, wvft.triangles[i][0] );
 			addElementToList ( tmp, wvft.triangles[i][1] );
@@ -228,6 +254,11 @@ function translateVerticesByMaterial (material, x, y, z)
 	var vertices = getVerticesByMaterial (material);
 	translateVertices (vertices, x, y, z);
 }
+function translateVerticesById (id, x, y, z)
+{
+	var vertices = getVerticesById (id);
+	translateVertices (vertices, x, y, z);
+}
 function deleteVerticeFromWavefront (v)
 {
 	for ( var i = 0 ; i < wvft.nt ; i++ )
@@ -250,6 +281,20 @@ function deleteTrianglesFromWavefrontByMaterial (m)
 		deleteVerticeFromWavefront (vertices[i]);
 	buffer = $.extend(true, {}, wvft);
 }
+function deleteTrianglesFromWavefrontById (id)
+{
+	for ( var i = 0 ; i < wvft.nt ; i++ )
+		if (wvft.triangles[i].id == id )
+		{
+			wvft.triangles.splice(i, 1);
+			wvft.nt--;
+			i--;
+		}
+	var vertices = getVerticesById (id);
+	for ( var i = 0 ; i < vertices.length ; i++ )
+		deleteVerticeFromWavefront (vertices[i]);
+	buffer = $.extend(true, {}, wvft);
+}
 function mergeWavefronts (a, b)
 {
 	var inc = a.vertices.length;
@@ -260,6 +305,7 @@ function mergeWavefronts (a, b)
 		var tmp = [parseInt(b.triangles[i][0])+inc,parseInt(b.triangles[i][1])+inc,parseInt(b.triangles[i][2])+inc ];
 		tmp.n = b.triangles[i].n;
 		tmp.mat = b.triangles[i].mat;
+		tmp.id = b.triangles[i].id;
 		a.triangles.push(tmp);
 		
 	}
@@ -287,12 +333,12 @@ function MovePiece (p, x, y, flags)
 	var q = 0.01;
 	for ( var i = 0 ; i < 100 ; i++ )
 	{
-		translateVerticesByMaterial (p, y*64.0*q, 0, -x*64.0*q);
+	//	translateVerticesByMaterial (p, y*64.0*q, 0, -x*64.0*q);
 
 	}
 	
-	//var q = 1;
-	//translateVerticesByMaterial (p, y*64.0*q, 0, -x*64.0*q);
+	var q = 1;
+	translateVerticesById (p, y*64.0*q, 0, -x*64.0*q);
 	
 
 	var newX = ChessPiece(p).position.x +x;
@@ -322,9 +368,9 @@ function MovePiece (p, x, y, flags)
 	}
 	plateau[newX][newY] = p;
 }
-function killPiece (p)
+function killPiece (id)
 {
-	deleteTrianglesFromWavefrontByMaterial (p);
+	deleteTrianglesFromWavefrontById (id);
 }
 function addToWayables (x, y, i)
 {

@@ -14,23 +14,22 @@ var Bwvft = {};
 var Qwvft = {};
 var Kwvft = {};
 var TMPwvft = {};
-
+var promotion= {from: 'a1', to:'a3', promo:'n'};
 var selectedway;
 var nWay = 0;
 var selectedPiece = "none";
 var hand = "w";
 var chess = new Chess();
 
-var plateau = [ 
-
-	["wt2","wc2","wf2","wk","wq","wf1","wc1","wt1"],
-	["wp8","wp7","wp6","wp5","wp4","wp3","wp2","wp1"],
+var plateau = 
+      [ ["wt2", "wc2", "wf2", "wk",  "wq",  "wf1", "wc1", "wt1" ],
+	["wp8", "wp7", "wp6", "wp5", "wp4", "wp3", "wp2", "wp1" ],
 	["free","free","free","free","free","free","free","free"],
 	["free","free","free","free","free","free","free","free"],
 	["free","free","free","free","free","free","free","free"],
 	["free","free","free","free","free","free","free","free"],
-	["bp1","bp2","bp3","bp4","bp5","bp6","bp7","bp8"],
-	["bt1","bc1","bf1","bk","bq","bf2","bc2","bt2"]];
+	["bp1", "bp2", "bp3", "bp4", "bp5", "bp6", "bp7", "bp8" ],
+	["bt1", "bc1", "bf1", "bk",  "bq",  "bf2", "bc2", "bt2" ] ];
 	
 var audiostart = new Audio('chesssound/start1.ogg');
 var audiomove = new Audio('chesssound/move1.ogg');
@@ -172,6 +171,7 @@ function showWay(p)
 {
 	var moves = chess.moves({square: ChessPiece(p).square});
 	console.log (ChessPiece(p).square+' is allowed o go to :');
+	
 	way2.splice(0, way2.length);
 	
 	
@@ -188,6 +188,11 @@ function showWay(p)
 		0
 		);	
 		var aWay = {square:getTargetFromMove(moves[i]), move: moves[i]};
+		
+		if (plateau[SquareToXY (getTargetFromMove(moves[i])).x][SquareToXY (getTargetFromMove(moves[i])).y] != 'free' )
+			switchMaterialInWavefrontById (buffer, plateau[SquareToXY (getTargetFromMove(moves[i])).x][SquareToXY (getTargetFromMove(moves[i])).y], "way");
+		
+		
 		way2.push(aWay);
 
 	}
@@ -246,6 +251,19 @@ function closeMenu ()
 	$('#navhelper').css('display' , 'block' );
 	//$('#closelayer').css('display' , 'none' );
 }
+function showRules ()
+{		
+	$('#RulesUI').css('display' , 'block' );
+	$('#navhelper').css('display' , 'none' );
+	//$('#closelayer').css('display' , 'block' );
+}
+
+function closeRules ()
+{
+	$('#RulesUI').css('display' , 'none' );
+	$('#navhelper').css('display' , 'block' );
+	//$('#closelayer').css('display' , 'none' );
+}
 function showPromotionUI ()
 {		
 	$('#PromotionUI').css('display' , 'block' );
@@ -277,23 +295,58 @@ function disposeapplicationlayers (option)
 	$('#svg8').attr('height', h);	
  	$("#svg8").attr('viewBox', '-'+((zoom/2))+' -'+(zoom/ratio/2)+' '+zoom+' '+(zoom/ratio));
 }
+function checkGameState ( )
+{
+	
+	if ( chess.insufficient_material() )
+	{
+		$('#endGameLayer > #endGameLayerContent > #matchResult').text ("Match nul, materiel insuffisant");
+		$('#endGameLayer > #endGameLayerContent > #gameHistory').text ( chess.pgn({ max_width: 5, newline_char: '<br />' }));
+	}
+	if ( chess.in_check() )
+	{
+		if (chess.turn() == 'w') $('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les blancs sont en Echec');
+		if (chess.turn() == 'b') $('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les noirs sont en Echec');
+		$('#endGameLayer > #endGameLayerContent > #gameHistory').html ( '' );
+	}
+	
+	if ( chess.in_checkmate() )
+	{
+		if (chess.turn() == 'w') $('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les blancs sont en Echec et mat');
+		if (chess.turn() == 'b') $('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les noirs sont en Echec et mat');
+		$('#endGameLayer > #endGameLayerContent > #gameHistory').html ( chess.pgn({ max_width: 5, newline_char: '<br />' }));
+	}
+	if ( chess.game_over() | chess.in_check() )
+	{
+		$('#endGameLayer').css('display' , 'block' );
+		$('#navhelper').css('display' , 'none' );
+		playspin = setInterval(spinview, 1);
+	}
+}
+function closeEndGameLayer ()
+{		
+	$('#endGameLayer').css('display' , 'none' );
+	$('#navhelper').css('display' , 'block' );
+}
+
 $(window).on("load", function() {
 
-	
-
+	buildPlateau ( );
+	generateMaterialsCSS ('blancs', white);
+	generateMaterialsCSS ('noirs', black);
 	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:255});
 
-	audiostart.play();
+	//audiostart.play();
 
 	disposeapplicationlayers();
-	showMenu();
+//	showMenu();
 
-	Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop'));
-	Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#rook'));
-	Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#knight'));
-	Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#pawn'));
-	Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#queen'));
-	Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#king'));
+	Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop', 'bishop'));
+	Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#rook', 'rook'));
+	Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#knight', 'knight'));
+	Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#pawn', 'pawn'));
+	Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#queen', 'queen'));
+	Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#king', 'king'));
 
 	disposeGameWavefrontsFrom_plateau ();
 
@@ -301,14 +354,19 @@ $(window).on("load", function() {
 	Log ('type wvft.triangles[].mat : '+typeof(wvft.triangles[0].mat));
 
 
-	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board'));
+	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board', 'board'));
 	boardbuffer = $.extend(true, {}, boardwvft);
 	
 	initViewZlock();
 	
-	
+
 	$('body').on('click', '#close-menu', function() {
 		closeMenu();
+		window.clearInterval(playspin);
+		
+	});
+	$('body').on('click', '#endGameLayerFooter', function() {
+		closeEndGameLayer();
 		window.clearInterval(playspin);
 		
 	});
@@ -316,11 +374,20 @@ $(window).on("load", function() {
 		showMenu();
 		playspin = setInterval(spinview, 1);
 	});
+/*	$('body').on('click', '#close-rules', function() {
+		closeRules();
+		window.clearInterval(playspin);
+		
+	});
+	$('body').on('click', '#show-rules', function() {
+	//	showRules();
+		playspin = setInterval(spinview, 1);
+	});
 
 	$('body').on('click', '#spin', function() {
 		var spin = setInterval(showOBJ, 100);
 	});
-	/*
+*/	/*
 	var singleTap = new Hammer.Tap({
 		event: 'singletap'
 	});
@@ -366,126 +433,150 @@ $(window).on("load", function() {
 
 
 	});
-	$('body').on('click', '.face', function() {
-	
-		var m = getfacematerial(this);
-		
-
-		if (selectedPiece != "none")
-			switchMaterial ("selectedPiece", selectedPiece );
-		selectedPiece = m;
-		clearWayables ();
-		showWay(selectedPiece);
-		switchMaterial (m, "selectedPiece");
-		viewChessBoard();
-	});
 	$('body').on('click', '#QueenPromotion', function() {
 	
-		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: way2[selectedway].square, promotion: 'q'  });
-		MovePiece(selectedPiece, mx, -my, move.flags);
 
-		switchMaterial ("selectedPiece", selectedPiece );
-		killPiece (selectedPiece);
+		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'q'});
+	
+		MovePiece(promotmp, mx, -my, mv.flags);
+
+		switchMaterial ("selectedPiece", promotmp );
+		killPiece (promotmp);
 		selectedPiece = "none";
 		clearWayables();
 
-
-		var newPiece = move.color+'q1';
+		var newPiece = mv.color+'q1';
 		TMPwvft = $.extend(true, {}, 	Qwvft);
-		putPieceWavefrontToSquare (TMPwvft, move.to)
+		if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+		putPieceWavefrontToSquare (TMPwvft, mv.to)
 		mergeWavefronts (wvft, TMPwvft);
-		switchMaterialInWavefront(wvft, 'queen', newPiece);
+		changeId(wvft, 'queen', newPiece);
+		if ( mv.color == 'w') switchMaterialInWavefrontById(wvft, newPiece, 'blancs');	
+		if ( mv.color == 'b') switchMaterialInWavefrontById(wvft, newPiece, 'noirs');	
 		buffer = $.extend(true, {}, wvft);
-		plateau[SquareToXY (move.to).x][SquareToXY (move.to).y] = newPiece;
-		if (move.color == 'w') generateMaterialsCSS (newPiece, white);
-		else if (move.color == 'b') generateMaterialsCSS (newPiece, black);
+		plateau[SquareToXY (mv.to).x][SquareToXY (mv.to).y] = newPiece;
+		if (mv.color == 'w') generateMaterialsCSS (newPiece, white);
+		else if (mv.color == 'b') generateMaterialsCSS (newPiece, black);
 		
 		closePromotionUI();
-		viewChessBoard();
-	});
+		viewChessBoard();	});
 	$('body').on('click', '#RookPromotion', function() {
 	
-		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: way2[selectedway].square, promotion: 'r'  });
-		MovePiece(selectedPiece, mx, -my, move.flags);
+		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'r'});
+	
+		MovePiece(promotmp, mx, -my, mv.flags);
 
-		switchMaterial ("selectedPiece", selectedPiece );
-		killPiece (selectedPiece);
+		switchMaterial ("selectedPiece", promotmp );
+		killPiece (promotmp);
 		selectedPiece = "none";
 		clearWayables();
 
-		var newPiece = move.color+'t3';
+		var newPiece = mv.color+'t3';
 		TMPwvft = $.extend(true, {}, 	Rwvft);
-		putPieceWavefrontToSquare (TMPwvft, move.to)
+		if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+		putPieceWavefrontToSquare (TMPwvft, mv.to)
 		mergeWavefronts (wvft, TMPwvft);
-		switchMaterialInWavefront(wvft, 'rook', newPiece);
+		changeId(wvft, 'rook', newPiece);
+		if ( mv.color == 'w') switchMaterialInWavefrontById(wvft, newPiece, 'blancs');	
+		if ( mv.color == 'b') switchMaterialInWavefrontById(wvft, newPiece, 'noirs');	
 		buffer = $.extend(true, {}, wvft);
-		plateau[SquareToXY (move.to).x][SquareToXY (move.to).y] = newPiece;
-		if (move.color == 'w') generateMaterialsCSS (newPiece, white);
-		else if (move.color == 'b') generateMaterialsCSS (newPiece, black);
+		plateau[SquareToXY (mv.to).x][SquareToXY (mv.to).y] = newPiece;
+		if (mv.color == 'w') generateMaterialsCSS (newPiece, white);
+		else if (mv.color == 'b') generateMaterialsCSS (newPiece, black);
 		
 		closePromotionUI();
 		viewChessBoard();
 	});
 	$('body').on('click', '#KnightPromotion', function() {
 	
-		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: way2[selectedway].square, promotion: 'n'  });
-		MovePiece(selectedPiece, mx, -my, move.flags);
+		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'n'});
+	
+		MovePiece(promotmp, mx, -my, mv.flags);
 
-		switchMaterial ("selectedPiece", selectedPiece );
-		killPiece (selectedPiece);
+		switchMaterial ("selectedPiece", promotmp );
+		killPiece (promotmp);
 		selectedPiece = "none";
 		clearWayables();
 
-		var newPiece = move.color+'c3';
+		var newPiece = mv.color+'c3';
 		TMPwvft = $.extend(true, {}, 	Nwvft);
-		putPieceWavefrontToSquare (TMPwvft, move.to)
+		if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+		putPieceWavefrontToSquare (TMPwvft, mv.to)
 		mergeWavefronts (wvft, TMPwvft);
-		switchMaterialInWavefront(wvft, 'knight', newPiece);
+		changeId(wvft, 'knight', newPiece);
+		if ( mv.color == 'w') switchMaterialInWavefrontById(wvft, newPiece, 'blancs');	
+		if ( mv.color == 'b') switchMaterialInWavefrontById(wvft, newPiece, 'noirs');	
 		buffer = $.extend(true, {}, wvft);
-		plateau[SquareToXY (move.to).x][SquareToXY (move.to).y] = newPiece;
-		if (move.color == 'w') generateMaterialsCSS (newPiece, white);
-		else if (move.color == 'b') generateMaterialsCSS (newPiece, black);
+		plateau[SquareToXY (mv.to).x][SquareToXY (mv.to).y] = newPiece;
+		if (mv.color == 'w') generateMaterialsCSS (newPiece, white);
+		else if (mv.color == 'b') generateMaterialsCSS (newPiece, black);
 		
 		closePromotionUI();
 		viewChessBoard();
 	});
 	$('body').on('click', '#BishopPromotion', function() {
 	
-		var move = chess.move({ from: ChessPiece(selectedPiece).square , to: way2[selectedway].square, promotion: 'b'  });
-		MovePiece(selectedPiece, mx, -my, move.flags);
 
-		switchMaterial ("selectedPiece", selectedPiece );
-		killPiece (selectedPiece);
+		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'b'});
+	
+		MovePiece(promotmp, mx, -my, mv.flags);
+
+		switchMaterial ("selectedPiece", promotmp );
+		killPiece (promotmp);
 		selectedPiece = "none";
 		clearWayables();
 
-		var newPiece = move.color+'f3';
+		var newPiece = mv.color+'f3';
 		TMPwvft = $.extend(true, {}, 	Bwvft);
-		putPieceWavefrontToSquare (TMPwvft, move.to)
+		if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+		putPieceWavefrontToSquare (TMPwvft, mv.to)
 		mergeWavefronts (wvft, TMPwvft);
-		switchMaterialInWavefront(wvft, 'bishop', newPiece);
+		changeId(wvft, 'bishop', newPiece);
+		if ( mv.color == 'w') switchMaterialInWavefrontById(wvft, newPiece, 'blancs');	
+		if ( mv.color == 'b') switchMaterialInWavefrontById(wvft, newPiece, 'noirs');	
 		buffer = $.extend(true, {}, wvft);
-		plateau[SquareToXY (move.to).x][SquareToXY (move.to).y] = newPiece;
-		if (move.color == 'w') generateMaterialsCSS (newPiece, white);
-		else if (move.color == 'b') generateMaterialsCSS (newPiece, black);
+		plateau[SquareToXY (mv.to).x][SquareToXY (mv.to).y] = newPiece;
+		if (mv.color == 'w') generateMaterialsCSS (newPiece, white);
+		else if (mv.color == 'b') generateMaterialsCSS (newPiece, black);
 		
 		closePromotionUI();
 		viewChessBoard();
 	});
 	$('body').on('click', '.way', function() {
 		//audiomove.play();
+					var id = getFaceId(this);
 		var tmp = $(this).attr('class');
 		
 		var tmp2 = tmp.match(/way\d+/)+"";
 		selectedway = parseInt(tmp2.match(/\d+/))
+		if (chess.turn != ChessPiece(selectedPiece).color )
+		{
+
+		Log ('>>>>>>>>>> capture !');
+			for ( var i = 0 ; i < way2.length ; i++ )
+			{
+		Log ('   way2['+i+'].square : '+way2[i].square);
+		Log ('   ChessPiece('+id+').square : '+ChessPiece(id).square);
+			if (ChessPiece(id).square == way2[i].square )
+			
+			selectedway = i;
+			}
+		}
+
+		
 
 		mx = SquareToXY(way2 [selectedway].square).x-ChessPiece(selectedPiece).position.x;
 		my = SquareToXY(way2 [selectedway].square).y-ChessPiece(selectedPiece).position.y;
 		
 		
-		
 		if ( ( SquareToXY(way2[selectedway].square).x == 7 | SquareToXY(way2[selectedway].square).x == 0 ) && ChessPiece(selectedPiece).type == 'pawn' )
+		{
+			promotion = way2[selectedway].move;
+			promotmp = selectedPiece;
+			promotmp2 = {f:ChessPiece(selectedPiece).square, t:way2[selectedway].square};
 			showPromotionUI ();
+		
+		}
 		else
 		{
 			var move = chess.move(way2[selectedway].move);
@@ -516,12 +607,35 @@ $(window).on("load", function() {
 			}
 			
 			MovePiece(selectedPiece, mx, -my, move.flags);
-			switchMaterial ("selectedPiece", selectedPiece );
+			
+		buffer = $.extend(true, {}, wvft);
 			selectedPiece = "none";
 			clearWayables();
 			viewChessBoard();
+			Log(chess.pgn({ max_width: 5, newline_char: '\n' }));
+			
+			checkGameState ();
+			
+			move
 		}
+		
 	});
+	$('body').on('click', '.piece', function() {
+	
+
+		var id = getFaceId(this);
+		
+Log ('id : '+id);
+		if (selectedPiece != "none")
+			buffer = $.extend(true, {}, wvft);
+
+		selectedPiece = id;
+		clearWayables ();
+		showWay(selectedPiece);
+		switchMaterialInWavefrontById (buffer, selectedPiece, "selectedPiece");
+		viewChessBoard();
+	});
+
 	$('#svg8').on('mousewheel', function(event) {
 
 		translateView (0, 0, event.deltaY*event.deltaFactor );
@@ -540,6 +654,25 @@ $(window).on("load", function() {
 	 }
 
 });
+function countPieceOnPlateau ( piece, color )
+{
+	cnt= 0;
+	for ( var j = 0 ;  j < 8 ; j++ )
+		for ( var i = 0 ; i < 8 ; i++ )
+		{
+			if ( ChessPiece(plateau[i][j]).type == piece && ChessPiece(plateau[i][j]).color == color) cnt++;
+			
+			
+		}
+}
+function buildPlateau ( )
+{
+	var b = chess.board();
+	
+	console.log (b[0][0]);
+
+}
+
 function disposeGameWavefrontsFrom_plateau ()
 {
 	var firstAdd = true;
@@ -561,16 +694,20 @@ function disposeGameWavefrontsFrom_plateau ()
 				if ( ChessPiece(piece).color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
 				putPieceWavefrontToSquare (TMPwvft, XYToSquare(i, j));
 	
-				if ( firstAdd == false ) mergeWavefronts (wvft, TMPwvft);
+				if ( firstAdd == false )
+				{
+					mergeWavefronts (wvft, TMPwvft);
+				}
 
 				if ( firstAdd == true )
 				{
 					wvft = $.extend(true, {}, TMPwvft);
+
 					firstAdd = false;
 				}
-				switchMaterialInWavefront(wvft, ChessPiece(piece).type, plateau[i][j]);
-				if ( ChessPiece(piece).color == 'w') generateMaterialsCSS (plateau[i][j], white);
-				if ( ChessPiece(piece).color == 'b') generateMaterialsCSS (plateau[i][j], black);
+				if ( ChessPiece(piece).color == 'w') switchMaterialInWavefront(wvft, ChessPiece(piece).type, 'blancs');
+				if ( ChessPiece(piece).color == 'b') switchMaterialInWavefront(wvft, ChessPiece(piece).type, 'noirs');
+				changeId(wvft, ChessPiece(piece).type, piece);
 			}
 	buffer = $.extend(true, {}, wvft);
 }
