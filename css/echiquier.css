@@ -165,7 +165,6 @@ p.toggleArea
 	text-align: right;
 
 
-  white-space: nowrap; /* interdiction de passer à la ligne */
 
 
 }
@@ -174,7 +173,8 @@ p.toggleArea
 	background-color: #eee !important;
 }
 .banner
-{
+{ 
+	display: flex;
 	position: fixed;
 	background-color: #000 !important;
 
@@ -189,6 +189,28 @@ p.toggleArea
 	z-index: 2000;
 	/*overflow: hidden !important;*/
 }
+.banner svg
+{ 
+
+	margin: auto;
+	
+}
+.banner h1
+{
+	text-align: center;
+	margin-left: auto;
+	width: 100%;
+	white-space: nowrap;
+	height: 3em;
+
+}
+.banner .indication
+{
+	align-self: flex-end;
+	/*white-space: nowrap;	
+	*/margin:1em;
+}
+
 @media screen and (max-width: 1000px)
 {
 
@@ -216,18 +238,11 @@ p.toggleArea
 .banner
 {
 	position: fixed;
-	background-color: #000 !important;
-
-	opacity: 0.9;
-	font: 400 1.2em Cantarel, sans-serif !important;
 	top:25vh;
 	left:0vw;
 	height: 50vh;
 	width: 100vw;
 
-	overflow: hidden !important;
-	z-index: 2000;
-	/*overflow: hidden !important;*/
 }
 
 }
@@ -235,13 +250,6 @@ p.toggleArea
 
 
 
-.banner h1
-{
-
-	font: 400 2em Cantarel, sans-serif !important;
-	line-height: 50vh;
-	text-align: center;	
-}
 
 
 .layer

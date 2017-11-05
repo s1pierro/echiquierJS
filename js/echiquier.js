@@ -21,6 +21,7 @@ var selectedPiece = "none";
 var hand = "w";
 var chess = new Chess();
 var mobileView = false;
+var view = 'auto';
 
 var plateau = 
       [ ["wt2", "wc2", "wf2", "wk",  "wq",  "wf1", "wc1", "wt1" ],
@@ -279,13 +280,15 @@ function disposeapplicationlayers (option)
 {		
 	var w = $(window).width();
 	var h = $(window).height();
-	if ( option == null )
+	if ( option == 'auto' )
 	{ 
 		if (w < 900 && h < 900 )
-		mobileView = true;
-		else mobileView = false;
+		view = 'mobile';
+		else view = 'desktop';
 	}
-	else mobileView = option;
+	else view = option;
+	Log ('vue : '+view);
+
 	var zoom = 100;
 	var ratio = w/h;
  	
@@ -323,7 +326,7 @@ function disposeapplicationlayers (option)
 			$("#svg8").attr('viewBox', '-'+((zoom*ratio)/2)+' -'+(zoom/2)+' '+(zoom*ratio)+' '+zoom);
 
 		}
-		if ( mobileView == true )
+		if ( view == 'mobile' )
 		{
 			Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatBishop', 'bishop'));
 			Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatRook', 'rook'));
@@ -336,7 +339,7 @@ function disposeapplicationlayers (option)
 			initViewZlock(270, 0, 0, 560);
 
 		}
-		else{
+		else {
 			Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop', 'bishop'));
 			Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#rook', 'rook'));
 			Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#knight', 'knight'));
@@ -438,93 +441,93 @@ function closeEndGameLayer ()
 
 $(window).on("load", function() {
 
+	Log ('#=# cookie : '+Cookies.get('vue') );
+	if ( Cookies.get('vue') == undefined ) 
+	{
+		view = 'auto';
+		Cookies.set('vue', 'auto');
+	}
+	else
+	{
+		if ( Cookies.get('vue') == 'auto' ) view = 'auto';
+		if ( Cookies.get('vue') == 'mobile' ) view = 'mobile';
+		if ( Cookies.get('vue') == 'desktop' ) view = 'desktop';
+
+	}
+	Log ('#=# cookie : '+Cookies.get('vue') );
+	
 	buildPlateau ( );
 	generateMaterialsCSS ('blancs', {r:253, g:231, b:135});
 	generateMaterialsCSS ('noirs', {r:109, g:102, b:77});
 	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:220});
 
-	generateMaterialsCSS ('HARDbrown', {r:150, g:150, b:150});
-	generateMaterialsCSS ('HARDcream',{r:225, g:225, b:225} );
+	generateMaterialsCSS ('HARDbrown', {r:170, g:170, b:170});
+	generateMaterialsCSS ('HARDcream',{r:245, g:245, b:245} );
 
 
 	//audiostart.play();
 
-//	showMenu();
-
-	Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatBishop', 'bishop'));
-	Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatRook', 'rook'));
-	Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatKnight', 'knight'));
-	Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatPawn', 'pawn'));
-	Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatQueen', 'queen'));
-	Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatKing', 'king'));
-
-/*	Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop', 'bishop'));
-	Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#rook', 'rook'));
-	Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#knight', 'knight'));
-	Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#pawn', 'pawn'));
-	Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#queen', 'queen'));
-	Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#king', 'king'));
-*/	
-	disposeGameWavefrontsFrom_plateau ();
-
-	Log ('type plateau[][] : '+typeof(plateau[0][0]));
-	Log ('type wvft.triangles[].mat : '+typeof(wvft.triangles[0].mat));
-
 
 	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board', 'board'));
 	boardbuffer = $.extend(true, {}, boardwvft);
+
+
+	disposeapplicationlayers(view);
+
 	
-	disposeapplicationlayers();
 
 	$('body').on('click', '#uiLayerFooter', function() {
+
 		closeUi();
-		//window.clearInterval(playspin);
 		
 	});
 	$('body').on('click', '#endGameLayerFooter', function() {
+
 		closeEndGameLayer();
-		//window.clearInterval(playspin);
 		
 	});
 	$('body').on('click', '#show-ui', function() {
+
 		showUi();
-		//playspin = setInterval(spinview, 1);
-	});
-	$('body').on('click', '.banner', function() {
-		$(this).css('display', 'none');
-		//playspin = setInterval(spinview, 1);
-	});
-	$('body').on('click', '#toggleViewMobile', function() {
-	disposeapplicationlayers(true);
-	$('.selectedToggle').removeClass('selectedToggle');
-	$('#toggleViewMobile').addClass('selectedToggle');
-	});
-	$('body').on('click', '#toggleViewDesktop', function() {
-	disposeapplicationlayers(false);
-	
-	$('.selectedToggle').removeClass('selectedToggle');
-	$('#toggleViewDesktop').addClass('selectedToggle');
-	});
-	$('body').on('click', '#toggleViewAuto', function() {
-	disposeapplicationlayers();
-	
-	$('.selectedToggle').removeClass('selectedToggle');
-	$('#toggleViewAuto').addClass('selectedToggle');
-	});
-/*	$('body').on('click', '#close-rules', function() {
-		closeRules();
-		window.clearInterval(playspin);
-		
-	});
-	$('body').on('click', '#show-rules', function() {
-	//	showRules();
-		playspin = setInterval(spinview, 1);
 	});
 
-	$('body').on('click', '#spin', function() {
-		var spin = setInterval(showOBJ, 100);
+
+	$('body').on('click', '*', function() {
+
+		$('.banner').css('display', 'none');
 	});
-*/	/*
+	$('body').on('click', '#toggleViewMobile', function() {
+
+		$('.selectedToggle').removeClass('selectedToggle');
+		$('#toggleViewMobile').addClass('selectedToggle');
+		view = 'mobile';
+		Cookies.set('vue','mobile' );
+		disposeapplicationlayers('mobile');
+	});
+	$('body').on('click', '#toggleViewDesktop', function() {
+	
+		$('.selectedToggle').removeClass('selectedToggle');
+		$('#toggleViewDesktop').addClass('selectedToggle');
+		view = 'desktop';
+		Cookies.set('vue', 'desktop');
+		disposeapplicationlayers('desktop');
+	});
+	$('body').on('click', '#toggleViewAuto', function() {
+
+		$('.selectedToggle').removeClass('selectedToggle');
+		$('#toggleViewAuto').addClass('selectedToggle');
+		view = 'auto';
+		Cookies.set('vue', 'auto');
+		disposeapplicationlayers('auto');
+	});
+	$('.selectedToggle').removeClass('selectedToggle');
+	var tmp = Cookies.set('vue');
+	if (tmp == 'auto') $('#toggleViewAuto').addClass('selectedToggle');
+	if (tmp == 'mobile') $('#toggleViewMobile').addClass('selectedToggle');
+	if (tmp == 'desktop') $('#toggleViewDesktop').addClass('selectedToggle');
+	
+
+/*
 	var singleTap = new Hammer.Tap({
 		event: 'singletap'
 	});
@@ -556,7 +559,7 @@ $(window).on("load", function() {
 	
 	});
 	mc.on("pan", function(ev) {
-	if (!mobileView)
+	if (view != 'mobile')
 	{
 
 		rotateViewZlock (ev.velocityY*15, ev.velocityX*15, 0 );
@@ -782,7 +785,7 @@ Log ('id : '+id);
 	});
 
 	$('#svg8').on('mousewheel', function(event) {
-	if (!mobileView)
+	if (view != 'mobile')
 	{
 
 
@@ -791,7 +794,7 @@ Log ('id : '+id);
 	}
 	});
 	$(window).on('resize', function() {
-		disposeapplicationlayers();
+		disposeapplicationlayers(Cookies.get('vue'));
 	});
 	
 	//playspin = setInterval(spinview, 50);
@@ -878,7 +881,7 @@ function disposeFlatGameWavefrontsFrom_plateau ()
 				if ( ChessPiece(piece).type == 'king'   ) TMPwvft = $.extend(true, {}, Kwvft);
 				if ( ChessPiece(piece).type == 'queen'  ) TMPwvft = $.extend(true, {}, Qwvft);
 				
-				translateWavefront (TMPwvft, 0, 0, 20)
+				translateWavefront (TMPwvft, 0, -10, 20)
 				
 				//if ( ChessPiece(piece).color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
 				putPieceWavefrontToSquare (TMPwvft, XYToSquare(i, j));
