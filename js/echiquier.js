@@ -881,7 +881,10 @@ function disposeFlatGameWavefrontsFrom_plateau ()
 				if ( ChessPiece(piece).type == 'king'   ) TMPwvft = $.extend(true, {}, Kwvft);
 				if ( ChessPiece(piece).type == 'queen'  ) TMPwvft = $.extend(true, {}, Qwvft);
 				
-				translateWavefront (TMPwvft, 0, -10, 20)
+
+
+				if ( ChessPiece(piece).type == 'pawn'   ) translateWavefront (TMPwvft, 0, -13, 20);
+				else translateWavefront (TMPwvft, 0, -13, 23)
 				
 				//if ( ChessPiece(piece).color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
 				putPieceWavefrontToSquare (TMPwvft, XYToSquare(i, j));
