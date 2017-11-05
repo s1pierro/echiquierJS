@@ -1,7 +1,7 @@
 var selectedfaces = [];
 var nselectedfaces = 0;
 var playspin;
-var spinning = true;
+var spinning = false;
 		var mx = 0;
 		var my = 0;
 		var white = {r:255, g:255, b:255};
@@ -20,6 +20,7 @@ var nWay = 0;
 var selectedPiece = "none";
 var hand = "w";
 var chess = new Chess();
+var mobileView = false;
 
 var plateau = 
       [ ["wt2", "wc2", "wf2", "wk",  "wq",  "wf1", "wc1", "wt1" ],
@@ -218,7 +219,7 @@ createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( dif
 
 /*
 On Chromium web browser, framerate is dramaticaly affected by css rules quantity.
-
+*/
 createClass('.'+name+'-step-0', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-1', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-2', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
@@ -228,7 +229,7 @@ createClass('.'+name+'-step-5', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math
 createClass('.'+name+'-step-6', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-7', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-8', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');*/
+createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');/**/
 createClass('.'+name+'-step-10', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-11', 'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
 createClass('.'+name+'-step-12', 'fill: rgb('+Math.floor( difuse.r*0.7)+', '+Math.floor( difuse.g*0.7)+', '+Math.floor( difuse.b*0.7)+');');
@@ -238,16 +239,16 @@ createClass('.'+name+'-step-15', 'fill: rgb('+Math.floor( difuse.r*1.0)+', '+Mat
 
 }
 
-function showMenu ()
+function showUi ()
 {		
-	$('#UI').css('display' , 'block' );
+	$('#ui').css('display' , 'block' );
 	$('#navhelper').css('display' , 'none' );
 	//$('#closelayer').css('display' , 'block' );
 }
 
-function closeMenu ()
+function closeUi ()
 {
-	$('#UI').css('display' , 'none' );
+	$('#ui').css('display' , 'none' );
 	$('#navhelper').css('display' , 'block' );
 	//$('#closelayer').css('display' , 'none' );
 }
@@ -278,7 +279,14 @@ function disposeapplicationlayers (option)
 {		
 	var w = $(window).width();
 	var h = $(window).height();
-	var zoom = 80;
+	if ( option == null )
+	{ 
+		if (w < 900 && h < 900 )
+		mobileView = true;
+		else mobileView = false;
+	}
+	else mobileView = option;
+	var zoom = 100;
 	var ratio = w/h;
  	
 	$('#UI').css({'top' : 0 });
@@ -291,9 +299,56 @@ function disposeapplicationlayers (option)
 	$('#PromotionUI').css({'width' : w });
 	$('#PromotionUI').css({'height' : h });
 
-	$('#svg8').attr('width', w);
+/*	$('#svg8').attr('width', w);
 	$('#svg8').attr('height', h);	
  	$("#svg8").attr('viewBox', '-'+((zoom/2))+' -'+(zoom/ratio/2)+' '+zoom+' '+(zoom/ratio));
+ */	if (w>h) {portrait=false;paysage=true;}
+ 	if (w<h) {portrait=true;paysage=false;}
+		if ( portrait == true )
+		{
+//			$('.banner').css('width', '100vw');
+//			$('.banner').attr('left', '0vw');
+			$('#svg8').attr('width', w);
+			$('#svg8').attr('height', h);
+				
+			$("#svg8").attr('viewBox', '-'+zoom/2+' -'+(zoom/2/ratio)+' '+zoom+' '+(zoom/ratio));
+
+		}
+		if ( paysage == true )
+		{
+//			$('.banner').css('width', '70vw');
+//			$('.banner').attr('left', '15vw');
+			$('#svg8').attr('width', w);
+			$('#svg8').attr('height', h);
+			$("#svg8").attr('viewBox', '-'+((zoom*ratio)/2)+' -'+(zoom/2)+' '+(zoom*ratio)+' '+zoom);
+
+		}
+		if ( mobileView == true )
+		{
+			Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatBishop', 'bishop'));
+			Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatRook', 'rook'));
+			Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatKnight', 'knight'));
+			Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatPawn', 'pawn'));
+			Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatQueen', 'queen'));
+			Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatKing', 'king'));
+			wvft = $.extend(true, {}, Pwvft);
+			disposeFlatGameWavefrontsFrom_plateau ();
+			initViewZlock(270, 0, 0, 560);
+
+		}
+		else{
+			Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop', 'bishop'));
+			Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#rook', 'rook'));
+			Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#knight', 'knight'));
+			Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#pawn', 'pawn'));
+			Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#queen', 'queen'));
+			Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#king', 'king'));
+			wvft = $.extend(true, {}, Pwvft);
+			disposeGameWavefrontsFrom_plateau ();
+			initViewZlock(230, 0, 0, 600);
+
+		}
+
 }
 function checkGameState ( )
 {
@@ -305,22 +360,74 @@ function checkGameState ( )
 	}
 	if ( chess.in_check() )
 	{
-		if (chess.turn() == 'w') $('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les blancs sont en Echec');
-		if (chess.turn() == 'b') $('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les noirs sont en Echec');
-		$('#endGameLayer > #endGameLayerContent > #gameHistory').html ( '' );
+	
+		
+		if (chess.turn() == 'w')
+		{
+			$('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les blancs sont en Echec');
+			switchMaterialInWavefrontById(buffer, 'wk', 'incheck');	
+
+
+		}
+		if (chess.turn() == 'b') 
+		{
+			$('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les noirs sont en Echec');
+			$('#endGameLayer > #endGameLayerContent > #gameHistory').html ( '' );
+
+
+		}
 	}
 	
 	if ( chess.in_checkmate() )
 	{
-		if (chess.turn() == 'w') $('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les blancs sont en Echec et mat');
-		if (chess.turn() == 'b') $('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les noirs sont en Echec et mat');
-		$('#endGameLayer > #endGameLayerContent > #gameHistory').html ( chess.pgn({ max_width: 5, newline_char: '<br />' }));
+		if (chess.turn() == 'w') $('#matchResult').text ( 'Les blancs sont en Echec et mat');
+		if (chess.turn() == 'b') $('#matchResult').text ( 'Les noirs sont en Echec et mat');
+		$('#gameHistory').html ( chess.pgn({ max_width: 5, newline_char: '<br />' }));
 	}
-	if ( chess.game_over() | chess.in_check() )
+	if (chess.in_check() )
+	{
+		if (chess.turn() == 'w')
+			switchMaterialInWavefrontById(buffer, 'wk', 'incheck');
+		if (chess.turn() == 'b') 
+			switchMaterialInWavefrontById(buffer, 'bk', 'incheck');	
+		viewChessBoard();
+	}
+	if ( chess.game_over() )
 	{
 		$('#endGameLayer').css('display' , 'block' );
 		$('#navhelper').css('display' , 'none' );
-		playspin = setInterval(spinview, 1);
+		viewChessBoard();
+	}
+}
+function toggleView (view)
+{
+	var w = $(window).width();
+	var h = $(window).height();
+	var ratio = w/h;
+	var z = 100;
+	if (w>h) {portrait=false;paysage=true;}
+ 	if (w<h) {portrait=true;paysage=false;}
+
+	if ( mobileView == true )
+	{
+		if ( portrait )
+		{
+			$('#svg8').attr('width', w);
+			$('#svg8').attr('height', h);	
+			$("#svg8").attr('viewBox', '-'+z/2+' -'+(z/2/ratio)+' '+z+' '+(z/ratio));
+			initViewZlock(270, 0, 0, 1000);
+		}
+		if ( paysage )
+		{
+			$('#svg8').attr('width', w);
+			$('#svg8').attr('height', h);	
+			$("#svg8").attr('viewBox', '-'+((z*ratio)/2)+' -'+(z/2)+' '+(z*ratio)+' '+z);
+			initViewZlock(270, 0, 0, 1000);
+		}
+	}
+	else
+	{
+
 	}
 }
 function closeEndGameLayer ()
@@ -332,22 +439,32 @@ function closeEndGameLayer ()
 $(window).on("load", function() {
 
 	buildPlateau ( );
-	generateMaterialsCSS ('blancs', white);
-	generateMaterialsCSS ('noirs', black);
-	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:255});
+	generateMaterialsCSS ('blancs', {r:253, g:231, b:135});
+	generateMaterialsCSS ('noirs', {r:109, g:102, b:77});
+	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:220});
+
+	generateMaterialsCSS ('HARDbrown', {r:150, g:150, b:150});
+	generateMaterialsCSS ('HARDcream',{r:225, g:225, b:225} );
+
 
 	//audiostart.play();
 
-	disposeapplicationlayers();
 //	showMenu();
 
-	Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop', 'bishop'));
+	Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatBishop', 'bishop'));
+	Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatRook', 'rook'));
+	Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatKnight', 'knight'));
+	Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatPawn', 'pawn'));
+	Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatQueen', 'queen'));
+	Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatKing', 'king'));
+
+/*	Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop', 'bishop'));
 	Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#rook', 'rook'));
 	Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#knight', 'knight'));
 	Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#pawn', 'pawn'));
 	Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#queen', 'queen'));
 	Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#king', 'king'));
-
+*/	
 	disposeGameWavefrontsFrom_plateau ();
 
 	Log ('type plateau[][] : '+typeof(plateau[0][0]));
@@ -357,22 +474,42 @@ $(window).on("load", function() {
 	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board', 'board'));
 	boardbuffer = $.extend(true, {}, boardwvft);
 	
-	initViewZlock();
-	
+	disposeapplicationlayers();
 
-	$('body').on('click', '#close-menu', function() {
-		closeMenu();
-		window.clearInterval(playspin);
+	$('body').on('click', '#uiLayerFooter', function() {
+		closeUi();
+		//window.clearInterval(playspin);
 		
 	});
 	$('body').on('click', '#endGameLayerFooter', function() {
 		closeEndGameLayer();
-		window.clearInterval(playspin);
+		//window.clearInterval(playspin);
 		
 	});
-	$('body').on('click', '#show-menu', function() {
-		showMenu();
-		playspin = setInterval(spinview, 1);
+	$('body').on('click', '#show-ui', function() {
+		showUi();
+		//playspin = setInterval(spinview, 1);
+	});
+	$('body').on('click', '.banner', function() {
+		$(this).css('display', 'none');
+		//playspin = setInterval(spinview, 1);
+	});
+	$('body').on('click', '#toggleViewMobile', function() {
+	disposeapplicationlayers(true);
+	$('.selectedToggle').removeClass('selectedToggle');
+	$('#toggleViewMobile').addClass('selectedToggle');
+	});
+	$('body').on('click', '#toggleViewDesktop', function() {
+	disposeapplicationlayers(false);
+	
+	$('.selectedToggle').removeClass('selectedToggle');
+	$('#toggleViewDesktop').addClass('selectedToggle');
+	});
+	$('body').on('click', '#toggleViewAuto', function() {
+	disposeapplicationlayers();
+	
+	$('.selectedToggle').removeClass('selectedToggle');
+	$('#toggleViewAuto').addClass('selectedToggle');
 	});
 /*	$('body').on('click', '#close-rules', function() {
 		closeRules();
@@ -419,7 +556,8 @@ $(window).on("load", function() {
 	
 	});
 	mc.on("pan", function(ev) {
-	
+	if (!mobileView)
+	{
 
 		rotateViewZlock (ev.velocityY*15, ev.velocityX*15, 0 );
 		$('#csl').text(ZlockANGx+'\n '+ZlockANGy+'\n '+ZlockANGz);
@@ -431,7 +569,7 @@ $(window).on("load", function() {
 			spinning = false;
 		}
 
-
+	}
 	});
 	$('body').on('click', '#QueenPromotion', function() {
 	
@@ -459,7 +597,10 @@ $(window).on("load", function() {
 		else if (mv.color == 'b') generateMaterialsCSS (newPiece, black);
 		
 		closePromotionUI();
-		viewChessBoard();	});
+		viewChessBoard();
+		checkGameState ();
+	});
+
 	$('body').on('click', '#RookPromotion', function() {
 	
 		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'r'});
@@ -486,6 +627,7 @@ $(window).on("load", function() {
 		
 		closePromotionUI();
 		viewChessBoard();
+		checkGameState ();
 	});
 	$('body').on('click', '#KnightPromotion', function() {
 	
@@ -513,6 +655,7 @@ $(window).on("load", function() {
 		
 		closePromotionUI();
 		viewChessBoard();
+		checkGameState ();
 	});
 	$('body').on('click', '#BishopPromotion', function() {
 	
@@ -541,6 +684,7 @@ $(window).on("load", function() {
 		
 		closePromotionUI();
 		viewChessBoard();
+		checkGameState ();
 	});
 	$('body').on('click', '.way', function() {
 		//audiomove.play();
@@ -577,6 +721,7 @@ $(window).on("load", function() {
 			showPromotionUI ();
 		
 		}
+
 		else
 		{
 			var move = chess.move(way2[selectedway].move);
@@ -615,10 +760,10 @@ $(window).on("load", function() {
 			Log(chess.pgn({ max_width: 5, newline_char: '\n' }));
 			
 			checkGameState ();
-			
-			move
 		}
 		
+		
+				
 	});
 	$('body').on('click', '.piece', function() {
 	
@@ -637,15 +782,19 @@ Log ('id : '+id);
 	});
 
 	$('#svg8').on('mousewheel', function(event) {
+	if (!mobileView)
+	{
+
 
 		translateView (0, 0, event.deltaY*event.deltaFactor );
-		viewChessBoard()
+		viewChessBoard();
+	}
 	});
 	$(window).on('resize', function() {
 		disposeapplicationlayers();
 	});
 	
-	playspin = setInterval(spinview, 50);
+	//playspin = setInterval(spinview, 50);
 	
 	function spinview(){	
 		
@@ -692,6 +841,46 @@ function disposeGameWavefrontsFrom_plateau ()
 				if ( ChessPiece(piece).type == 'queen'  ) TMPwvft = $.extend(true, {}, Qwvft);
 
 				if ( ChessPiece(piece).color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+				putPieceWavefrontToSquare (TMPwvft, XYToSquare(i, j));
+	
+				if ( firstAdd == false )
+				{
+					mergeWavefronts (wvft, TMPwvft);
+				}
+
+				if ( firstAdd == true )
+				{
+					wvft = $.extend(true, {}, TMPwvft);
+
+					firstAdd = false;
+				}
+				if ( ChessPiece(piece).color == 'w') switchMaterialInWavefront(wvft, ChessPiece(piece).type, 'blancs');
+				if ( ChessPiece(piece).color == 'b') switchMaterialInWavefront(wvft, ChessPiece(piece).type, 'noirs');
+				changeId(wvft, ChessPiece(piece).type, piece);
+			}
+	buffer = $.extend(true, {}, wvft);
+}
+function disposeFlatGameWavefrontsFrom_plateau ()
+{
+	var firstAdd = true;
+
+	for ( var j = 0 ;  j < 8 ; j++ )
+		for ( var i = 0 ; i < 8 ; i++ )
+			if ( plateau[i][j] != "free" )
+			{
+				var piece = plateau[i][j];
+				Log ('found '+plateau[i][j]+' on '+i+', '+j+' > '+ChessPiece(plateau[i][j]+"").type);
+				
+				if ( ChessPiece(piece).type == 'pawn'   ) TMPwvft = $.extend(true, {}, Pwvft);
+				if ( ChessPiece(piece).type == 'rook'   ) TMPwvft = $.extend(true, {}, Rwvft);
+				if ( ChessPiece(piece).type == 'knight' ) TMPwvft = $.extend(true, {}, Nwvft);
+				if ( ChessPiece(piece).type == 'bishop' ) TMPwvft = $.extend(true, {}, Bwvft);
+				if ( ChessPiece(piece).type == 'king'   ) TMPwvft = $.extend(true, {}, Kwvft);
+				if ( ChessPiece(piece).type == 'queen'  ) TMPwvft = $.extend(true, {}, Qwvft);
+				
+				translateWavefront (TMPwvft, 0, 0, 20)
+				
+				//if ( ChessPiece(piece).color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
 				putPieceWavefrontToSquare (TMPwvft, XYToSquare(i, j));
 	
 				if ( firstAdd == false )

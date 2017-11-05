@@ -3,7 +3,7 @@
 	src: url('../font/Cantarell-Regular.ttf');
 }
 body {
-	font: 400 1.2em Cantarel, sans-serif;
+	font: 400 1em Cantarel, sans-serif;
 	line-height: 1.3;
 	color: #fff;
 	background-color: #fff;
@@ -29,6 +29,13 @@ h2
 	color: #fff;
 	margin-top: 2em;
 }
+.selectedToggle
+{
+	border: solid;
+	border-width: 0px 0px medium 0px;
+}
+
+
 #UI_content h2:first-child {
 
 	margin-top: 0em;
@@ -65,7 +72,7 @@ p
 	width: 100%;
 }
 #navhelper a {
-	color: #333;
+	color: #fff;
 	font: 800 1.3em Cantarel, sans-serif !important;
 	text-decoration: none;
 	cursor: pointer;
@@ -82,62 +89,12 @@ p
 	float: left;
 	margin-left: 0.5em;
 }
-#close-footer {
-	color: #000;
-	font: 800 1.3em Cantarel, sans-serif !important;
-	background-color: #ccc !important;
-	opacity: 1.0;
-	padding: 1em;
-	text-align: center;
-}
-#close-menu {
-	color: #000;
-	cursor: pointer;
-}
-#close-menu:hover {
-	color: #0d0;
-}
+
 #show-menu:hover {
 	color: #fff;
 }
 
-#UI, #PromotionUI{
-	position: fixed;
-	z-index: 1100;
-	overflow: auto !important;
-	padding: 0px;
 
-}
-#RulesUI{
-	position: fixed;
-	z-index: 1100;
-	overflow: auto !important;
-	padding: 0px;
-
-}
-
-
-#UI_content, #PromotionUI_content {
-	font: 400 1.2em Cantarel, sans-serif !important;
-	margin: 0em;
-	padding: 1em;
-
-
-	background-color: #000 !important;
-	opacity: 0.8;
-	/*overflow: hidden !important;*/
-}
-
-#RulesUI_content {
-	font: 400 1.2em Cantarel, sans-serif !important;
-	margin: 0em;
-	padding: 1em;
-
-
-	background-color: #000 !important;
-	opacity: 0.8;
-
-}
 .layer
 {
 		padding-left: 1em;
@@ -153,39 +110,151 @@ p
 
 	}
 }
+@media screen and (max-width: 600px) {
+
+	.layer
+	{
+			padding-left: 0.5em;
+			padding-right: 0.5em;
+
+	}
+}
 /*========================================================*/
 /*============      endGameLayer        =================*/
 /*======================================================*/
 
-#endGameLayer
+
+
+
+/*=============================*/
+/*========================================================*/
+/*============      endGameLayer        =================*/
+/*======================================================*/
+.toggle
+{
+	white-space: nowrap;	
+	cursor: pointer;
+}
+p.toggleArea
+{
+
+	line-height: 2em; /* hauteur de ligne (identique) */
+	text-align: left !important;
+}
+.layerContainer
 {
 	position: fixed;
 	z-index: 1100;
 	padding: 0px;
 
-	width: 70%;
-	height: 70vw;
+	width: 100%;
+	height: 100%;
 	top:0px;
 
-	overflow: hidden !important;
-  margin-top: 15vh; /* poussé de la moitié de hauteur de viewport */
+	overflow: auto !important;
+}
+.layerFooter
+{
+	color: #000;
+	font: 800 1.6em Cantarel, sans-serif !important;
+  line-height: 1.5em; /* hauteur de ligne (identique) */
+	background-color: #ccc !important;
+	opacity: 1.0;
+	padding: 1em;
 
-  margin-left: 15vw; /* poussé de la moitié de hauteur de viewport */
+	text-align: right;
+
+
+  white-space: nowrap; /* interdiction de passer à la ligne */
 
 
 }
+.layerFooter:hover {
+	color: #0d0;
+	background-color: #eee !important;
+}
+.banner
+{
+	position: fixed;
+	background-color: #000 !important;
 
-#endGameLayerContent
+	opacity: 0.9;
+	font: 400 1.2em Cantarel, sans-serif !important;
+	top:25vh;
+	left:10vw;
+	height: 50vh;
+	width: 80vw;
+
+	overflow: hidden !important;
+	z-index: 2000;
+	/*overflow: hidden !important;*/
+}
+@media screen and (max-width: 1000px)
+{
+
+.banner
+{
+	position: fixed;
+	background-color: #000 !important;
+
+	opacity: 0.9;
+	font: 400 1.2em Cantarel, sans-serif !important;
+	top:25vh;
+	left:0vw;
+	height: 50vh;
+	width: 100vw;
+
+	overflow: hidden !important;
+	z-index: 2000;
+	/*overflow: hidden !important;*/
+}
+
+}
+@media screen and (orientation: portrait)
+{
+
+.banner
+{
+	position: fixed;
+	background-color: #000 !important;
+
+	opacity: 0.9;
+	font: 400 1.2em Cantarel, sans-serif !important;
+	top:25vh;
+	left:0vw;
+	height: 50vh;
+	width: 100vw;
+
+	overflow: hidden !important;
+	z-index: 2000;
+	/*overflow: hidden !important;*/
+}
+
+}
+
+
+
+
+.banner h1
+{
+
+	font: 400 2em Cantarel, sans-serif !important;
+	line-height: 50vh;
+	text-align: center;	
+}
+
+
+.layer
 {
 
 	background-color: #000 !important;
 	opacity: 0.8;
 	font: 400 1.2em Cantarel, sans-serif !important;
-	min-height: 50vh;
+	min-height: 86vh;
 	margin: 0em;	overflow: auto !important;
 	/*overflow: hidden !important;*/
 }
-#endGameLayer h1
+
 {
 	color: #fff;
 	font: 400 2em Cantarel, sans-serif !important;
@@ -193,55 +262,29 @@ p
 	margin: 0em;
 
 }
-#endGameLayer p
+.layer p 
 {
 	color: #fff;
-	font: 400 1em Cantarel, sans-serif !important;
-	padding: 1em;
+
+	padding-bottom: 1em;
 	margin: 0em;
 
 }
-#endGameLayerFooter
-{
-	color: #000;
-	font: 800 1.6em Cantarel, sans-serif !important;
-  line-height: 20vh; /* hauteur de ligne (identique) */
-	background-color: #ccc !important;
-	opacity: 1.0;
-
-	text-align: center;
-	height: 20vh;
-
-  white-space: nowrap; /* interdiction de passer à la ligne */
 
 
-}
-/*=============================*/
-
-@media screen and (min-width: 1000px) {
-
-	#UI_content, #PromotionUI_content, #RulesUI_content {
-		padding-left: 20vh;
-		padding-right: 20vh;
-	}
-}
 
 /* 3D renderer */
 
-.HARDbrown {
-	fill: #773800 !important;
-	opacity: 1.0 !important;
-}
-.HARDcream {
-	fill: #d5ca71 !important;
-	opacity: 1.0 !important;
-}
 
 .way {
 	fill: #0d0 !important;
 	opacity: 0.5 !important;
 }
 .way.piece {
+	fill: #d00 !important;
+	opacity: 0.5 !important;
+}
+.incheck {
 	fill: #d00 !important;
 	opacity: 0.5 !important;
 }

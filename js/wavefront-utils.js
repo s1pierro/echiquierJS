@@ -330,6 +330,7 @@ function clearWayables ()
 
 function MovePiece (p, x, y, flags)
 {
+
 	var q = 0.01;
 	for ( var i = 0 ; i < 100 ; i++ )
 	{

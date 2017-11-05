@@ -8,8 +8,16 @@
 </head>
 <body>
 <div id="application">
-	<div id="UI" hidden>
-		<div id="UI_content">
+	<div id="ui" class="layerContainer" hidden>
+		<div  class="layer">
+			<h3>Partie locale ( sans IA )</h3>
+			<p>
+				<a><i class="icon-trash"></i> réinitialiser le plateau </a>
+			</p>
+			<h2>Parties en ligne</h2>
+			<p>
+				Les parties en ligne sont disponible <a>ici</a>
+			</p>
 
 			<h2>À propos de cet échiquier</h2>
 			<p>
@@ -22,12 +30,14 @@
 				 <br>
 				 <br>
 				 <a href="https://github.com/s1pierro/echiquierJS"><i class="icon-github-circled"></i> Voir les sources sur Github</a>
+				 <br>
+				 <a href="http://s1pierro.free.fr/index.php"><i class="icon-s1p-fnt-d"></i>Site le l'auteur</a>
 			</p>
 			
 			<h3>Etat d'avancement</h3>
 			<p>
-				L'echiquier est jouable en local, il reste a mettre en place le message de fin de partie.
-				 L'ecriture d'un adversaire IA n'est pas a l'ordre du jour. L'objectif actuel est de
+				L'echiquier est jouable en local. L'ecriture d'un adversaire IA n'est pas a
+				l'ordre du jour. L'objectif actuel est de
 				 proposer une plateforme minimaliste pour des parties en ligne entre humains.
 			</p>
 			<h3>Performances</h3>
@@ -56,16 +66,25 @@
 				Modifiez la vue a l'aide de la souris ou surface tactile
 			</li>
 			</ul>
+
+			<h2>Préference</h2>
+			<h3>Affichage</h3>
+			<p class="toggleArea">
+			<span id="toggleViewAuto" class="toggle selectedToggle"><i class="icon-cog"></i>Automatique.</span>
+			<span id="toggleViewMobile" class="toggle" ><i class="icon-mobile"></i>Forcer la vue  mobile.</span>
+			<span id="toggleViewDesktop" class="toggle" ><i class="icon-laptop"></i>Forcer la vue ordinateur.</span>
+			</p>
+			<!--h3>Theme</h3-->
 		</div>
-		<div id='close-footer' >
-			<span id='close-menu' >
+		<div id='uiLayerFooter' class="layerFooter" >
+			<span>
 				ok <i class="icon-ok"></i>
 			</span>	
 		</div>
 	</div>
 	
-	<div id="PromotionUI" hidden>
-		<div id="PromotionUI_content">
+	<div id="PromotionUI" class="layerContainer" hidden>
+		<div class="layer">
 
 			<h2>Choisissez une piece pour la promotion</h2>
 			<ul>
@@ -84,14 +103,15 @@
 			</ul>
 		</div>
 	</div>
-	<div id="endGameLayer" hidden >
-		<div id="endGameLayerContent" class="layer">
+	<div id="endGameLayer" class="layerContainer"  hidden>
+		<div  class="layer">
 
-			<h1 id="matchResult">resultat</h1>
+			<h2 id="matchResult">resultat</h2>
 			<p id="gameHistory">
+	
 				</p>
 		</div>
-		<div id="endGameLayerFooter" class="layer">
+		<div id="endGameLayerFooter" class="layerFooter" >
 			<span>
 				ok <i class="icon-ok"></i>
 			</span>			
@@ -151,7 +171,7 @@
 			</cc:Work>
 			</rdf:RDF>
 		</metadata> 
-		<rect id="background" y="-100" x="-100" height="200" width="200"
+		<rect id="background" y="-200" x="-200" height="400" width="400"
 			style="opacity:1;vector-effect:none;fill:url(#linearGradient4493);fill-opacity:1.0;stroke:none;stroke-width:0.49999997;stroke-linecap:round;stroke-linejoin:bevel;stroke-miterlimit:4;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:0.94618835;paint-order:fill markers stroke" />
 		<g id="renderbox">
 		</g>
@@ -159,15 +179,17 @@
 	</div>
 	
 	
-	
+	<div class="banner" >
+	<h1>Échiquier Js</h1>
+	</div>
 	<div id="navhelper" >
 		<span class="left-side" >
-			<a href="http://s1pierro.free.fr/index.php"><i class="icon-s1p-fnt-c"></i></a>
+			<a><i class="icon-"></i></a>
 		</span>
 		<span class="right-side" >
-			<a id='show-menu'><i class="icon-info"></i></a>
-			<a id='show-rules'><i class="icon-book"></i></a>
-			<a><i class="icon-cog"></i></a>
+			<a id='show-ui'><i class="icon-menu"></i></a>
+			<!--a id='show-rules'><i class="icon-book"></i></a>
+			<a><i class="icon-cog"></i></a-->
 		</span>	
 	</div>
 	<div id="closelayer" hidden >
@@ -720,7 +742,203 @@ f 5 4 10
 f 3 6 1
 f 8 2 1
 </div>
-
+<div id="flatPawn" hidden >
+# Blender v2.79 (sub 0) OBJ File: 'flatChessBoard.blend'
+# www.blender.org
+mtllib flatPawn.mtl
+o flatPawn
+v 0.707680 13.023005 -35.513752
+v -12.304596 13.023005 -20.704113
+v 12.138985 13.023005 -19.598717
+v 5.888477 13.028375 -13.441269
+v 17.754662 13.023004 -10.154526
+v -20.804398 13.023004 -0.000000
+v 20.804398 13.023004 -0.000000
+v -7.487938 13.023005 -13.924736
+v -17.910027 13.023004 -10.154526
+v 11.118164 13.023005 -29.527206
+v -10.618896 13.023005 -29.650351
+usemtl pawn
+s off
+f 8 6 4
+f 8 11 2
+f 11 4 1
+f 10 4 3
+f 4 7 5
+f 7 4 6
+f 8 4 11
+f 6 8 9
+f 1 4 10
+</div>
+<div id="flatRook" hidden >
+# Blender v2.79 (sub 0) OBJ File: 'flatChessBoard.blend'
+# www.blender.org
+mtllib flatRook.mtl
+o flatRook
+v 0.707687 13.023005 -40.449951
+v -11.036972 13.023004 -46.378853
+v 12.138992 13.023004 -42.486572
+v 9.788479 13.028374 -13.441269
+v 17.754669 13.023003 -10.154526
+v -20.804390 13.023003 -0.000000
+v 20.804405 13.023003 -0.000000
+v -10.154533 13.023004 -12.316456
+v -17.910019 13.023003 -10.154526
+usemtl rook
+s off
+f 8 7 4
+f 8 1 2
+f 1 4 3
+f 4 7 5
+f 7 8 6
+f 8 4 1
+f 6 8 9
+</div>
+<div id="flatKnight" hidden >
+o flatKnight
+v 14.860291 13.023004 -37.150703
+v 6.100746 13.023004 -40.449951
+v -13.436874 13.023004 -33.435646
+v -17.832352 13.023003 -18.327682
+v 17.336990 13.023003 -23.033440
+v 6.934799 13.023003 -15.355629
+v -4.382347 13.023004 -46.068130
+v 17.754662 13.023002 -10.154526
+v -20.804398 13.023002 -0.000000
+v 20.804398 13.023002 -0.000000
+v -12.878922 13.023003 -14.117271
+v -2.724396 13.023003 -22.538094
+v -10.154541 13.023003 -12.316456
+v -17.910027 13.023002 -10.154526
+usemtl knight
+s off
+f 13 6 12
+f 12 4 11
+f 4 12 3
+f 2 12 1
+f 3 2 7
+f 12 2 3
+f 1 12 5
+f 6 10 8
+f 10 13 9
+f 9 13 14
+f 12 6 5
+f 6 13 10
+</div>
+<div id="flatBishop" hidden >
+# Blender v2.79 (sub 0) OBJ File: 'flatChessBoard.blend'
+# www.blender.org
+mtllib flatBishop.mtl
+o flatBishop_Untitled
+v -4.382347 13.022991 -46.068134
+v 3.280434 13.022991 -39.273457
+v -15.255188 13.022991 -27.550884
+v 12.597038 13.022991 -23.514050
+v 6.934799 13.022991 -15.355633
+v 2.928299 13.022991 -24.204975
+v 17.754662 13.022991 -10.154530
+v -20.804398 13.022991 -0.000004
+v 20.804398 13.022991 -0.000004
+v 8.352188 13.022991 -33.092709
+v -10.154541 13.022991 -12.316460
+v -17.910034 13.022991 -10.154530
+usemtl bishop
+s off
+f 11 8 9
+f 11 6 3
+f 1 3 2
+f 6 4 10
+f 5 9 7
+f 6 5 4
+f 3 6 2
+f 8 11 12
+f 5 11 9
+f 11 5 6
+</div>
+<div id="flatQueen" hidden >
+# Blender v2.79 (sub 0) OBJ File: 'flatChessBoard.blend'
+# www.blender.org
+mtllib flatQueen.mtl
+o flatQueen
+v -6.467688 -1.136964 -41.948624
+v -13.761850 0.000001 -49.400291
+v 4.420261 0.000002 -42.167038
+v 8.657269 0.005371 -13.441269
+v 17.754662 0.000000 -10.154526
+v -20.804398 0.000000 0.000000
+v 20.804398 0.000000 0.000000
+v -9.366188 0.000001 -12.316456
+v -17.910027 0.000000 -10.154526
+v 11.404060 0.002686 -28.215269
+v -13.951946 0.000001 -28.466623
+v 14.331642 0.001344 -49.083435
+v -10.674570 0.000001 -28.303291
+v 8.171272 0.004029 -28.173832
+v -16.840137 0.000002 -46.408566
+v -3.441879 -1.136964 -49.630905
+v 0.386246 -0.568481 -50.325546
+v -13.447884 0.000001 -20.309875
+v 11.841774 0.004700 -20.807549
+v 9.375954 0.000674 -49.040657
+usemtl queen
+s off
+f 12 3 10
+f 8 7 4
+f 13 18 14
+f 14 10 3
+f 18 19 14
+f 15 11 1
+f 1 2 15
+f 17 16 3
+f 12 20 3
+f 3 16 1
+f 1 11 13
+f 13 14 1
+f 3 1 14
+f 8 9 6
+f 6 7 8
+f 4 19 18
+f 7 5 4
+f 4 18 8
+</div>
+<div id="flatKing" hidden >
+# Blender v2.79 (sub 0) OBJ File: 'flatChessBoard.blend'
+# www.blender.org
+mtllib flatKing.mtl
+o flatKing_Cube.010
+v -5.029608 11.886027 -47.713467
+v -6.761686 13.022993 -38.694160
+v 6.373058 13.022993 -39.284618
+v 8.657269 13.028362 -13.441269
+v 17.754662 13.022991 -10.154526
+v -20.804398 13.022991 0.000000
+v 20.804398 13.022991 0.000000
+v -9.366188 13.022992 -12.316456
+v -17.910027 13.022991 -10.154526
+v 13.874706 13.025677 -29.244705
+v -17.349085 13.022992 -30.628439
+v 14.743416 13.024335 -39.921455
+v -7.956860 13.022992 -28.303291
+v 8.171272 13.027020 -28.173832
+v -15.996000 13.022993 -40.211357
+v 5.408142 11.886027 -44.689613
+usemtl king
+s off
+f 3 2 13
+f 8 9 6
+f 6 7 8
+f 7 5 4
+f 8 7 4
+f 14 10 3
+f 8 4 13
+f 15 11 2
+f 13 4 14
+f 10 12 3
+f 3 16 2
+f 2 11 13
+f 16 1 2
+f 13 14 3
+</div>
 <div id="board" hidden >
 # Blender v2.79 (sub 0) OBJ File: ''
 # www.blender.org
