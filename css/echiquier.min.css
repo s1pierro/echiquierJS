@@ -1,0 +1,41 @@
+@font-face{font-family:'Cantarel';src:url('../font/Cantarell-Regular.ttf');}
+body{font:400 1em Cantarel, sans-serif;line-height:1.3;color:#fff;background-color:#fff;margin:0px !important;overflow:hidden;}
+a{color:#08d;font-weight:600;text-decoration:none;}
+h1{font:600 1.6em Cantarel, sans-serif;color:#fff;}
+h2{font:400 1.5em Cantarel, sans-serif;border:solid;border-width:0px 0px 1px 0px;padding-bottom:1em;color:#fff;margin-top:2em;}
+.selectedToggle{border:solid;border-width:0px 0px medium 0px;}
+#UI_content h2:first-child{margin-top:0em;}
+#endGameLayer h2:first-child{margin-top:1em;}
+h3{font:400 1.3em Cantarel, sans-serif;line-height:1.3;color:#fff;}
+h4{font:600 1.2em Cantarel, sans-serif;line-height:1.3;color:#ccc;}
+p{text-align:justify;color:#ddd;}
+#navhelper{color:#000;font:400 1.3em Cantarel, sans-serif !important;line-height:1.4;background-color:#0000 !important;opacity:0.8;position:fixed;top:0;left:0;z-index:1000;width:100%;}
+#navhelper a{color:#fff;font:800 1.3em Cantarel, sans-serif !important;text-decoration:none;cursor:pointer;}
+#navhelper a:hover{color:#fff;text-decoration:none;}
+.right-side{float:right;margin-right:0.5em;}
+.left-side{float:left;margin-left:0.5em;}
+#show-menu:hover{color:#fff;}
+.layer{padding-left:1em;padding-right:1em;}
+@media screen and (min-width:1000px){.layer{padding-left:20vh;padding-right:20vh;}
+}
+@media screen and (max-width:600px){.layer{padding-left:0.5em;padding-right:0.5em;}
+}
+.toggle{white-space:nowrap;cursor:pointer;}
+p.toggleArea{line-height:2em;text-align:left !important;}
+.layerContainer{position:fixed;z-index:1100;padding:0px;width:100%;height:100%;top:0px;overflow:auto !important;}
+.layerFooter{color:#000;font:800 1.6em Cantarel, sans-serif !important;line-height:1.5em;background-color:#ccc !important;opacity:1.0;padding:1em;text-align:right;}
+.layerFooter:hover{color:#0d0;background-color:#eee !important;}
+.banner{display:flex;position:fixed;background-color:#444 !important;opacity:0.95;font:400 1.2em Cantarel, sans-serif !important;top:25vh;left:10vw;height:50vh;width:80vw;overflow:hidden !important;z-index:2000;}
+.banner svg{margin:auto;}
+.banner h1{text-align:center;margin-left:auto;width:100%;white-space:nowrap;height:3em;}
+.banner .indication{align-self:flex-end;margin:1em;}
+@media screen and (max-width:1000px){.banner{position:fixed;opacity:0.9;font:400 1.2em Cantarel, sans-serif !important;top:25vh;left:0vw;height:50vh;width:100vw;overflow:hidden !important;z-index:2000;}
+}
+@media screen and (orientation:portrait){.banner{position:fixed;top:25vh;left:0vw;height:50vh;width:100vw;}
+}
+.layer{background-color:#000 !important;opacity:0.8;font:400 1.2em Cantarel, sans-serif !important;min-height:86vh;margin:0em;overflow:auto !important;}
+{color:#fff;font:400 2em Cantarel, sans-serif !important;padding:0em;margin:0em;}
+.layer p{color:#fff;padding-bottom:1em;margin:0em;}
+.way{fill:#0d0 !important;opacity:0.5 !important;}
+.way.piece{fill:#d00 !important;opacity:0.5 !important;}
+.incheck{fill:#d00 !important;opacity:0.5 !important;}
