@@ -384,6 +384,7 @@ $(window).on("load", function() {
 	{
 		view = 'auto';
 		Cookies.set('vue', 'auto');
+		Log ('setting cookie vue');
 	}
 	else
 	{
@@ -455,7 +456,7 @@ $(window).on("load", function() {
 		disposeapplicationlayers('auto');
 	});
 	$('.selectedToggle').removeClass('selectedToggle');
-	var tmp = Cookies.set('vue');
+	var tmp = Cookies.get('vue');
 	if (tmp == 'auto') $('#toggleViewAuto').addClass('selectedToggle');
 	if (tmp == 'mobile') $('#toggleViewMobile').addClass('selectedToggle');
 	if (tmp == 'desktop') $('#toggleViewDesktop').addClass('selectedToggle');
@@ -499,12 +500,7 @@ $(window).on("load", function() {
 		rotateViewZlock (ev.velocityY*15, ev.velocityX*15, 0 );
 		$('#csl').text(ZlockANGx+'\n '+ZlockANGy+'\n '+ZlockANGz);
 		viewChessBoard();
-		
-		if ( spinning == true )
-		{
-			window.clearInterval(playspin);
-			spinning = false;
-		}
+
 
 	}
 	});
