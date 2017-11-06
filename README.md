@@ -2,9 +2,9 @@
   <img src="https://github.com/s1pierro/echiquierJS/blob/master/pictures/gitReadmeBanner.svg">
 </p>
 
-# Echiquier js 
+# Échiquier svg / js 
 
-[js /svg chessboard](https://s1pierro.github.io/echiquierJS/echiquier.html)
+[Play it](https://s1pierro.github.io/echiquierJS/echiquier.html)
 
 a little 3d chess game using HTML/JS/SVG soft rendering
 
