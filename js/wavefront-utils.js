@@ -356,14 +356,22 @@ function MovePiece (p, x, y, flags)
 		target = plateau[newX][newY]+"";
 		killPiece (plateau[newX][newY]);
 		switchMaterial ( target, "dead");
+		
+		
 	//	audiocapture.play();
 	}
 	if ( flags == 'e')
 	{
 		if ( newX > 4 )
+		{
 			target = plateau[newX-1][newY]+"";
+			plateau[newX-1][newY] = 'free';
+		}
 		else
+		{
 			target = plateau[newX+1][newY]+"";
+			plateau[newX+1][newY] = 'free';
+		}	
 		killPiece (target)
 		audiocapture.play();
 	}

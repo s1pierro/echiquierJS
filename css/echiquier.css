@@ -176,9 +176,9 @@ p.toggleArea
 { 
 	display: flex;
 	position: fixed;
-	background-color: #000 !important;
+	background-color: #444 !important;
 
-	opacity: 0.9;
+	opacity: 0.95;
 	font: 400 1.2em Cantarel, sans-serif !important;
 	top:25vh;
 	left:10vw;
@@ -217,7 +217,7 @@ p.toggleArea
 .banner
 {
 	position: fixed;
-	background-color: #000 !important;
+
 
 	opacity: 0.9;
 	font: 400 1.2em Cantarel, sans-serif !important;

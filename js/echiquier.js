@@ -1,5 +1,4 @@
-var selectedfaces = [];
-var nselectedfaces = 0;
+
 var playspin;
 var spinning = false;
 		var mx = 0;
@@ -14,6 +13,7 @@ var Bwvft = {};
 var Qwvft = {};
 var Kwvft = {};
 var TMPwvft = {};
+
 var promotion= {from: 'a1', to:'a3', promo:'n'};
 var selectedway;
 var nWay = 0;
@@ -83,10 +83,10 @@ function ChessPiece  ( p )
 				px = i;
 				py = j;
 			}
-	if ( p.match(/^[wb]p[1-8]/gi)) ptype = "pawn";
-	if ( p.match(/^[wb]t[1-2]/gi)) ptype = "rook";
-	if ( p.match(/^[wb]c[1-2]/gi)) ptype = "knight";
-	if ( p.match(/^[wb]f[1-2]/gi)) ptype = "bishop";
+	if ( p.match(/^[wb]p/gi)) ptype = "pawn";
+	if ( p.match(/^[wb]t/gi)) ptype = "rook";
+	if ( p.match(/^[wb]c/gi)) ptype = "knight";
+	if ( p.match(/^[wb]f/gi)) ptype = "bishop";
 	if ( p.match(/^[wb]q/gi)) ptype = "queen";
 	if ( p.match(/^[wb]k/gi)) ptype = "king";		
 	
@@ -351,6 +351,8 @@ function disposeapplicationlayers (option)
 			initViewZlock(230, 0, 0, 600);
 
 		}
+		
+		Log ( plateau );
 
 }
 function checkGameState ( )
@@ -588,8 +590,9 @@ $(window).on("load", function() {
 
 		var newPiece = mv.color+'q1';
 		TMPwvft = $.extend(true, {}, 	Qwvft);
-		if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
-		putPieceWavefrontToSquare (TMPwvft, mv.to)
+		if ( view == 'mobile' ) translateWavefront (TMPwvft, 0, -13, 23);
+		else if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+				putPieceWavefrontToSquare (TMPwvft, mv.to)
 		mergeWavefronts (wvft, TMPwvft);
 		changeId(wvft, 'queen', newPiece);
 		if ( mv.color == 'w') switchMaterialInWavefrontById(wvft, newPiece, 'blancs');	
@@ -617,8 +620,9 @@ $(window).on("load", function() {
 
 		var newPiece = mv.color+'t3';
 		TMPwvft = $.extend(true, {}, 	Rwvft);
-		if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
-		putPieceWavefrontToSquare (TMPwvft, mv.to)
+		if ( view == 'mobile' ) translateWavefront (TMPwvft, 0, -13, 23);
+		else if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+				putPieceWavefrontToSquare (TMPwvft, mv.to)
 		mergeWavefronts (wvft, TMPwvft);
 		changeId(wvft, 'rook', newPiece);
 		if ( mv.color == 'w') switchMaterialInWavefrontById(wvft, newPiece, 'blancs');	
@@ -645,8 +649,9 @@ $(window).on("load", function() {
 
 		var newPiece = mv.color+'c3';
 		TMPwvft = $.extend(true, {}, 	Nwvft);
-		if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
-		putPieceWavefrontToSquare (TMPwvft, mv.to)
+		if ( view == 'mobile' ) translateWavefront (TMPwvft, 0, -13, 23);
+		else if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+				putPieceWavefrontToSquare (TMPwvft, mv.to)
 		mergeWavefronts (wvft, TMPwvft);
 		changeId(wvft, 'knight', newPiece);
 		if ( mv.color == 'w') switchMaterialInWavefrontById(wvft, newPiece, 'blancs');	
@@ -674,7 +679,10 @@ $(window).on("load", function() {
 
 		var newPiece = mv.color+'f3';
 		TMPwvft = $.extend(true, {}, 	Bwvft);
-		if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+		
+		if ( view == 'mobile' ) translateWavefront (TMPwvft, 0, -13, 23);
+		else if ( mv.color == 'w') rotateWavefront (TMPwvft, 0, 180, 0);
+		
 		putPieceWavefrontToSquare (TMPwvft, mv.to)
 		mergeWavefronts (wvft, TMPwvft);
 		changeId(wvft, 'bishop', newPiece);
@@ -834,7 +842,7 @@ function disposeGameWavefrontsFrom_plateau ()
 			if ( plateau[i][j] != "free" )
 			{
 				var piece = plateau[i][j];
-				Log ('found '+plateau[i][j]+' on '+i+', '+j+' > '+ChessPiece(plateau[i][j]+"").type);
+				//Log ('found '+plateau[i][j]+' on '+i+', '+j+' > '+ChessPiece(plateau[i][j]+"").type);
 				
 				if ( ChessPiece(piece).type == 'pawn'   ) TMPwvft = $.extend(true, {}, Pwvft);
 				if ( ChessPiece(piece).type == 'rook'   ) TMPwvft = $.extend(true, {}, Rwvft);
@@ -862,6 +870,8 @@ function disposeGameWavefrontsFrom_plateau ()
 				changeId(wvft, ChessPiece(piece).type, piece);
 			}
 	buffer = $.extend(true, {}, wvft);
+	LogPlateau();
+
 }
 function disposeFlatGameWavefrontsFrom_plateau ()
 {
@@ -872,7 +882,7 @@ function disposeFlatGameWavefrontsFrom_plateau ()
 			if ( plateau[i][j] != "free" )
 			{
 				var piece = plateau[i][j];
-				Log ('found '+plateau[i][j]+' on '+i+', '+j+' > '+ChessPiece(plateau[i][j]+"").type);
+				//Log ('found '+plateau[i][j]+' on '+i+', '+j+' > '+ChessPiece(plateau[i][j]+"").type);
 				
 				if ( ChessPiece(piece).type == 'pawn'   ) TMPwvft = $.extend(true, {}, Pwvft);
 				if ( ChessPiece(piece).type == 'rook'   ) TMPwvft = $.extend(true, {}, Rwvft);
@@ -905,5 +915,17 @@ function disposeFlatGameWavefrontsFrom_plateau ()
 				changeId(wvft, ChessPiece(piece).type, piece);
 			}
 	buffer = $.extend(true, {}, wvft);
+	LogPlateau();
 }
+function LogPlateau()
+{
+for ( var i = 0 ; i < 8 ; i++ )
+{
+
+Log(plateau[i][0]+' '+plateau[i][1]+' '+plateau[i][2]+' '+plateau[i][3]+' '+plateau[i][4]+' '+plateau[i][5]+' '+plateau[i][6]+' '+plateau[i][7]);
+
+}
+
+}
+
 	
