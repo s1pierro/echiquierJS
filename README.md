@@ -1,12 +1,11 @@
 <p align="center">
   <img src="https://github.com/s1pierro/echiquierJS/blob/master/pictures/gitReadmeBanner.svg">
 </p>
+[Play it](https://s1pierro.github.io/echiquierJS/echiquier.html)
 
 # Échiquier svg / js 
 
-[Play it](https://s1pierro.github.io/echiquierJS/echiquier.html)
-
-a little 3d chess game using HTML/JS/SVG soft rendering
+A little 3d chess game using HTML/JS/SVG soft rendering
 
 ### code
 HTML, CSS, SVG, Javascript, jQUERY, [chess.js](https://github.com/jhlywa/chess.js/blob/master/README.md) and [Hammer js](https://hammerjs.github.io/getting-started/)
