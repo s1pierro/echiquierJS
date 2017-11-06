@@ -1,3 +1,6 @@
+<p align="center">
+  <img src="https://github.com/s1pierro/echiquierJS/blob/master/pictures/gitReadmeBanner.svg">
+</p>
 # Echiquier js 
 
 [L'échquier de s1pierro](https://s1pierro.github.io/echiquierJS/echiquier.html)
