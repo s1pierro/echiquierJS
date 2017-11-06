@@ -8,7 +8,7 @@ a little 3d chess game using HTML/JS/SVG soft rendering
 HTML, CSS, SVG, Javascript, jQUERY, [chess.js](https://github.com/jhlywa/chess.js/blob/master/README.md) and [Hammer js](https://hammerjs.github.io/getting-started/)
 
 ### state
-This chessbor is localy usable.
+This chessboard is localy usable.
 
 ### Note
 You can use this board offline by [downloading the project](https://github.com/s1pierro/echiquierJS/archive/master.zip) and opening "echiquier.html". Using a modern, up-to-date web browser is highly recommended.
