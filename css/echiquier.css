@@ -185,8 +185,9 @@ p.toggleArea
 	/*overflow: hidden !important;*/
 }
 .banner svg
-{ 
-
+{ 	height: 49vh;
+	width: auto;
+	
 	margin: auto;
 	
 }

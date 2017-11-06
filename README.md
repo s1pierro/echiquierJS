@@ -5,11 +5,13 @@
 a little 3d chess game using HTML/JS/SVG soft rendering
 
 ### code
-HTML, CSS, SVG, Javascript, jQUERY, and Hammer js
+HTML, CSS, SVG, Javascript, jQUERY, [chess.js](https://github.com/jhlywa/chess.js/blob/master/README.md) and [Hammer js](https://hammerjs.github.io/getting-started/)
 
 ### state
-Close to be localy usable, Roque and End of game Messages are still missing
+This chessbor is localy usable.
+
 ### Note
-You can use this board offline by [downloading the project](https://github.com/s1pierro/echiquierJS/archive/master.zip) and opening "echiquier.html". Using a modern, up-to-date web browser is highly recommended. For now, the app is running slowly on most mobile devices.
+You can use this board offline by [downloading the project](https://github.com/s1pierro/echiquierJS/archive/master.zip) and opening "echiquier.html". Using a modern, up-to-date web browser is highly recommended.
+
 
 
