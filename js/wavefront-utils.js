@@ -2,9 +2,6 @@
 var wvft = {};
 var way2 = [{square:'a4', move:'a4'}, {square:'a3', move:'a3'}];
 
-
-
-var nWay = 0;
 var buffer = {};
 var boardwvft = {};
 var boardbuffer = {};
@@ -327,16 +324,7 @@ function clearWayables ()
 function MovePiece (p, x, y, flags)
 {
 
-	var q = 0.01;
-	for ( var i = 0 ; i < 100 ; i++ )
-	{
-	//	translateVerticesByMaterial (p, y*64.0*q, 0, -x*64.0*q);
-
-	}
-	
-	var q = 1;
-	translateVerticesById (p, y*64.0*q, 0, -x*64.0*q);
-	
+	translateVerticesById (p, y*64.0, 0, -x*64.0);
 
 	var newX = ChessPiece(p).position.x +x;
 	var newY = ChessPiece(p).position.y -y;
@@ -344,17 +332,12 @@ function MovePiece (p, x, y, flags)
 	plateau[ ChessPiece(p).position.x ][ ChessPiece(p).position.y ] = "free";
 
 	var target = plateau[newX][newY]+"";
-		//audiomove.play();
-	
 	if ( flags == 'c' | flags == 'cp' )
 	{
 		audiomove.play();
-		target = plateau[newX][newY]+"";
 		killPiece (plateau[newX][newY]);
 		switchMaterialInWavefront ( buffer, target, "dead");
-		
-		
-	//	audiocapture.play();
+		audiomove.play();
 	}
 	if ( flags == 'e')
 	{

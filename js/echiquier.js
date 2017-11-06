@@ -1,10 +1,9 @@
+//FIXME remove mx, my variables from global scope
+var mx = 0;
+var my = 0;
 
-var playspin;
-var spinning = false;
-		var mx = 0;
-		var my = 0;
-		var white = {r:255, g:255, b:255};
-	var black = {r:100, g:100, b:100};
+var white = {r:255, g:255, b:255};
+var black = {r:100, g:100, b:100};
 	
 var Pwvft = {};
 var Rwvft = {};
@@ -15,12 +14,9 @@ var Kwvft = {};
 var TMPwvft = {};
 
 var promotion= {from: 'a1', to:'a3', promo:'n'};
-var selectedway;
-var nWay = 0;
 var selectedPiece = "none";
 var hand = "w";
 var chess = new Chess();
-var mobileView = false;
 var view = 'auto';
 
 var plateau = 
