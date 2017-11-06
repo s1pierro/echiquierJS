@@ -166,17 +166,11 @@ function changeId (w, target, value) {
 	for ( var j = 0 ; j < w.triangles.length  ; j++)
 		if ( w.triangles[ j ].id == target) w.triangles[ j ].id = value;
 }
-function switchMaterial(target, value) {
+/*function switchMaterial(target, value) {
 
 	for ( var j = 0 ; j < buffer.nt  ; j++)
 	if ( buffer.triangles[ j ].mat == target) buffer.triangles[ j ].mat = value;
-}
-function patchwvtf(o) {
-	for (var i = 0; i < o.nt ; i++)
-	for (var j = 0; j < 3 ; j++) 
-	o.triangles[i][j] = o.triangles[i][j] - 1;
-	
-}
+}*/
 function genNormales(obj) {
 	for (var i = 0; i < obj.nt; i += 1) {
 		obj.triangles[i].n = normalisevertex(vectorproduct(vectfromvertices(obj.vertices[obj.triangles[i][0] - 1], obj.vertices[obj.triangles[i][2] - 1]).s, vectfromvertices(obj.vertices[obj.triangles[i][0] - 1], obj.vertices[obj.triangles[i][1] - 1]).s));
@@ -313,7 +307,9 @@ function mergeWavefronts (a, b)
 	a.nv = a.nv+b.nv;
 
 }
-// chessboard function
+////////////////////////////////////////////////////////////////////////////////
+// chessboard function  ////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////////////
 function clearWayables ()
 {
 			/*var contents = $('#board').text();
@@ -355,7 +351,7 @@ function MovePiece (p, x, y, flags)
 		audiomove.play();
 		target = plateau[newX][newY]+"";
 		killPiece (plateau[newX][newY]);
-		switchMaterial ( target, "dead");
+		switchMaterialInWavefront ( buffer, target, "dead");
 		
 		
 	//	audiocapture.play();

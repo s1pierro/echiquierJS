@@ -173,7 +173,7 @@ p.toggleArea
 	position: fixed;
 	background-color: #444 !important;
 
-	opacity: 0.95;
+	opacity: 1.0;
 	font: 400 1.2em Cantarel, sans-serif !important;
 	top:25vh;
 	left:10vw;
