@@ -4,7 +4,7 @@
 
 # Echiquier js 
 
-[L'échquier de s1pierro](https://s1pierro.github.io/echiquierJS/echiquier.html)
+[js /svg chessboard](https://s1pierro.github.io/echiquierJS/echiquier.html)
 
 a little 3d chess game using HTML/JS/SVG soft rendering
 
