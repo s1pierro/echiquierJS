@@ -18,6 +18,8 @@ var selectedPiece = "none";
 var hand = "w";
 var chess = new Chess();
 var view = 'auto';
+var altPieces = {};
+var altPieces = [];
 
 var plateau = 
       [ ["wt2", "wc2", "wf2", "wk",  "wq",  "wf1", "wc1", "wt1" ],
@@ -34,7 +36,37 @@ var audiomove = new Audio('chesssound/move1.ogg');
 var audiocapture = new Audio('chesssound/capture1.ogg');
 
 
+function buildAltPieces ()
+{
+altPieces.splice (0,altPieces.length );
+	var tmpWvft2 = {};
+	for ( var v = 0 ; v < 8 ; v++ )
+	{	
 
+	for ( var u = 0 ; u < 8 ; u++ )
+	{
+	if (chess.get(XYToSquare(u, v)) != null )
+	{
+
+	Log ('u, v:'+u+', '+v+' get: '+chess.get(XYToSquare(u, v)).type);
+		if (chess.get(XYToSquare(u, v)).type == 'p' ) tmpWvft2 = $.extend(true, {}, Pwvft);
+		if (chess.get(XYToSquare(u, v)).type == 'n' ) tmpWvft2 = $.extend(true, {}, Nwvft);
+		if (chess.get(XYToSquare(u, v)).type == 'b' ) tmpWvft2 = $.extend(true, {}, Bwvft);
+		if (chess.get(XYToSquare(u, v)).type == 'r' ) tmpWvft2 = $.extend(true, {}, Rwvft);
+		if (chess.get(XYToSquare(u, v)).type == 'q' ) tmpWvft2 = $.extend(true, {}, Qwvft);
+		if (chess.get(XYToSquare(u, v)).type == 'k' ) tmpWvft2 = $.extend(true, {}, Kwvft);
+		putPieceWavefrontToSquare (tmpWvft2, XYToSquare(u, v), 0);
+	
+		altPiece = {id: 'id', square: XYToSquare(u, v), x: u, y: v, flags: '', index: 0, color: chess.get(XYToSquare(u, v)).color, type: chess.get(XYToSquare(u, v)).type, w: {}};
+		if ( chess.get(XYToSquare(u, v)).color == 'w') switchMaterialWavefront (tmpWvft2, 'blancs');
+		if ( chess.get(XYToSquare(u, v)).color == 'b') switchMaterialWavefront (tmpWvft2, 'noirs');
+		altPiece.w = $.extend(true, {},tmpWvft2 );
+		altPieces.push(altPiece);
+	}
+	}
+	}
+	
+}
 function Log(s)
 {
 	console.log(s);
@@ -182,11 +214,12 @@ function createClass(name,rules){
 function generateMaterialsCSS (name, difuse)
 {
 
-createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
+createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.75)+', '+Math.floor( difuse.g*0.75)+', '+Math.floor( difuse.b*0.75)+');');
+//createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
 
 
 // Warning On Chromium web browser, framerate is dramaticaly affected by css rules quantity.
-
+/*
 createClass('.'+name+'-step-0', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-1', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-2', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
@@ -196,12 +229,12 @@ createClass('.'+name+'-step-5', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math
 createClass('.'+name+'-step-6', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-7', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
 createClass('.'+name+'-step-8', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');/**/
-createClass('.'+name+'-step-10', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-11', 'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
-createClass('.'+name+'-step-12', 'fill: rgb('+Math.floor( difuse.r*0.7)+', '+Math.floor( difuse.g*0.7)+', '+Math.floor( difuse.b*0.7)+');');
-createClass('.'+name+'-step-13', 'fill: rgb('+Math.floor( difuse.r*0.8)+', '+Math.floor( difuse.g*0.8)+', '+Math.floor( difuse.b*0.8)+');');
-createClass('.'+name+'-step-14', 'fill: rgb('+Math.floor( difuse.r*0.9)+', '+Math.floor( difuse.g*0.9)+', '+Math.floor( difuse.b*0.9)+');');
+createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-10', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');*/
+createClass('.'+name+'-step-11', 'fill: rgb('+Math.floor( difuse.r*0.96)+', '+Math.floor( difuse.g*0.96)+', '+Math.floor( difuse.b*0.96)+');');
+createClass('.'+name+'-step-12', 'fill: rgb('+Math.floor( difuse.r*0.97)+', '+Math.floor( difuse.g*0.97)+', '+Math.floor( difuse.b*0.97)+');');
+createClass('.'+name+'-step-13', 'fill: rgb('+Math.floor( difuse.r*0.98)+', '+Math.floor( difuse.g*0.98)+', '+Math.floor( difuse.b*0.98)+');');
+createClass('.'+name+'-step-14', 'fill: rgb('+Math.floor( difuse.r*0.99)+', '+Math.floor( difuse.g*0.99)+', '+Math.floor( difuse.b*0.99)+');');
 createClass('.'+name+'-step-15', 'fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');');
 
 }
@@ -241,6 +274,7 @@ function disposeapplicationlayers (option)
 	}
 	else view = option;
 	Log ('vue : '+view);
+
 
 	var zoom = 100;
 	var ratio = w/h;
@@ -290,40 +324,46 @@ function disposeapplicationlayers (option)
 		initViewZlock(230, 0, 0, 600);
 
 	}
+		buildAltPieces ();
+
 }
 function checkGameState ( )
 {
 	
 	if ( chess.insufficient_material() )
 	{
-		$('#endGameLayer > #endGameLayerContent > #matchResult').text ("Match nul, materiel insuffisant");
-		$('#endGameLayer > #endGameLayerContent > #gameHistory').text ( chess.pgn({ max_width: 5, newline_char: '<br />' }));
+		$('#matchResult').text ("MatchPartie nulle, materiel insuffisant");
+		$('#gameHistory').text ( chess.pgn({ max_width: 15, newline_char: '<br />' }));
 	}
 	if ( chess.in_check() )
 	{
-	
-		
 		if (chess.turn() == 'w')
 		{
-			$('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les blancs sont en Echec');
+			$('#matchResult').text ( 'Les blancs sont en Echec');
 			switchMaterialInWavefrontById(buffer, 'wk', 'incheck');	
-
-
 		}
 		if (chess.turn() == 'b') 
 		{
-			$('#endGameLayer > #endGameLayerContent > #matchResult').text ( 'Les noirs sont en Echec');
-			$('#endGameLayer > #endGameLayerContent > #gameHistory').html ( '' );
-
-
+			$('#matchResult').text ( 'Les noirs sont en Echec');
+			$('#gameHistory').html ( '' );
 		}
 	}
-	
+	if ( chess.in_threefold_repetition() )
+	{
+		$('#matchResult').text ( 'Partie nulle, répétition');
+		$('#gameHistory').html ( chess.pgn({ max_width: 15, newline_char: '<br />' }));
+	}
 	if ( chess.in_checkmate() )
 	{
 		if (chess.turn() == 'w') $('#matchResult').text ( 'Les blancs sont en Echec et mat');
 		if (chess.turn() == 'b') $('#matchResult').text ( 'Les noirs sont en Echec et mat');
 		$('#gameHistory').html ( chess.pgn({ max_width: 5, newline_char: '<br />' }));
+	}
+	if ( chess.in_slatemate() )
+	{
+		if (chess.turn() == 'w') $('#matchResult').text ( 'Partie nulle les blancs sont pat');
+		if (chess.turn() == 'b') $('#matchResult').text ( 'Partie nulle les noirs sont pat');
+		$('#gameHistory').html ( chess.pgn({ max_width: 15, newline_char: '<br />' }));
 	}
 	if (chess.in_check() )
 	{
@@ -340,45 +380,27 @@ function checkGameState ( )
 		viewChessBoard();
 	}
 }
-function toggleView (view)
-{
-	var w = $(window).width();
-	var h = $(window).height();
-	var ratio = w/h;
-	var z = 100;
-	if (w>h) {portrait=false;paysage=true;}
- 	if (w<h) {portrait=true;paysage=false;}
-
-	if ( mobileView == true )
-	{
-		if ( portrait )
-		{
-			$('#svg8').attr('width', w);
-			$('#svg8').attr('height', h);	
-			$("#svg8").attr('viewBox', '-'+z/2+' -'+(z/2/ratio)+' '+z+' '+(z/ratio));
-			initViewZlock(270, 0, 0, 1000);
-		}
-		if ( paysage )
-		{
-			$('#svg8').attr('width', w);
-			$('#svg8').attr('height', h);	
-			$("#svg8").attr('viewBox', '-'+((z*ratio)/2)+' -'+(z/2)+' '+(z*ratio)+' '+z);
-			initViewZlock(270, 0, 0, 1000);
-		}
-	}
-	else
-	{
-
-	}
-}
 function closeEndGameLayer ()
 {		
 	$('#endGameLayer').css('display' , 'none' );
 	$('#navhelper').css('display' , 'block' );
 }
-
 $(window).on("load", function() {
 
+
+		Bwvft = $.extend(true, {}, loadWavefrontFromHTLM('#bishop', 'bishop'));
+		Rwvft = $.extend(true, {}, loadWavefrontFromHTLM('#rook', 'rook'));
+		Nwvft = $.extend(true, {}, loadWavefrontFromHTLM('#knight', 'knight'));
+		Pwvft = $.extend(true, {}, loadWavefrontFromHTLM('#pawn', 'pawn'));
+		Qwvft = $.extend(true, {}, loadWavefrontFromHTLM('#queen', 'queen'));
+		Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#king', 'king'));
+
+		buildAltPieces ();
+		var td = altPieces[0];
+		for ( var i = 0 ; i < altPieces.length ; i++)
+		Log('##  ## '+ altPieces[i].type +' '+altPieces[i].color +' '+altPieces[i].square );
+	
+	//audiostart.play();
 	Log ('#=# cookie : '+Cookies.get('vue') );
 	if ( Cookies.get('vue') == undefined ) 
 	{
@@ -396,8 +418,9 @@ $(window).on("load", function() {
 	Log ('#=# cookie : '+Cookies.get('vue') );
 	
 	buildPlateau ( );
+//	generateMaterialsCSS ('blancs', {r:253, g:251, b:235});
 	generateMaterialsCSS ('blancs', {r:253, g:231, b:135});
-	generateMaterialsCSS ('noirs', {r:109, g:102, b:77});
+	generateMaterialsCSS ('noirs', {r:169, g:162, b:137});
 	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:220});
 
 	generateMaterialsCSS ('HARDbrown', {r:170, g:170, b:170});
@@ -409,7 +432,6 @@ $(window).on("load", function() {
 
 	disposeapplicationlayers(view);
 
-	
 
 	$('body').on('click', '#uiLayerFooter', function() {
 
@@ -788,4 +810,106 @@ function createPiecesWavefront (option)
 			}
 	buffer = $.extend(true, {}, wvft);
 }
+function clearWayables ()
+{
+			/*var contents = $('#board').text();
+			var obj = parsewavefront(contents);
+			boardwvft = $.extend(true, {}, obj);
+			gennormalesboard();
+			boardbuffer = $.extend(true, {}, boardwvft);*/
+	boardwvft = loadWavefrontFromHTLM('#board');
+	boardbuffer = $.extend(true, {}, boardwvft);
+			
+
+			way2.splice(0, way2.length );
+}
+
+function MovePiece (p, x, y, flags)
+{
+
+	translateVerticesById (p, y*64.0, 0, -x*64.0);
+
+	var newX = ChessPiece(p).position.x +x;
+	var newY = ChessPiece(p).position.y -y;
 	
+	plateau[ ChessPiece(p).position.x ][ ChessPiece(p).position.y ] = "free";
+
+	var target = plateau[newX][newY]+"";
+	if ( flags == 'n'| flags == 'b' )
+	{
+		audiomove.play();
+	}
+	if ( flags == 'c' | flags == 'cp' )
+	{
+		killPiece (plateau[newX][newY]);
+		switchMaterialInWavefront ( buffer, target, "dead");
+		audiocapture.play();
+	}
+	if ( flags == 'e')
+	{
+		if ( newX > 4 )
+		{
+			target = plateau[newX-1][newY]+"";
+			plateau[newX-1][newY] = 'free';
+		}
+		else
+		{
+			target = plateau[newX+1][newY]+"";
+			plateau[newX+1][newY] = 'free';
+		}	
+		killPiece (target)
+		audiocapture.play();
+	}
+	plateau[newX][newY] = p;
+}
+function killPiece (id)
+{
+	deleteTrianglesFromWavefrontById (id);
+}
+function addToWayables (x, y, i)
+{
+	var xs = 224;
+	var ys = 224;
+	var mrg = 32;
+	var stp = 64;
+	var z = 0;
+	var v = [-y*stp-mrg+xs, z, -x*stp-mrg+ys ];
+	boardwvft.vertices.push(v);
+	var v1 = [-y*stp-mrg+xs, z, -x*stp+mrg+ys ];
+	boardwvft.vertices.push(v1);
+	var v2 = [-y*stp+mrg+xs, z, -x*stp+mrg+ys ];
+	boardwvft.vertices.push(v2);
+	var v3 = [-y*stp+mrg+xs, z, -x*stp-mrg+ys ];
+	boardwvft.vertices.push(v3);
+
+	var tmp = boardwvft.nv;
+	var t = [tmp+2, tmp+4, tmp+1];
+	boardwvft.triangles.push(t);
+	t = [tmp+4, tmp+2, tmp+3];
+	boardwvft.triangles.push(t);
+
+	boardwvft.nt = boardwvft.nt+2;
+	boardwvft.nv = boardwvft.nv+4;
+
+	var n = [ 0.0, 1.0, 0.0];
+	boardwvft.triangles[boardwvft.nt-1].mat = "way"+way2.length;
+	boardwvft.triangles[boardwvft.nt-1].n=n;
+	boardwvft.triangles[boardwvft.nt-2].mat = "way"+way2.length;
+	boardwvft.triangles[boardwvft.nt-2].n=n;
+	
+	boardbuffer = $.extend(true, {}, boardwvft);
+
+}
+function putPieceWavefrontToSquare (pieceWavefront, square, id)
+{
+	var xs = 224;
+	var ys = 224;
+	var mrg = 0;
+	var stp = 64;
+	var z = 0;
+	
+	var x = SquareToXY (square).x;
+	var y = SquareToXY (square).y;
+
+	translateWavefront (pieceWavefront, -y*stp-mrg+xs, z, -x*stp-mrg+ys );
+}

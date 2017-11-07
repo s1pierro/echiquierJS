@@ -34,7 +34,8 @@ function viewChessBoard()
 	genfmat();
 	drawboard();
 	if ( view == 'mobile') drawpiecesWriteIdMobileDisplay();
-	else drawpiecesWriteId();
+	else drawpiecesWriteIdDisplayExperimental();
+//	else drawpiecesWriteId();
 }
 function rotateViewZlock(x, y)
 {
@@ -99,6 +100,7 @@ function drawpiecesWriteId() {
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
 		var trigon = buffer.vertices[ buffer.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][1];
       svg.setAttribute('points',trigon);
+       //svg.setAttribute('class', 'id'+buffer.triangles[ j ].id+'id piece '+buffer.triangles[j].mat+' '+buffer.triangles[ j ].mat+'-step-14');
        svg.setAttribute('class', 'id'+buffer.triangles[ j ].id+'id piece '+buffer.triangles[j].mat+' '+buffer.triangles[ j ].mat+'-step-'+Math.floor(n*16));
 
 		container.appendChild(svg);
@@ -118,9 +120,22 @@ function drawpiecesWriteIdMobileDisplay() {
 		buffer.triangles[i].n = applymat(rmat, wvft.triangles[i].n);
 	genzmap(buffer);
 
-	for (var i = 0; i < wvft.triangles.length ; i++)
+	for (var j = 0; j < wvft.triangles.length ; j++)
 	{
-		var j = buffer.zmap[i][0];
+		
+		var n = buffer.triangles[ j ].n[2];
+		
+		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
+		var trigon = buffer.vertices[ buffer.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ buffer.triangles[ j ][2] - 1 ][1];
+      svg.setAttribute('points',trigon);
+       svg.setAttribute('class', 'id'+buffer.triangles[ j ].id+'id piece lineMask');
+
+		container.appendChild(svg);
+
+	}
+	for (var j = 0; j < wvft.triangles.length ; j++)
+	{
+		
 		var n = buffer.triangles[ j ].n[2];
 		
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
@@ -131,6 +146,53 @@ function drawpiecesWriteIdMobileDisplay() {
 		container.appendChild(svg);
 
 	}
+
+	ts2 = Date.now();
+	increment = -(ts2-ts1)/1000;
+	ts1 = Date.now();
+}
+function drawpiecesWriteIdDisplayExperimental() {
+	
+	var tmpWvft2 = {};
+
+	for ( var u = 0 ; u < altPieces.length ; u++ )
+	{
+
+		var tmpWvft = altPieces[u].w;
+	
+	for (var i = 0; i < tmpWvft.vertices.length; i++)
+		buffer.vertices[i] = applymatNpersp(fmat, tmpWvft.vertices[i]);
+	for (var i = 0; i < tmpWvft.triangles.length; i++)
+		buffer.triangles[i].n = applymat(rmat, tmpWvft.triangles[i].n);
+	genzmap(tmpWvft);
+
+	for (var j = 0; j < tmpWvft.triangles.length ; j++)
+	{
+		
+		var n = buffer.triangles[ j ].n[2];
+		
+		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
+		var trigon = buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][1];
+      svg.setAttribute('points',trigon);
+       svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id piece lineMask');
+
+		container.appendChild(svg);
+
+	}
+	for (var i = 0; i < tmpWvft.triangles.length ; i++)
+	{
+		var j = tmpWvft.zmap[i][0];
+		var n = buffer.triangles[ j ].n[2];
+		
+		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
+		var trigon = buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][1];
+      svg.setAttribute('points',trigon);
+       svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id piece '+tmpWvft.triangles[j].mat+' '+tmpWvft.triangles[ j ].mat+'-step-'+Math.floor(n*16));
+
+		container.appendChild(svg);
+
+	}
+}
 
 	ts2 = Date.now();
 	increment = -(ts2-ts1)/1000;

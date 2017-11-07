@@ -41,6 +41,7 @@ h4
 }
 p
 {
+	font-size: 1em;
 	text-align: justify;
 	color: #ddd;
 }
@@ -250,6 +251,14 @@ p.toggleArea
 .way.piece {
 	fill: #d00 !important;
 	opacity: 0.5 !important;
+}
+.piece.lineMask {
+	fill: none !important;
+	opacity: 1.0 !important;
+	stroke: #000 !important;
+	 stroke-linejoin: round;
+	stroke-width: 0.81px !important;
+
 }
 .incheck {
 	fill: #d00 !important;

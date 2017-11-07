@@ -148,6 +148,12 @@ function genzmap(obj) {
 		return b[1] - a[1];
 	});
 }
+function switchMaterialWavefront(w, value) {
+
+	for ( var j = 0 ; j < w.nt  ; j++)
+		w.triangles[ j ].mat = value;
+}
+
 function switchMaterialInWavefront(w, target, value) {
 
 	for ( var j = 0 ; j < w.nt  ; j++)
@@ -307,103 +313,4 @@ function mergeWavefronts (a, b)
 ////////////////////////////////////////////////////////////////////////////////
 // chessboard function  ////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////////
-function clearWayables ()
-{
-			/*var contents = $('#board').text();
-			var obj = parsewavefront(contents);
-			boardwvft = $.extend(true, {}, obj);
-			gennormalesboard();
-			boardbuffer = $.extend(true, {}, boardwvft);*/
-	boardwvft = loadWavefrontFromHTLM('#board');
-	boardbuffer = $.extend(true, {}, boardwvft);
-			
 
-			way2.splice(0, way2.length );
-}
-
-function MovePiece (p, x, y, flags)
-{
-
-	translateVerticesById (p, y*64.0, 0, -x*64.0);
-
-	var newX = ChessPiece(p).position.x +x;
-	var newY = ChessPiece(p).position.y -y;
-	
-	plateau[ ChessPiece(p).position.x ][ ChessPiece(p).position.y ] = "free";
-
-	var target = plateau[newX][newY]+"";
-	if ( flags == 'c' | flags == 'cp' )
-	{
-		audiomove.play();
-		killPiece (plateau[newX][newY]);
-		switchMaterialInWavefront ( buffer, target, "dead");
-		audiomove.play();
-	}
-	if ( flags == 'e')
-	{
-		if ( newX > 4 )
-		{
-			target = plateau[newX-1][newY]+"";
-			plateau[newX-1][newY] = 'free';
-		}
-		else
-		{
-			target = plateau[newX+1][newY]+"";
-			plateau[newX+1][newY] = 'free';
-		}	
-		killPiece (target)
-		audiocapture.play();
-	}
-	plateau[newX][newY] = p;
-}
-function killPiece (id)
-{
-	deleteTrianglesFromWavefrontById (id);
-}
-function addToWayables (x, y, i)
-{
-	var xs = 224;
-	var ys = 224;
-	var mrg = 32;
-	var stp = 64;
-	var z = 0;
-	var v = [-y*stp-mrg+xs, z, -x*stp-mrg+ys ];
-	boardwvft.vertices.push(v);
-	var v1 = [-y*stp-mrg+xs, z, -x*stp+mrg+ys ];
-	boardwvft.vertices.push(v1);
-	var v2 = [-y*stp+mrg+xs, z, -x*stp+mrg+ys ];
-	boardwvft.vertices.push(v2);
-	var v3 = [-y*stp+mrg+xs, z, -x*stp-mrg+ys ];
-	boardwvft.vertices.push(v3);
-
-	var tmp = boardwvft.nv;
-	var t = [tmp+2, tmp+4, tmp+1];
-	boardwvft.triangles.push(t);
-	t = [tmp+4, tmp+2, tmp+3];
-	boardwvft.triangles.push(t);
-
-	boardwvft.nt = boardwvft.nt+2;
-	boardwvft.nv = boardwvft.nv+4;
-
-	var n = [ 0.0, 1.0, 0.0];
-	boardwvft.triangles[boardwvft.nt-1].mat = "way"+way2.length;
-	boardwvft.triangles[boardwvft.nt-1].n=n;
-	boardwvft.triangles[boardwvft.nt-2].mat = "way"+way2.length;
-	boardwvft.triangles[boardwvft.nt-2].n=n;
-	
-	boardbuffer = $.extend(true, {}, boardwvft);
-
-}
-function putPieceWavefrontToSquare (pieceWavefront, square, id)
-{
-	var xs = 224;
-	var ys = 224;
-	var mrg = 0;
-	var stp = 64;
-	var z = 0;
-	
-	var x = SquareToXY (square).x;
-	var y = SquareToXY (square).y;
-
-	translateWavefront (pieceWavefront, -y*stp-mrg+xs, z, -x*stp-mrg+ys );
-}
