@@ -257,7 +257,7 @@ p.toggleArea
 	opacity: 1.0 !important;
 	stroke: #000 !important;
 	 stroke-linejoin: round;
-	stroke-width: 0.81px !important;
+	stroke-width: 1px !important;
 
 }
 .incheck {

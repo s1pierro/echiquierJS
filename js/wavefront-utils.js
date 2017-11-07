@@ -148,6 +148,21 @@ function genzmap(obj) {
 		return b[1] - a[1];
 	});
 }
+function genPpcszmap(pcs) {
+	var tmp = new Array();
+
+	for (var i = 0; i < altPieces.length; i++)
+		buffer.vertices[i] = applymat(fmat, altPieces[i].w.vertices[0]);
+
+	for (var i = 0; i < altPieces.length; i++) {
+		var tmp2 = new Array(i, buffer.vertices[i][2]);
+		tmp.push(tmp2);
+	}
+	pcs.zmap = tmp;
+	pcs.zmap.sort(function(a, b) {
+		return b[1] - a[1];
+	});
+}
 function switchMaterialWavefront(w, value) {
 
 	for ( var j = 0 ; j < w.nt  ; j++)

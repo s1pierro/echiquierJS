@@ -55,11 +55,16 @@ altPieces.splice (0,altPieces.length );
 		if (chess.get(XYToSquare(u, v)).type == 'r' ) tmpWvft2 = $.extend(true, {}, Rwvft);
 		if (chess.get(XYToSquare(u, v)).type == 'q' ) tmpWvft2 = $.extend(true, {}, Qwvft);
 		if (chess.get(XYToSquare(u, v)).type == 'k' ) tmpWvft2 = $.extend(true, {}, Kwvft);
-		putPieceWavefrontToSquare (tmpWvft2, XYToSquare(u, v), 0);
 	
 		altPiece = {id: 'id', square: XYToSquare(u, v), x: u, y: v, flags: '', index: 0, color: chess.get(XYToSquare(u, v)).color, type: chess.get(XYToSquare(u, v)).type, w: {}};
-		if ( chess.get(XYToSquare(u, v)).color == 'w') switchMaterialWavefront (tmpWvft2, 'blancs');
+		if ( chess.get(XYToSquare(u, v)).color == 'w')
+		{
+			switchMaterialWavefront (tmpWvft2, 'blancs');
+			rotateWavefront (tmpWvft2, 0, 180, 0);
+		}
+		
 		if ( chess.get(XYToSquare(u, v)).color == 'b') switchMaterialWavefront (tmpWvft2, 'noirs');
+		putPieceWavefrontToSquare (tmpWvft2, XYToSquare(u, v), 0);
 		altPiece.w = $.extend(true, {},tmpWvft2 );
 		altPieces.push(altPiece);
 	}
@@ -316,12 +321,12 @@ function disposeapplicationlayers (option)
 	if ( view == 'mobile' )
 	{
 		createPiecesWavefront ('flat');
-		initViewZlock(270, 0, 0, 560);
+		initViewZlock(270, 0, 0, 770);
 
 	}
 	else {
 		createPiecesWavefront ('normal');
-		initViewZlock(230, 0, 0, 600);
+		initViewZlock(220, 90, 0, 700);
 
 	}
 		buildAltPieces ();
