@@ -550,6 +550,7 @@ $(window).on("load", function() {
 		var id = getFaceId(this);		
 		if ( chess.turn() == altPieces[id].color )
 		{
+			clearWayables ();
 			switchMaterialWavefront (altPieces[id].w, "selectedPiece");
 
 			if (selectedPiece != "none")
@@ -562,7 +563,6 @@ $(window).on("load", function() {
 			}
 			switchMaterialWavefront (altPieces[id].w, "selectedPiece");
 			selectedPiece = id;
-			clearWayables ();
 			showWay(selectedPiece);
 			viewChessBoard();
 		}
@@ -615,7 +615,6 @@ function clearWayables ()
 			boardbuffer = $.extend(true, {}, boardwvft);*/
 	boardwvft = loadWavefrontFromHTLM('#board');
 	boardbuffer = $.extend(true, {}, boardwvft);
-	
 	for ( var i = 0 ; i < altPieces.length ; i++ )
 	{
 
