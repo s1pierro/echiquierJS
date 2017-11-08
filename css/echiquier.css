@@ -101,7 +101,7 @@ p.toggleArea
 {
 
 	background-color: #000 !important;
-	opacity: 0.90;
+	opacity: 0.94;
 	font: 400 1.2em Cantarel, sans-serif !important;
 	min-height: 86vh;
 	margin: 0em;	
@@ -257,7 +257,7 @@ p.toggleArea
 	opacity: 1.0 !important;
 	stroke: #000 !important;
 	 stroke-linejoin: round;
-	stroke-width: 1px !important;
+	stroke-width: 1.4px !important;
 
 }
 .incheck {

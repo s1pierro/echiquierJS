@@ -168,6 +168,11 @@ function switchMaterialWavefront(w, value) {
 	for ( var j = 0 ; j < w.nt  ; j++)
 		w.triangles[ j ].mat = value;
 }
+function setWavefrontId(w, id) {
+
+	for ( var j = 0 ; j < w.nt  ; j++)
+		w.triangles[ j ].id = id;
+}
 
 function switchMaterialInWavefront(w, target, value) {
 
