@@ -615,6 +615,16 @@ function clearWayables ()
 			boardbuffer = $.extend(true, {}, boardwvft);*/
 	boardwvft = loadWavefrontFromHTLM('#board');
 	boardbuffer = $.extend(true, {}, boardwvft);
+	
+	for ( var i = 0 ; i < altPieces.length ; i++ )
+	{
+
+				if ( altPieces[i].color == 'w')
+					switchMaterialWavefront (altPieces[i].w, 'blancs');
+				if ( altPieces[i].color == 'b')
+					switchMaterialWavefront (altPieces[i].w, 'noirs');
+
+	}
 			
 
 			way2.splice(0, way2.length );
