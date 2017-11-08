@@ -267,7 +267,7 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {
 	for (var i = 0; i < tmpWvft.triangles.length; i++)
 		buffer.triangles[i].n = applymat(rmat, tmpWvft.triangles[i].n);
 
-
+	genzmap(tmpWvft);
 	for (var j = 0; j < tmpWvft.triangles.length ; j++)
 	{
 		
@@ -281,7 +281,7 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {
 		container.appendChild(svg);
 
 	}
-	for (var i = 0; i < tmpWvft.triangles.length ; i++)
+	for (var i = 0; i < tmpWvft.zmap.length ; i++)
 	{
 		var j = tmpWvft.zmap[i][0];
 		var n = buffer.triangles[ j ].n[2];

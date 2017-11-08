@@ -250,7 +250,7 @@ p.toggleArea
 }
 .way.piece {
 	fill: #d00 !important;
-	opacity: 0.5 !important;
+	opacity: 1.0 !important;
 }
 .piece.lineMask {
 	fill: none !important;
