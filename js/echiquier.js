@@ -27,7 +27,7 @@ var audiomove = new Audio('chesssound/move1.ogg');
 var audiocapture = new Audio('chesssound/capture1.ogg');
 
 
-function buildAltPieces (option)
+function buildAltPieces ()
 {
 	if ( view != 'mobile' ) 
 	{
@@ -293,11 +293,11 @@ function disposeapplicationlayers (option)
 	}
 	if ( view == 'mobile' )
 	{
-		buildAltPieces ('flat');
+		buildAltPieces ();
 		initViewZlock(270, 0, 0, 770);
 	}
 	else {
-		buildAltPieces ('3d');
+		buildAltPieces ();
 		initViewZlock(220, 90, 0, 730);
 	}
 }
@@ -588,7 +588,7 @@ $(window).on("load", function() {
 		else
 		{		
 			var move = chess.move(way2[selectedway].move);
-			buildAltPieces ('flat');
+			buildAltPieces ();
 			selectedPiece = "none";
 			clearWayables();
 			viewChessBoard();
