@@ -81,7 +81,10 @@ function parsewavefront(objText, id) {
 	var ng = 0;
 	var obj = {};
 	var vertexMatches = objText.match(/^v( -?\d+(\.\d+)?){3}$/gm);
-	var triMatches = objText.match(/^f( \d+){3}$/gm);
+//	var triMatches = objText.match(/^f( \d+){3}$/gm);
+var triMatches = objText.match(/^f( \d+){3,4}$/gm);
+
+
 	var gMatches = objText.match(/^f( \d+){3}$|^usemtl (.+)$/gm);
 	if (vertexMatches) {
 		obj.vertices = vertexMatches.map(function(vertex) {
@@ -129,10 +132,10 @@ function parsewavefront(objText, id) {
 
 function loadWavefrontFromHTLM(object, id) {
 	
-			Log('getting wavefront from '+id);
+			//Log('getting wavefront from '+id);
 			var contents = $(object).text();
 			var obj = parsewavefront(contents, id);
-			Log('loaded : '+obj.nv+' vertices, '+obj.nt+' triangles');
+			//Log('loaded : '+obj.nv+' vertices, '+obj.nt+' triangles');
 			genNormales(obj);			
 			return obj;
 }
