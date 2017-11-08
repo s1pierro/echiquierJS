@@ -1,10 +1,4 @@
-//FIXME remove mx, my variables from global scope
-var mx = 0;
-var my = 0;
 
-var white = {r:255, g:255, b:255};
-var black = {r:100, g:100, b:100};
-	
 var Pwvft = {};
 var Rwvft = {};
 var Nwvft = {};
@@ -18,9 +12,8 @@ var selectedPiece = "none";
 var hand = "w";
 var chess = new Chess();
 var view = 'auto';
-var altPieces = {};
-var altPieces = [];
 
+var altPieces = [];
 
 var audiostart = new Audio('chesssound/start1.ogg');
 var audiomove = new Audio('chesssound/move1.ogg');
@@ -51,40 +44,33 @@ function buildAltPieces ()
 	altPieces.splice (0,altPieces.length );
 	var tmpWvft2 = {};
 	for ( var v = 0 ; v < 8 ; v++ )
-	{	
-		for ( var u = 0 ; u < 8 ; u++ )
+	for ( var u = 0 ; u < 8 ; u++ )
+	{
+		var square = XYToSquare(u, v)
+		if (chess.get(square) != null )
 		{
-			if (chess.get(XYToSquare(u, v)) != null )
-			{
-				if (chess.get(XYToSquare(u, v)).type == 'p' ) tmpWvft2 = $.extend(true, {}, Pwvft);
-				if (chess.get(XYToSquare(u, v)).type == 'n' ) tmpWvft2 = $.extend(true, {}, Nwvft);
-				if (chess.get(XYToSquare(u, v)).type == 'b' ) tmpWvft2 = $.extend(true, {}, Bwvft);
-				if (chess.get(XYToSquare(u, v)).type == 'r' ) tmpWvft2 = $.extend(true, {}, Rwvft);
-				if (chess.get(XYToSquare(u, v)).type == 'q' ) tmpWvft2 = $.extend(true, {}, Qwvft);
-				if (chess.get(XYToSquare(u, v)).type == 'k' ) tmpWvft2 = $.extend(true, {}, Kwvft);
-				altPiece = {id: altPieces.length, square: XYToSquare(u, v), x: u, y: v, flags: '', index: 0, color: chess.get(XYToSquare(u, v)).color, type: chess.get(XYToSquare(u, v)).type, w: {}};
-				setWavefrontId(tmpWvft2, altPieces.length);
-				if ( chess.get(XYToSquare(u, v)).color == 'w')
-					switchMaterialWavefront (tmpWvft2, 'blancs');
-				if ( chess.get(XYToSquare(u, v)).color == 'b')
-					switchMaterialWavefront (tmpWvft2, 'noirs');
-				if ( view == 'mobile' ) 
-				{
-				
-					if ( chess.get(XYToSquare(u, v)).type == 'p' == 'pawn'   ) 
-						translateWavefront (tmpWvft2, 0, -13, 20);
-					else translateWavefront (tmpWvft2, 0, -13, 23)
-				}
-				else
-				{
-					if ( chess.get(XYToSquare(u, v)).color == 'w')
-						rotateWavefront (tmpWvft2, 0, 180, 0);
-				}
-				
-				putPieceWavefrontToSquare (tmpWvft2, XYToSquare(u, v), 0);
-				altPiece.w = $.extend(true, {},tmpWvft2 );
-				altPieces.push(altPiece);
-			}
+			if (chess.get(square).type == 'p' ) tmpWvft2 = $.extend(true, {}, Pwvft);
+			if (chess.get(square).type == 'n' ) tmpWvft2 = $.extend(true, {}, Nwvft);
+			if (chess.get(square).type == 'b' ) tmpWvft2 = $.extend(true, {}, Bwvft);
+			if (chess.get(square).type == 'r' ) tmpWvft2 = $.extend(true, {}, Rwvft);
+			if (chess.get(square).type == 'q' ) tmpWvft2 = $.extend(true, {}, Qwvft);
+			if (chess.get(square).type == 'k' ) tmpWvft2 = $.extend(true, {}, Kwvft);
+			altPiece = {id: altPieces.length, square: square, x: u, y: v, flags: '', index: 0, color: chess.get(square).color, type: chess.get(square).type, w: {}};
+			setWavefrontId(tmpWvft2, altPieces.length);
+			if ( chess.get(square).color == 'w')
+				switchMaterialWavefront (tmpWvft2, 'blancs');
+			if ( chess.get(square).color == 'b')
+				switchMaterialWavefront (tmpWvft2, 'noirs');
+			if ( view == 'mobile' ) 
+				if ( chess.get(square).type == 'p' == 'pawn'   ) 
+					translateWavefront (tmpWvft2, 0, -13, 20);
+				else translateWavefront (tmpWvft2, 0, -13, 23)
+			else
+				if ( chess.get(square).color == 'w')
+					rotateWavefront (tmpWvft2, 0, 180, 0);
+			putPieceWavefrontToSquare (tmpWvft2, square, 0);
+			altPiece.w = $.extend(true, {},tmpWvft2 );
+			altPieces.push(altPiece);
 		}
 	}
 }
@@ -234,14 +220,11 @@ function showUi ()
 {		
 	$('#ui').css('display' , 'block' );
 	$('#navhelper').css('display' , 'none' );
-	//$('#closelayer').css('display' , 'block' );
 }
-
 function closeUi ()
 {
 	$('#ui').css('display' , 'none' );
 	$('#navhelper').css('display' , 'block' );
-	//$('#closelayer').css('display' , 'none' );
 }
 function showPromotionUI ()
 {		
@@ -298,7 +281,7 @@ function disposeapplicationlayers (option)
 	}
 	else {
 		buildAltPieces ();
-		initViewZlock(220, 90, 0, 730);
+		initViewZlock(220, 90, 0, 690);
 	}
 }
 function checkGameState ( )
@@ -389,7 +372,7 @@ $(window).on("load", function() {
 	generateMaterialsCSS ('noirs', {r:169, g:162, b:137});
 	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:220});
 
-	generateMaterialsCSS ('HARDbrown', {r:170, g:170, b:170});
+	generateMaterialsCSS ('HARDbrown', {r:80, g:80, b:80});
 	generateMaterialsCSS ('HARDcream',{r:245, g:245, b:245} );
 */
 	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board', 'board'));
@@ -425,7 +408,8 @@ $(window).on("load", function() {
 
 
 			clearWayables ();
-		$('.selectedToggle').removeClass('selectedToggle');
+	$('#toggleViewMobile').removeClass('selectedToggle');
+	$('#toggleViewDesktop').removeClass('selectedToggle');
 		$('#toggleViewMobile').addClass('selectedToggle');
 		view = 'mobile';
 		Cookies.set('vue','mobile' );
@@ -435,7 +419,8 @@ $(window).on("load", function() {
 
 			clearWayables ();
 	
-		$('.selectedToggle').removeClass('selectedToggle');
+	$('#toggleViewMobile').removeClass('selectedToggle');
+	$('#toggleViewDesktop').removeClass('selectedToggle');
 		$('#toggleViewDesktop').addClass('selectedToggle');
 		view = 'desktop';
 		Cookies.set('vue', 'desktop');
@@ -445,7 +430,8 @@ $(window).on("load", function() {
 	$('body').on('click', '#toggleViewAuto', function() {
 
 			clearWayables ();
-		$('.selectedToggle').removeClass('selectedToggle');
+	$('#toggleViewMobile').removeClass('selectedToggle');
+	$('#toggleViewDesktop').removeClass('selectedToggle');
 		$('#toggleViewAuto').addClass('selectedToggle');
 		view = 'auto';
 		Cookies.set('vue', 'auto');
@@ -460,7 +446,8 @@ $(window).on("load", function() {
 		viewChessBoard();
 
 	});
-	$('.selectedToggle').removeClass('selectedToggle');
+	$('#toggleViewMobile').removeClass('selectedToggle');
+	$('#toggleViewDesktop').removeClass('selectedToggle');
 	var tmp = Cookies.get('vue');
 	if (tmp == 'auto') $('#toggleViewAuto').addClass('selectedToggle');
 	if (tmp == 'mobile') $('#toggleViewMobile').addClass('selectedToggle');
@@ -583,6 +570,8 @@ $(window).on("load", function() {
 		{
 			promotmp = selectedPiece;
 			promotmp2 = {f:altPieces[selectedPiece].square, t:way2[selectedway].square};
+			if ( chess.turn() == 'w' ) $('.pce').addClass('blancs');
+			if ( chess.turn() == 'b' ) $('.pce').addClass('noirs');
 			showPromotionUI ();		
 		}
 		else
