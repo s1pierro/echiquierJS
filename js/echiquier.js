@@ -424,6 +424,7 @@ $(window).on("load", function() {
 	$('body').on('click', '#toggleViewMobile', function() {
 
 
+			clearWayables ();
 		$('.selectedToggle').removeClass('selectedToggle');
 		$('#toggleViewMobile').addClass('selectedToggle');
 		view = 'mobile';
@@ -432,6 +433,7 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#toggleViewDesktop', function() {
 
+			clearWayables ();
 	
 		$('.selectedToggle').removeClass('selectedToggle');
 		$('#toggleViewDesktop').addClass('selectedToggle');
@@ -442,6 +444,7 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#toggleViewAuto', function() {
 
+			clearWayables ();
 		$('.selectedToggle').removeClass('selectedToggle');
 		$('#toggleViewAuto').addClass('selectedToggle');
 		view = 'auto';
@@ -451,6 +454,7 @@ $(window).on("load", function() {
 	$('body').on('click', '#resetBoard', function() {
 
 		chess.reset();
+			clearWayables ();
 
 		disposeapplicationlayers('desktop');
 		viewChessBoard();
