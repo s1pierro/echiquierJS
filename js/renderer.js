@@ -186,7 +186,8 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {
 	{
 		
 		var n = buffer.triangles[ j ].n[2];
-		
+		if (n>-0.3)
+		{
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
 		if  (buffer.triangles[ j ].length == 3)
 		var trigon = buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][1];
@@ -196,12 +197,14 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {
        svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id piece lineMask');
 
 		container.appendChild(svg);
-
+		}
 	}
 	for (var i = 0; i < tmpWvft.triangles.length ; i++)
 	{
 		var j = buffer.zmap[i][0];
 		var n = buffer.triangles[ j ].n[2];
+		if (n>-0.3)
+		{
 		
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
 		if  (buffer.triangles[ j ].length == 3)
@@ -212,7 +215,7 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {
        svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id piece '+tmpWvft.triangles[j].mat+' '+tmpWvft.triangles[ j ].mat+'-step-'+Math.floor(n*16));
 
 		container.appendChild(svg);
-
+		}
 	}
 
 
