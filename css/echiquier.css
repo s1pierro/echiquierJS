@@ -304,6 +304,7 @@ p.toggleArea
 .way {
 	fill: #0d0 !important;
 	opacity: 0.5 !important;
+
 }
 .way.piece {
 	fill: #d00 !important;
@@ -317,12 +318,26 @@ p.toggleArea
 	stroke-width: 1.4px !important;
 
 }
+.selectedPiece.lineMask {
+	fill: none !important;
+	opacity: 1.0 !important;
+	stroke: #000 !important;
+	 stroke-linejoin: round;
+	stroke-width: 3.0px !important;
+
+}
 .piece.flatLineMask {
 	fill: none !important;
 	opacity: 1.0 !important;
 	stroke: #000 !important;
 	 stroke-linejoin: round;
 	stroke-width: 0.8px !important;
+
+}
+.square {
+	stroke: #000 !important;
+	 stroke-linejoin: round;
+	stroke-width: 0.4px !important;
 
 }
 .incheck {

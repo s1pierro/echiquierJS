@@ -6,21 +6,20 @@ var Bwvft = {};
 var Qwvft = {};
 var Kwvft = {};
 var TMPwvft = {};
-
+var way = [];
 var promotion= {from: 'a1', to:'a3', promo:'n'};
 var selectedPiece = "none";
 var hand = "w";
 var chess = new Chess();
 var view = 'auto';
-
-var altPieces = [];
+var Pieces = [];
 
 var audiostart = new Audio('chesssound/start1.ogg');
 var audiomove = new Audio('chesssound/move1.ogg');
 var audiocapture = new Audio('chesssound/capture1.ogg');
 
 
-function buildAltPieces ()
+function buildPieces ()
 {
 	if ( view != 'mobile' ) 
 	{
@@ -41,7 +40,7 @@ function buildAltPieces ()
 		Kwvft = $.extend(true, {}, loadWavefrontFromHTLM('#flatKing', 'king'));
 	}
 
-	altPieces.splice (0,altPieces.length );
+	Pieces.splice (0,Pieces.length );
 	var tmpWvft2 = {};
 	for ( var v = 0 ; v < 8 ; v++ )
 	for ( var u = 0 ; u < 8 ; u++ )
@@ -55,8 +54,8 @@ function buildAltPieces ()
 			if (chess.get(square).type == 'r' ) tmpWvft2 = $.extend(true, {}, Rwvft);
 			if (chess.get(square).type == 'q' ) tmpWvft2 = $.extend(true, {}, Qwvft);
 			if (chess.get(square).type == 'k' ) tmpWvft2 = $.extend(true, {}, Kwvft);
-			altPiece = {id: altPieces.length, square: square, x: u, y: v, flags: '', index: 0, color: chess.get(square).color, type: chess.get(square).type, w: {}};
-			setWavefrontId(tmpWvft2, altPieces.length);
+			altPiece = {id: Pieces.length, square: square, x: u, y: v, flags: '', index: 0, color: chess.get(square).color, type: chess.get(square).type, w: {}};
+			setWavefrontId(tmpWvft2, Pieces.length);
 			if ( chess.get(square).color == 'w')
 				switchMaterialWavefront (tmpWvft2, 'blancs');
 			if ( chess.get(square).color == 'b')
@@ -70,13 +69,9 @@ function buildAltPieces ()
 					rotateWavefront (tmpWvft2, 0, 180, 0);
 			putPieceWavefrontToSquare (tmpWvft2, square, 0);
 			altPiece.w = $.extend(true, {},tmpWvft2 );
-			altPieces.push(altPiece);
+			Pieces.push(altPiece);
 		}
 	}
-}
-function Log(s)
-{
-	console.log(s);
 }
 function getTargetFromMove (a)
 {
@@ -150,7 +145,7 @@ function SquareToXY (s)
 	
 	return {x:px, y:py};
 }
-function isPromotion(a)
+function isPromotionMove(a)
 {
 	if (a.includes('=R') | a.includes('=Q') | a.includes('=R') | a.includes('=B') | a.includes('=N')  )
 	return true;
@@ -159,9 +154,9 @@ function isPromotion(a)
 
 function showWay(p)
 {
-	var moves = chess.moves({square: altPieces[p].square});
+	var moves = chess.moves({square: Pieces[p].square});
 	
-	way2.splice(0, way2.length);
+	way.splice(0, way.length);
 
 	for (var i = 0 ; i < moves.length ; i++)
 	{
@@ -170,50 +165,14 @@ function showWay(p)
 		var aWay = { square: getTargetFromMove(moves[i]), move: moves[i] };
 		if (chess.get(aWay.square) != null )
 		{
-			for ( var j = 0 ; j < altPieces.length ; j++ )
+			for ( var j = 0 ; j < Pieces.length ; j++ )
 			{
-			if (altPieces[j].square == aWay.square)
-			switchMaterialWavefront ( altPieces[j].w, "way way"+i);
+			if (Pieces[j].square == aWay.square)
+			switchMaterialWavefront ( Pieces[j].w, "way way"+i);
 			}
 		}
-		way2.push(aWay);
+		way.push(aWay);
 	}	
-}
-function createClass(name,rules){
-	var style = document.createElement('style');
-	style.type = 'text/css';
-	document.getElementsByTagName('head')[0].appendChild(style);
-	if(!(style.sheet||{}).insertRule) 
-		(style.styleSheet || style.sheet).addRule(name, rules);
-	else
-		style.sheet.insertRule(name+"{"+rules+"}",0);
-}
-function generateMaterialsCSS (name, difuse)
-{
-
-createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.75)+', '+Math.floor( difuse.g*0.75)+', '+Math.floor( difuse.b*0.75)+');');
-//createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
-
-
-// Warning On Chromium web browser, framerate is dramaticaly affected by css rules quantity.
-/*
-createClass('.'+name+'-step-0', ' fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-1', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-2', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-3', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-4', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-5', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-6', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-7', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-8', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-10', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');*/
-createClass('.'+name+'-step-11', 'fill: rgb('+Math.floor( difuse.r*0.96)+', '+Math.floor( difuse.g*0.96)+', '+Math.floor( difuse.b*0.96)+');');
-createClass('.'+name+'-step-12', 'fill: rgb('+Math.floor( difuse.r*0.97)+', '+Math.floor( difuse.g*0.97)+', '+Math.floor( difuse.b*0.97)+');');
-createClass('.'+name+'-step-13', 'fill: rgb('+Math.floor( difuse.r*0.98)+', '+Math.floor( difuse.g*0.98)+', '+Math.floor( difuse.b*0.98)+');');
-createClass('.'+name+'-step-14', 'fill: rgb('+Math.floor( difuse.r*0.99)+', '+Math.floor( difuse.g*0.99)+', '+Math.floor( difuse.b*0.99)+');');
-createClass('.'+name+'-step-15', 'fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');');
-
 }
 
 function showUi ()
@@ -276,11 +235,11 @@ function disposeapplicationlayers (option)
 	}
 	if ( view == 'mobile' )
 	{
-		buildAltPieces ();
+		buildPieces ();
 		initViewZlock(270, 0, 0, 770);
 	}
 	else {
-		buildAltPieces ();
+		buildPieces ();
 		initViewZlock(220, 90, 0, 690);
 	}
 }
@@ -510,7 +469,7 @@ $(window).on("load", function() {
 	
 
 		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'q'});
-		buildAltPieces ();
+		buildPieces ();
 		selectedPiece = "none";
 		clearWayables();
 		viewChessBoard();
@@ -522,7 +481,7 @@ $(window).on("load", function() {
 	
 
 		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'r'});
-		buildAltPieces ();
+		buildPieces ();
 		selectedPiece = "none";
 		clearWayables();
 		viewChessBoard();
@@ -532,7 +491,7 @@ $(window).on("load", function() {
 	$('body').on('click', '#KnightPromotion', function() {
 
 		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'n'});
-		buildAltPieces ();
+		buildPieces ();
 		selectedPiece = "none";
 		clearWayables();
 		viewChessBoard();
@@ -542,7 +501,7 @@ $(window).on("load", function() {
 	$('body').on('click', '#BishopPromotion', function() {
 	
 		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'b'});
-		buildAltPieces ();
+		buildPieces ();
 		selectedPiece = "none";
 		clearWayables();
 		viewChessBoard();
@@ -552,20 +511,20 @@ $(window).on("load", function() {
 	$('body').on('click', '.piece', function() {
 	
 		var id = getFaceId(this);		
-		if ( chess.turn() == altPieces[id].color )
+		if ( chess.turn() == Pieces[id].color )
 		{
 			clearWayables ();
-			switchMaterialWavefront (altPieces[id].w, "selectedPiece");
+			switchMaterialWavefront (Pieces[id].w, "selectedPiece");
 
 			if (selectedPiece != "none")
 			{
-				if (altPieces[selectedPiece].color == 'w')
-					switchMaterialWavefront (altPieces[selectedPiece].w, 'blancs');
-				if (altPieces[selectedPiece].color == 'b')
-					switchMaterialWavefront (altPieces[selectedPiece].w, 'noirs');
+				if (Pieces[selectedPiece].color == 'w')
+					switchMaterialWavefront (Pieces[selectedPiece].w, 'blancs');
+				if (Pieces[selectedPiece].color == 'b')
+					switchMaterialWavefront (Pieces[selectedPiece].w, 'noirs');
 		
 			}
-			switchMaterialWavefront (altPieces[id].w, "selectedPiece");
+			switchMaterialWavefront (Pieces[id].w, "selectedPiece");
 			selectedPiece = id;
 			showWay(selectedPiece);
 			viewChessBoard();
@@ -579,18 +538,18 @@ $(window).on("load", function() {
 		var tmp2 = tmp.match(/way\d+/)+"";
 		selectedway = parseInt(tmp2.match(/\d+/));
 
-		if (isPromotion(way2[selectedway].move))
+		if (isPromotionMove(way[selectedway].move))
 		{
 			promotmp = selectedPiece;
-			promotmp2 = {f:altPieces[selectedPiece].square, t:way2[selectedway].square};
+			promotmp2 = {f:Pieces[selectedPiece].square, t:way[selectedway].square};
 			if ( chess.turn() == 'w' ) $('.pce').addClass('blancs');
 			if ( chess.turn() == 'b' ) $('.pce').addClass('noirs');
 			showPromotionUI ();		
 		}
 		else
 		{		
-			var move = chess.move(way2[selectedway].move);
-			buildAltPieces ();
+			var move = chess.move(way[selectedway].move);
+			buildPieces ();
 			selectedPiece = "none";
 			clearWayables();
 			viewChessBoard();
@@ -621,18 +580,18 @@ function clearWayables ()
 			boardbuffer = $.extend(true, {}, boardwvft);*/
 	boardwvft = loadWavefrontFromHTLM('#board');
 	boardbuffer = $.extend(true, {}, boardwvft);
-	for ( var i = 0 ; i < altPieces.length ; i++ )
+	for ( var i = 0 ; i < Pieces.length ; i++ )
 	{
 
-				if ( altPieces[i].color == 'w')
-					switchMaterialWavefront (altPieces[i].w, 'blancs');
-				if ( altPieces[i].color == 'b')
-					switchMaterialWavefront (altPieces[i].w, 'noirs');
+				if ( Pieces[i].color == 'w')
+					switchMaterialWavefront (Pieces[i].w, 'blancs');
+				if ( Pieces[i].color == 'b')
+					switchMaterialWavefront (Pieces[i].w, 'noirs');
 
 	}
 			
 
-			way2.splice(0, way2.length );
+			way.splice(0, way.length );
 }
 function addToWayables (x, y, i)
 {
@@ -660,9 +619,9 @@ function addToWayables (x, y, i)
 	boardwvft.nv = boardwvft.nv+4;
 
 	var n = [ 0.0, 1.0, 0.0];
-	boardwvft.triangles[boardwvft.nt-1].mat = "way"+way2.length;
+	boardwvft.triangles[boardwvft.nt-1].mat = "way"+way.length;
 	boardwvft.triangles[boardwvft.nt-1].n=n;
-	boardwvft.triangles[boardwvft.nt-2].mat = "way"+way2.length;
+	boardwvft.triangles[boardwvft.nt-2].mat = "way"+way.length;
 	boardwvft.triangles[boardwvft.nt-2].n=n;
 	
 	boardbuffer = $.extend(true, {}, boardwvft);

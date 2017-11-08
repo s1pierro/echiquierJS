@@ -1,6 +1,6 @@
 
 var wvft = {};
-var way2 = [{square:'a4', move:'a4'}, {square:'a3', move:'a3'}];
+
 
 var buffer = {};
 var boardwvft = {};
@@ -85,7 +85,7 @@ function parsewavefront(objText, id) {
 var triMatches = objText.match(/^f( \d+){3,4}$/gm);
 
 
-	var gMatches = objText.match(/^f( \d+){3}$|^usemtl (.+)$/gm);
+	var gMatches = objText.match(/^f( \d+){3,4}$|^usemtl (.+)$/gm);
 	if (vertexMatches) {
 		obj.vertices = vertexMatches.map(function(vertex) {
 			nv++;
@@ -132,7 +132,7 @@ var triMatches = objText.match(/^f( \d+){3,4}$/gm);
 
 function loadWavefrontFromHTLM(object, id) {
 	
-			//Log('getting wavefront from '+id);
+			Log('getting wavefront from '+id);
 			var contents = $(object).text();
 			var obj = parsewavefront(contents, id);
 			//Log('loaded : '+obj.nv+' vertices, '+obj.nt+' triangles');
@@ -154,10 +154,10 @@ function genzmap(obj) {
 function genPpcszmap(pcs) {
 	var tmp = new Array();
 
-	for (var i = 0; i < altPieces.length; i++)
-		buffer.vertices[i] = applymat(fmat, altPieces[i].w.vertices[0]);
+	for (var i = 0; i < Pieces.length; i++)
+		buffer.vertices[i] = applymat(fmat, Pieces[i].w.vertices[0]);
 
-	for (var i = 0; i < altPieces.length; i++) {
+	for (var i = 0; i < Pieces.length; i++) {
 		var tmp2 = new Array(i, buffer.vertices[i][2]);
 		tmp.push(tmp2);
 	}
@@ -332,6 +332,10 @@ function mergeWavefronts (a, b)
 	a.nt = a.nt+b.nt;
 	a.nv = a.nv+b.nv;
 
+}
+function Log(s)
+{
+	console.log(s);
 }
 ////////////////////////////////////////////////////////////////////////////////
 // chessboard function  ////////////////////////////////////////////////////////

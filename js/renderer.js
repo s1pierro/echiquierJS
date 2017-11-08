@@ -15,6 +15,42 @@ var zoom = 1600;
 container = document.getElementById("renderbox");
 
 
+function createClass(name,rules){
+	var style = document.createElement('style');
+	style.type = 'text/css';
+	document.getElementsByTagName('head')[0].appendChild(style);
+	if(!(style.sheet||{}).insertRule) 
+		(style.styleSheet || style.sheet).addRule(name, rules);
+	else
+		style.sheet.insertRule(name+"{"+rules+"}",0);
+}
+function generateMaterialsCSS (name, difuse)
+{
+
+createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.75)+', '+Math.floor( difuse.g*0.75)+', '+Math.floor( difuse.b*0.75)+');');
+//createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
+
+
+// Warning On Chromium web browser, framerate is dramaticaly affected by css rules quantity.
+/*
+createClass('.'+name+'-step-0', ' fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-1', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-2', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-3', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-4', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-5', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-6', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-7', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-8', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
+createClass('.'+name+'-step-10', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');*/
+createClass('.'+name+'-step-11', 'fill: rgb('+Math.floor( difuse.r*0.96)+', '+Math.floor( difuse.g*0.96)+', '+Math.floor( difuse.b*0.96)+');');
+createClass('.'+name+'-step-12', 'fill: rgb('+Math.floor( difuse.r*0.97)+', '+Math.floor( difuse.g*0.97)+', '+Math.floor( difuse.b*0.97)+');');
+createClass('.'+name+'-step-13', 'fill: rgb('+Math.floor( difuse.r*0.98)+', '+Math.floor( difuse.g*0.98)+', '+Math.floor( difuse.b*0.98)+');');
+createClass('.'+name+'-step-14', 'fill: rgb('+Math.floor( difuse.r*0.99)+', '+Math.floor( difuse.g*0.99)+', '+Math.floor( difuse.b*0.99)+');');
+createClass('.'+name+'-step-15', 'fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');');
+
+}
 
 function initViewZlock(x, y, z, zm)
 {
@@ -115,13 +151,13 @@ function drawpiecesWriteId() {
 function drawpiecesWriteIdMobileDisplay() {
 	
 	var tmpWvft2 = {};
-	genPpcszmap(altPieces);
-	for ( var v = 0 ; v < altPieces.zmap.length ; v++ )
+	genPpcszmap(Pieces);
+	for ( var v = 0 ; v < Pieces.zmap.length ; v++ )
 	{
 
-		var u = altPieces.zmap[v][0];	
+		var u = Pieces.zmap[v][0];	
 
-		var tmpWvft = altPieces[u].w;
+		var tmpWvft = Pieces[u].w;
 	buffer = $.extend(true, {}, tmpWvft);	
 	for (var i = 0; i < tmpWvft.vertices.length; i++)
 		buffer.vertices[i] = applymatNpersp(fmat, tmpWvft.vertices[i]);
@@ -166,13 +202,13 @@ function drawpiecesWriteIdMobileDisplay() {
 function drawpiecesWriteIdDisplayExperimentalLighted() {
 	
 	var tmpWvft2 = {};
-	genPpcszmap(altPieces);
-	for ( var v = 0 ; v < altPieces.zmap.length ; v++ )
+	genPpcszmap(Pieces);
+	for ( var v = 0 ; v < Pieces.zmap.length ; v++ )
 	{
 
-		var u = altPieces.zmap[v][0];	
+		var u = Pieces.zmap[v][0];	
 
-		var tmpWvft = altPieces[u].w;
+		var tmpWvft = Pieces[u].w;
 	buffer = $.extend(true, {}, tmpWvft);
 	
 	for (var i = 0; i < tmpWvft.vertices.length; i++)
@@ -227,14 +263,14 @@ function drawboard() {
 	for (var i = 0; i < boardwvft.vertices.length; i++)
 		boardbuffer.vertices[i] = applymatNpersp(fmat, boardwvft.vertices[i]);
    	container.innerHTML = "";
-	for (var j = 0; j < 76 ; j++) {
+	for (var j = 0; j < 38 ; j++) {
 
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
-    		svg.setAttribute('points',boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][1]);
-		svg.setAttribute('class', boardbuffer.triangles[ j ].mat+'-step-15');
+    		svg.setAttribute('points',boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][3] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][3] - 1 ][1]);
+		svg.setAttribute('class', boardbuffer.triangles[ j ].mat+'-step-15 square');
 		container.appendChild(svg);
 	}
-	for (var j = 76; j < boardbuffer.triangles.length ; j++) {
+	for (var j = 38; j < boardbuffer.triangles.length ; j++) {
 
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
     		svg.setAttribute('points',boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][0] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][1] - 1 ][1] + ' ' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][0] + ',' + boardbuffer.vertices[ boardbuffer.triangles[ j ][2] - 1 ][1]);
