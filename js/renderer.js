@@ -177,7 +177,7 @@ function drawpiecesWriteIdMobileDisplay() {
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
 		var trigon = buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][1];
       svg.setAttribute('points',trigon);
-       svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id piece lineMask');
+       svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id piece flatLineMask');
 
 		container.appendChild(svg);
 

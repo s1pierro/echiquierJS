@@ -260,6 +260,14 @@ p.toggleArea
 	stroke-width: 1.4px !important;
 
 }
+.piece.flatLineMask {
+	fill: none !important;
+	opacity: 1.0 !important;
+	stroke: #000 !important;
+	 stroke-linejoin: round;
+	stroke-width: 0px !important;
+
+}
 .incheck {
 	fill: #d00 !important;
 	opacity: 0.5 !important;
