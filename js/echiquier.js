@@ -400,6 +400,20 @@ $(window).on("load", function() {
 	});
 
 
+	$('body').on('click', '#turnLeft', function() {
+		if (view != 'mobile')
+		{
+			rotateViewZlock (0, 90, 0 );
+			viewChessBoard();
+		}
+	});
+	$('body').on('click', '#turnRight', function() {
+		if (view != 'mobile')
+		{
+			rotateViewZlock (0, -90, 0 );
+			viewChessBoard();
+		}
+	});
 	$('body').on('click', '*', function() {
 
 		$('.banner').css('display', 'none');
@@ -489,7 +503,6 @@ $(window).on("load", function() {
 		if (view != 'mobile')
 		{
 			rotateViewZlock (ev.velocityY*15, ev.velocityX*15, 0 );
-			$('#csl').text(ZlockANGx+'\n '+ZlockANGy+'\n '+ZlockANGz);
 			viewChessBoard();
 		}
 	});
