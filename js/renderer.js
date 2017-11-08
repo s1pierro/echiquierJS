@@ -34,8 +34,9 @@ function viewChessBoard()
 	genfmat();
 	drawboard();
 	if ( view == 'mobile') drawpiecesWriteIdMobileDisplay();
+//	else drawpiecesWriteIdDisplayExperimental();
 	else drawpiecesWriteIdDisplayExperimentalLighted();
-//	else drawpiecesWriteId();
+
 }
 function rotateViewZlock(x, y)
 {
@@ -261,13 +262,15 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {
 		var u = altPieces.zmap[v][0];	
 
 		var tmpWvft = altPieces[u].w;
+	buffer = $.extend(true, {}, tmpWvft);
 	
 	for (var i = 0; i < tmpWvft.vertices.length; i++)
 		buffer.vertices[i] = applymatNpersp(fmat, tmpWvft.vertices[i]);
 	for (var i = 0; i < tmpWvft.triangles.length; i++)
+	{
 		buffer.triangles[i].n = applymat(rmat, tmpWvft.triangles[i].n);
-
-	genzmap(tmpWvft);
+	}
+	genzmap(buffer);
 	for (var j = 0; j < tmpWvft.triangles.length ; j++)
 	{
 		
@@ -281,9 +284,9 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {
 		container.appendChild(svg);
 
 	}
-	for (var i = 0; i < tmpWvft.zmap.length ; i++)
+	for (var i = 0; i < tmpWvft.triangles.length ; i++)
 	{
-		var j = tmpWvft.zmap[i][0];
+		var j = buffer.zmap[i][0];
 		var n = buffer.triangles[ j ].n[2];
 		
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
