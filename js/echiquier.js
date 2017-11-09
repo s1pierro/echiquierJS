@@ -335,6 +335,7 @@ function checkGameState ( )
 		if (chess.turn() == 'b') 
 			switchMaterialInWavefrontById(buffer, 'bk', 'incheck');	
 		viewChessBoard();
+		audiocheck.play();
 	}
 	if ( chess.game_over() )
 	{
@@ -602,8 +603,9 @@ $(window).on("load", function() {
 			var move = chess.move(way[selectedway].move);
 			if ( move.flags == 'e' ) audiocapture.play();
 			if ( move.flags == 'c' ) audiocapture.play();
-			if ( move.flags == 'cp' ) audiocapture.play();
-			if ( move.flags == 'n' ) audiomove.play();
+			if ( move.flags == 'cp' ) audioenpassant.play();
+			if ( move.flags == 'q' [ move.flags == 'k' ) audio.castle();
+
 			buildPieces ();
 			selectedPiece = "none";
 			clearWayables();
