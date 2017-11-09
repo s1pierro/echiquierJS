@@ -633,6 +633,7 @@ $(window).on("load", function() {
 		} else {
 			var move = chess.move(way[selectedway].move);
 			if (move.flags == 'n') audiomove.play();
+			if (move.flags == 'b') audiomove.play();
 			if (move.flags == 'e') audiocapture.play();
 			if (move.flags == 'c') audiocapture.play();
 			if (move.flags == 'cp') audioenpassant.play();
