@@ -1,0 +1,90 @@
+
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:xlink="http://www.w3.org/1999/xlink"
+   style="shape-rendering:optimizeSpeed"
+   height="70"
+   id="bannerPicture"
+   version="1.1"
+   viewBox="-66.34757 -50 69.21944 10.309278"
+   width="470">
+  <defs
+     id="defs2">
+    <filter
+       style="color-interpolation-filters:sRGB"
+       id="filter4559"
+       x="-0.043885715"
+       width="1.0877714"
+       y="-0.034133334"
+       height="1.0682667">
+      <feGaussianBlur
+         stdDeviation="0.1"
+         id="feGaussianBlur4561" />
+    </filter>
+    <linearGradient
+       id="linearGradient4491">
+      <stop
+         style="stop-color:#aaf;stop-opacity:1;"
+         offset="0"
+         id="stop4487" />
+      <stop
+         style="stop-color:#fff;stop-opacity:1;"
+         offset="1"
+         id="stop4489" />
+    </linearGradient>
+    <linearGradient
+       gradientTransform="translate(30.932203,44.067797)"
+       xlink:href="#linearGradient4491"
+       id="linearGradient4493"
+       x1="0"
+       y1="-4"
+       x2="0"
+       y2="20"
+       gradientUnits="userSpaceOnUse" />
+  </defs>
+  <metadata
+     id="metadata998">
+    <rdf:rdf>
+      <cc:work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title />
+      </cc:work>
+    </rdf:rdf>
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+        <dc:title></dc:title>
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <path
+     class="pce"
+     id="BishopPromotion"
+     d="m -40.659197,-48.968497 -2.071349,3.527131 0.971673,2.902073 -1.477356,0.411911 -0.551133,1.93414 h 7.925833 l -0.581047,-1.93414 -2.060993,-0.990945 1.078676,-1.55387 -0.808576,-1.824835 -1.033228,1.693092 0.06702,-2.870144 z"
+     style="fill:#b3b3b3;fill-opacity:1;stroke-width:1" />
+  <path
+     class="pce"
+     id="QueenPromotion"
+     d="m -55.632035,-49.49748 -0.703873,0.178629 -0.5612,1.425005 -1.370927,-1.481671 -0.572129,0.556309 0.537037,3.334695 0.608948,0.03049 -0.515464,1.485698 0.758815,1.485698 -1.588101,0.401843 -0.537901,1.887542 h 7.733972 l -0.566953,-1.887542 -1.691078,-0.61125 0.591978,-1.369201 -0.682299,-1.369201 0.600896,-0.0075 0.544228,-3.878636 -0.921046,0.0078 -0.921334,1.277729 z"
+     style="fill:#b3b3b3;fill-opacity:1;stroke-width:1" />
+  <path
+      class="pce"
+    id="KnightPromotion"
+     d="m -24.678155,-48.968497 -1.724733,2.406169 -0.837053,2.877911 0.943483,0.801961 1.93414,-1.603921 -1.415225,1.947084 -1.477357,0.411911 -0.551131,1.93414 h 7.925832 l -0.581047,-1.93414 -2.060993,-0.990945 1.981314,-1.462399 -0.471741,-2.689214 -1.668355,-0.628509 z"
+     style="fill:#b3b3b3;fill-opacity:1;stroke-width:1" />
+  <path
+     class="pce"
+     id="RookPromotion"
+     d="m -9.9642016,-49.027753 0.168274,6.48846 -1.4773564,0.411911 -0.55142,1.93414 h 7.9258325 l -0.5807601,-1.93414 -1.517051,-0.626496 0.447291,-5.53232 -2.177489,0.387749 z"
+     style="fill:#b3b3b3;fill-opacity:1;stroke-width:1" />
+</svg>
