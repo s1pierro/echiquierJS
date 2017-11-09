@@ -93,7 +93,7 @@ p.toggleArea
 .selectedToggle
 {
 	border: solid;
-	border-color: #00c;
+	border-color: #eee;
 	border-width: 0px 0px medium 0px;
 }
 
@@ -331,7 +331,7 @@ p.toggleArea
 	opacity: 1.0 !important;
 	stroke: #000 !important;
 	 stroke-linejoin: round;
-	stroke-width: 0.8px !important;
+	stroke-width: 0.6px !important;
 
 }
 .square {

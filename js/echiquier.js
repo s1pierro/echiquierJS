@@ -566,8 +566,18 @@ $(window).on("load", function() {
 	}
 	});
 	$(window).on('resize', function() {
+		clearWayables ();
 		disposeapplicationlayers(Cookies.get('vue'));
 	});
+	
+	//	playspin = setInterval(spinview, 50);
+	
+	function spinview(){	
+		
+		 rotateViewZlock (0, 0.2, 0 );
+		 viewChessBoard()
+	 }
+
 });
 
 
