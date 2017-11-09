@@ -67,7 +67,7 @@ function buildPieces ()
 			else
 				if ( chess.get(square).color == 'w')
 					rotateWavefront (tmpWvft2, 0, 180, 0);
-			putPieceWavefrontToSquare (tmpWvft2, square, 0);
+			translateWavefront (tmpWvft2, -v*64+224, 0, -u*64+224 );
 			altPiece.w = $.extend(true, {},tmpWvft2 );
 			Pieces.push(altPiece);
 		}
@@ -174,7 +174,53 @@ function showWay(p)
 		way.push(aWay);
 	}	
 }
+function clearWayables ()
+{
+	boardwvft = loadWavefrontFromHTLM('#board');
+	boardbuffer = $.extend(true, {}, boardwvft);
+	for ( var i = 0 ; i < Pieces.length ; i++ )
+	{
+		if ( Pieces[i].color == 'w')
+			switchMaterialWavefront (Pieces[i].w, 'blancs');
+		if ( Pieces[i].color == 'b')
+			switchMaterialWavefront (Pieces[i].w, 'noirs');
+	}
+	way.splice(0, way.length );
+}
+function addToWayables (x, y, i)
+{
+	var xs = 224;
+	var ys = 224;
+	var mrg = 32;
+	var stp = 64;
+	var z = 0;
+	var tmp = boardwvft.vertices.length;
+	var v = [-y*stp-mrg+xs, z, -x*stp-mrg+ys ];
+	boardwvft.vertices.push(v);
+	var v1 = [-y*stp-mrg+xs, z, -x*stp+mrg+ys ];
+	boardwvft.vertices.push(v1);
+	var v2 = [-y*stp+mrg+xs, z, -x*stp+mrg+ys ];
+	boardwvft.vertices.push(v2);
+	var v3 = [-y*stp+mrg+xs, z, -x*stp-mrg+ys ];
+	boardwvft.vertices.push(v3);
 
+	var t = [tmp+2, tmp+4, tmp+1];
+	boardwvft.triangles.push(t);
+	t = [tmp+4, tmp+2, tmp+3];
+	boardwvft.triangles.push(t);
+
+	boardwvft.nt = boardwvft.nt+2;
+	boardwvft.nv = boardwvft.nv+4;
+
+	var n = [ 0.0, 1.0, 0.0];
+	boardwvft.triangles[boardwvft.nt-1].mat = "way"+way.length;
+	boardwvft.triangles[boardwvft.nt-1].n=n;
+	boardwvft.triangles[boardwvft.nt-2].mat = "way"+way.length;
+	boardwvft.triangles[boardwvft.nt-2].n=n;
+	
+	boardbuffer = $.extend(true, {}, boardwvft);
+
+}
 function showUi ()
 {		
 	$('#ui').css('display' , 'block' );
@@ -549,6 +595,10 @@ $(window).on("load", function() {
 		else
 		{		
 			var move = chess.move(way[selectedway].move);
+			if ( move.flags == 'e' ) audiocapture.play();
+			if ( move.flags == 'c' ) audiocapture.play();
+			if ( move.flags == 'cp' ) audiocapture.play();
+			if ( move.flags == 'n' ) audiomove.play();
 			buildPieces ();
 			selectedPiece = "none";
 			clearWayables();
@@ -579,74 +629,3 @@ $(window).on("load", function() {
 	 }
 
 });
-
-
-function clearWayables ()
-{
-			/*var contents = $('#board').text();
-			var obj = parsewavefront(contents);
-			boardwvft = $.extend(true, {}, obj);
-			gennormalesboard();
-			boardbuffer = $.extend(true, {}, boardwvft);*/
-	boardwvft = loadWavefrontFromHTLM('#board');
-	boardbuffer = $.extend(true, {}, boardwvft);
-	for ( var i = 0 ; i < Pieces.length ; i++ )
-	{
-
-				if ( Pieces[i].color == 'w')
-					switchMaterialWavefront (Pieces[i].w, 'blancs');
-				if ( Pieces[i].color == 'b')
-					switchMaterialWavefront (Pieces[i].w, 'noirs');
-
-	}
-			
-
-			way.splice(0, way.length );
-}
-function addToWayables (x, y, i)
-{
-	var xs = 224;
-	var ys = 224;
-	var mrg = 32;
-	var stp = 64;
-	var z = 0;
-	var v = [-y*stp-mrg+xs, z, -x*stp-mrg+ys ];
-	boardwvft.vertices.push(v);
-	var v1 = [-y*stp-mrg+xs, z, -x*stp+mrg+ys ];
-	boardwvft.vertices.push(v1);
-	var v2 = [-y*stp+mrg+xs, z, -x*stp+mrg+ys ];
-	boardwvft.vertices.push(v2);
-	var v3 = [-y*stp+mrg+xs, z, -x*stp-mrg+ys ];
-	boardwvft.vertices.push(v3);
-
-	var tmp = boardwvft.nv;
-	var t = [tmp+2, tmp+4, tmp+1];
-	boardwvft.triangles.push(t);
-	t = [tmp+4, tmp+2, tmp+3];
-	boardwvft.triangles.push(t);
-
-	boardwvft.nt = boardwvft.nt+2;
-	boardwvft.nv = boardwvft.nv+4;
-
-	var n = [ 0.0, 1.0, 0.0];
-	boardwvft.triangles[boardwvft.nt-1].mat = "way"+way.length;
-	boardwvft.triangles[boardwvft.nt-1].n=n;
-	boardwvft.triangles[boardwvft.nt-2].mat = "way"+way.length;
-	boardwvft.triangles[boardwvft.nt-2].n=n;
-	
-	boardbuffer = $.extend(true, {}, boardwvft);
-
-}
-function putPieceWavefrontToSquare (pieceWavefront, square, id)
-{
-	var xs = 224;
-	var ys = 224;
-	var mrg = 0;
-	var stp = 64;
-	var z = 0;
-	
-	var x = SquareToXY (square).x;
-	var y = SquareToXY (square).y;
-
-	translateWavefront (pieceWavefront, -y*stp-mrg+xs, z, -x*stp-mrg+ys );
-}
