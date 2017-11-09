@@ -604,7 +604,7 @@ $(window).on("load", function() {
 			if ( move.flags == 'e' ) audiocapture.play();
 			if ( move.flags == 'c' ) audiocapture.play();
 			if ( move.flags == 'cp' ) audioenpassant.play();
-			if ( move.flags == 'q' [ move.flags == 'k' ) audio.castle();
+			if ( move.flags == 'q' | move.flags == 'k' ) audio.castle();
 
 			buildPieces ();
 			selectedPiece = "none";
