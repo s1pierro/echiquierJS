@@ -349,8 +349,12 @@ function closeEndGameLayer ()
 	$('#endGameLayer').css('display' , 'none' );
 	$('#navhelper').css('display' , 'block' );
 }
+
 $(window).on("load", function() {
-	
+
+	document.getElementById("banquise").disabled = true;
+	document.getElementById("cappuccino").disabled = false;
+	document.getElementById("bois").disabled = true;
 	if (Cookies.get('fen') != undefined )
 	chess.load(Cookies.get('fen'));
 
@@ -370,22 +374,7 @@ $(window).on("load", function() {
 
 	}
 	Log ('#=# cookie : '+Cookies.get('vue') );
-	
 
-//	generateMaterialsCSS ('blancs', {r:253, g:251, b:235});
-	generateMaterialsCSS ('blancs', {r:241, g:241, b:255});
-	generateMaterialsCSS ('noirs', {r:100, g:100, b:100});
-	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:220});
-
-	generateMaterialsCSS ('HARDbrown',{r:59, g:42, b:17} );
-	generateMaterialsCSS ('HARDcream',{r:159, g:152, b:117} );
-/*	generateMaterialsCSS ('blancs', {r:253, g:231, b:135});
-	generateMaterialsCSS ('noirs', {r:169, g:162, b:137});
-	generateMaterialsCSS ('selectedPiece', {r:0, g:0, b:220});
-
-	generateMaterialsCSS ('HARDbrown', {r:80, g:80, b:80});
-	generateMaterialsCSS ('HARDcream',{r:245, g:245, b:245} );
-*/
 	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board', 'board'));
 	boardbuffer = $.extend(true, {}, boardwvft);
 	buffer = $.extend(true, {}, boardwvft);
@@ -478,6 +467,39 @@ $(window).on("load", function() {
 	if (tmp == 'mobile') $('#toggleViewMobile').addClass('selectedToggle');
 	if (tmp == 'desktop') $('#toggleViewDesktop').addClass('selectedToggle');
 	
+	$('body').on('click', '#toggleThemeCapucino', function() {
+
+		document.getElementById("banquise").disabled = true;
+		document.getElementById("cappuccino").disabled = false;
+		document.getElementById("bois").disabled = true;
+		$('#toggleThemeBois').removeClass('selectedToggle');
+		$('#toggleThemeBanquise').removeClass('selectedToggle');
+		$('#toggleThemeCapucino').addClass('selectedToggle');
+		viewChessBoard();
+
+	});
+	$('body').on('click', '#toggleThemeBanquise', function() {
+
+		document.getElementById("banquise").disabled = false;
+		document.getElementById("cappuccino").disabled = true;
+		document.getElementById("bois").disabled = true;
+		$('#toggleThemeBois').removeClass('selectedToggle');
+		$('#toggleThemeBanquise').addClass('selectedToggle');
+		$('#toggleThemeCapucino').removeClass('selectedToggle');
+		viewChessBoard();
+
+	});
+	$('body').on('click', '#toggleThemeBois', function() {
+
+		document.getElementById("banquise").disabled = true;
+		document.getElementById("cappuccino").disabled = true;
+		document.getElementById("bois").disabled = false;
+		$('#toggleThemeBois').addClass('selectedToggle');
+		$('#toggleThemeBanquise').removeClass('selectedToggle');
+		$('#toggleThemeCapucino').removeClass('selectedToggle');
+		viewChessBoard();
+
+	});
 
 /*
 	var singleTap = new Hammer.Tap({

@@ -1,0 +1,93 @@
+body {
+	color: #fff;
+}
+a
+{
+	color: #08d;
+}
+
+#navhelper {
+	color: #000;
+	background-color: #0000 !important;
+	opacity: 0.8;
+}
+#navhelper a {
+	color: #ddd;
+}
+#navhelper a:hover {
+	color: #fff;
+}
+
+.selectedToggle
+{
+	border-color: #eee;
+}
+
+.layer
+{
+	color: #ccc;
+	background-color: #333 !important;
+}
+.layer p 
+{
+}
+
+.layerFooter
+{
+	color: #000;
+	background-color: #ccc !important;
+	opacity: 1.0;
+}
+.layerFooter:hover {
+	color: #0d0;
+	background-color: #eee !important;
+}
+
+
+/* 3D renderer */
+
+
+.blancs { fill: rgb(144, 144, 153); } .blancs-step-15 { fill: rgb(241, 241, 255); } .blancs-step-14 { fill: rgb(241, 241, 255); } .blancs-step-13 { fill: rgb(241, 241, 255); } .blancs-step-12 { fill: rgb(241, 241, 255); } .blancs-step-11 { fill: rgb(241, 241, 255); } .noirs { fill: rgb(60, 60, 60); } .noirs-step-15 { fill: rgb(100, 100, 100); } .noirs-step-14 { fill: rgb(100, 100, 100); } .noirs-step-13 { fill: rgb(100, 100, 100); } .noirs-step-12 { fill: rgb(100, 100, 100); } .noirs-step-11 { fill: rgb(100, 100, 100); } .selectedPiece { fill: rgb(0, 0, 132); } .selectedPiece-step-15 { fill: rgb(0, 0, 220); } .selectedPiece-step-14 { fill: rgb(0, 0, 220); } .selectedPiece-step-13 { fill: rgb(0, 0, 220); } .selectedPiece-step-12 { fill: rgb(0, 0, 220); } .selectedPiece-step-11 { fill: rgb(0, 0, 220); } .HARDbrown { fill: rgb(35, 25, 10); } .HARDbrown-step-15 { fill: rgb(59, 42, 17); } .HARDbrown-step-14 { fill: rgb(59, 42, 17); } .HARDbrown-step-13 { fill: rgb(59, 42, 17); } .HARDbrown-step-12 { fill: rgb(59, 42, 17); } .HARDbrown-step-11 { fill: rgb(59, 42, 17); } .HARDcream { fill: rgb(95, 91, 70); } .HARDcream-step-15 { fill: rgb(159, 152, 117); } .HARDcream-step-14 { fill: rgb(159, 152, 117); } .HARDcream-step-13 { fill: rgb(159, 152, 117); } .HARDcream-step-12 { fill: rgb(159, 152, 117); } .HARDcream-step-11 { fill: rgb(159, 152, 117); }
+
+
+.way {
+	fill: #0d0 !important;
+	opacity: 0.5 !important;
+
+}
+.way.piece {
+	fill: #d00 !important;
+	opacity: 1.0 !important;
+}
+.piece.lineMask {
+	fill: none !important;
+	opacity: 1.0 !important;
+	stroke: #000 !important;
+	 stroke-linejoin: round;
+	stroke-width: 1.4px !important;
+}
+.selectedPiece.lineMask {
+	fill: none !important;
+	opacity: 1.0 !important;
+	stroke: #000 !important;
+	 stroke-linejoin: round;
+	stroke-width: 3.0px !important;
+}
+.piece.flatLineMask {
+	fill: none !important;
+	opacity: 1.0 !important;
+	stroke: #000 !important;
+	 stroke-linejoin: round;
+	stroke-width: 0.6px !important;
+}
+.square {
+	stroke: #000 !important;
+	 stroke-linejoin: round;
+	stroke-width: 0.4px !important;
+}
+.incheck {
+	fill: #d00 !important;
+	opacity: 0.5 !important;
+}
+
+
