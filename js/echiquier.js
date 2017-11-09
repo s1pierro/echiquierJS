@@ -469,6 +469,7 @@ $(window).on("load", function() {
 	
 	$('body').on('click', '#toggleThemeCapucino', function() {
 
+			$('svg').attr('shape-rendering', 'geometricPrecision')
 		document.getElementById("banquise").disabled = true;
 		document.getElementById("cappuccino").disabled = false;
 		document.getElementById("bois").disabled = true;
@@ -479,7 +480,8 @@ $(window).on("load", function() {
 
 	});
 	$('body').on('click', '#toggleThemeBanquise', function() {
-
+			
+			$('svg').attr('shape-rendering', 'geometricPrecision')
 		document.getElementById("banquise").disabled = false;
 		document.getElementById("cappuccino").disabled = true;
 		document.getElementById("bois").disabled = true;
@@ -488,6 +490,27 @@ $(window).on("load", function() {
 		$('#toggleThemeCapucino').removeClass('selectedToggle');
 		viewChessBoard();
 
+	});
+	$('body').on('click', '#toggleRenderingLow', function() {
+		$('svg').attr('shape-rendering', 'optimisedSpeed')
+		$('#toggleRenderingHight').removeClass('selectedToggle');
+		$('#toggleRenderingMiddle').removeClass('selectedToggle');
+		$('#toggleRenderingLow').addClass('selectedToggle');
+		viewChessBoard();
+	});
+	$('body').on('click', '#toggleRenderingMiddle', function() {
+		$('svg').attr('shape-rendering', 'crispEdges')
+		$('#toggleRenderingLow').removeClass('selectedToggle');
+		$('#toggleRenderingHight').removeClass('selectedToggle');
+		$('#toggleRenderingMiddle').addClass('selectedToggle');
+		viewChessBoard();
+	});
+	$('body').on('click', '#toggleRenderingHight', function() {
+			$('svg').attr('shape-rendering', 'geometricPrecision')
+		$('#toggleRenderingLow').removeClass('selectedToggle');
+		$('#toggleRenderingMiddle').removeClass('selectedToggle');
+		$('#toggleRenderingHight').addClass('selectedToggle');
+		viewChessBoard();
 	});
 	$('body').on('click', '#toggleThemeBois', function() {
 
