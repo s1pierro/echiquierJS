@@ -294,237 +294,102 @@ function disposeapplicationlayers (option)
 		initViewZlock(220, 90, 0, 690);
 	}
 }
-function checkGameState ( )
-{
-	
-	if ( chess.insufficient_material() )
-	{
-		$('#matchResult').text ("MatchPartie nulle, materiel insuffisant");
-		$('#gameHistory').text ( chess.pgn({ max_width: 15, newline_char: '<br />' }));
+function checkGameState() {
+	if (chess.insufficient_material()) {
+		$('#matchResult').text("MatchPartie nulle, materiel insuffisant");
+		$('#gameHistory').text(chess.pgn({
+			max_width: 15,
+			newline_char: '<br />'
+		}));
 	}
-	if ( chess.in_check() )
-	{
-		if (chess.turn() == 'w')
-		{
-			$('#matchResult').text ( 'Les blancs sont en Echec');
-			switchMaterialInWavefrontById(buffer, 'wk', 'incheck');	
-		}
-		if (chess.turn() == 'b') 
-		{
-			$('#matchResult').text ( 'Les noirs sont en Echec');
-			$('#gameHistory').html ( '' );
-		}
-	}
-	if ( chess.in_threefold_repetition() )
-	{
-		$('#matchResult').text ( 'Partie nulle, répétition');
-		$('#gameHistory').html ( chess.pgn({ max_width: 15, newline_char: '<br />' }));
-	}
-	if ( chess.in_checkmate() )
-	{
-		if (chess.turn() == 'w') $('#matchResult').text ( 'Les blancs sont en Echec et mat');
-		if (chess.turn() == 'b') $('#matchResult').text ( 'Les noirs sont en Echec et mat');
-		$('#gameHistory').html ( chess.pgn({ max_width: 5, newline_char: '<br />' }));
-	}
-
-
-	if (chess.in_check() )
-	{
-		if (chess.turn() == 'w')
+	if (chess.in_check()) {
+		if (chess.turn() == 'w') {
+			$('#matchResult').text('Les blancs sont en Echec');
 			switchMaterialInWavefrontById(buffer, 'wk', 'incheck');
-		if (chess.turn() == 'b') 
-			switchMaterialInWavefrontById(buffer, 'bk', 'incheck');	
+		}
+		if (chess.turn() == 'b') {
+			$('#matchResult').text('Les noirs sont en Echec');
+			$('#gameHistory').html('');
+		}
+	}
+	if (chess.in_threefold_repetition()) {
+		$('#matchResult').text('Partie nulle, répétition');
+		$('#gameHistory').html(chess.pgn({
+			max_width: 15,
+			newline_char: '<br />'
+		}));
+	}
+	if (chess.in_checkmate()) {
+		if (chess.turn() == 'w') $('#matchResult').text('Les blancs sont en Echec et mat');
+		if (chess.turn() == 'b') $('#matchResult').text('Les noirs sont en Echec et mat');
+		$('#gameHistory').html(chess.pgn({
+			max_width: 5,
+			newline_char: '<br />'
+		}));
+	}
+	if (chess.in_check()) {
+		if (chess.turn() == 'w') switchMaterialInWavefrontById(buffer, 'wk', 'incheck');
+		if (chess.turn() == 'b') switchMaterialInWavefrontById(buffer, 'bk', 'incheck');
 		viewChessBoard();
 		audiocheck.play();
 	}
-	if ( chess.game_over() )
-	{
-		$('#endGameLayer').css('display' , 'block' );
-		$('#navhelper').css('display' , 'none' );
+	if (chess.game_over()) {
+		$('#endGameLayer').css('display', 'block');
+		$('#navhelper').css('display', 'none');
 		viewChessBoard();
 	}
 }
-function closeEndGameLayer ()
-{		
-	$('#endGameLayer').css('display' , 'none' );
-	$('#navhelper').css('display' , 'block' );
+
+function closeEndGameLayer() {
+	$('#endGameLayer').css('display', 'none');
+	$('#navhelper').css('display', 'block');
 }
-
 $(window).on("load", function() {
-
+	/*======================================================================
+	/***********************************************************************
+	
+		Initialisations
+		
+	***********************************************************************/
 	document.getElementById("banquise").disabled = true;
 	document.getElementById("cappuccino").disabled = false;
 	document.getElementById("bois").disabled = true;
-	if (Cookies.get('fen') != undefined )
-	chess.load(Cookies.get('fen'));
-
-	//audiostart.play();
-	Log ('#=# cookie : '+Cookies.get('vue') );
-	if ( Cookies.get('vue') == undefined ) 
-	{
+	/*  Recuperation des Parametres client
+	 ***********************************************************************/
+	if (Cookies.get('fen') != undefined) chess.load(Cookies.get('fen'));
+	if (Cookies.get('vue') == undefined) {
 		view = 'auto';
 		Cookies.set('vue', 'auto');
-		Log ('setting cookie vue');
+		Log('setting cookie vue');
+	} else {
+		if (Cookies.get('vue') == 'auto') view = 'auto';
+		if (Cookies.get('vue') == 'mobile') view = 'mobile';
+		if (Cookies.get('vue') == 'desktop') view = 'desktop';
 	}
-	else
-	{
-		if ( Cookies.get('vue') == 'auto' ) view = 'auto';
-		if ( Cookies.get('vue') == 'mobile' ) view = 'mobile';
-		if ( Cookies.get('vue') == 'desktop' ) view = 'desktop';
-
-	}
-	Log ('#=# cookie : '+Cookies.get('vue') );
-
+	Log('#=# cookie : ' + Cookies.get('vue'));
+	/*  Chargement du wavefrnt du plateau
+	 ***********************************************************************/
 	boardwvft = $.extend(true, {}, loadWavefrontFromHTLM('#board', 'board'));
 	boardbuffer = $.extend(true, {}, boardwvft);
 	buffer = $.extend(true, {}, boardwvft);
-
-
+	/*  Mise en page de l'application
+	 ***********************************************************************/
 	disposeapplicationlayers(view);
-		viewChessBoard();
-
-
-	$('body').on('click', '#uiLayerFooter', function() {
-
-		closeUi();
-		
+	viewChessBoard();
+	/*  configuration hammerJS
+	 ***********************************************************************/
+	var myElement = document.getElementById('svg8');
+	var mc = new Hammer(myElement);
+	mc.get('pan').set({
+		direction: Hammer.DIRECTION_ALL
 	});
-	$('body').on('click', '#endGameLayerFooter', function() {
-
-		closeEndGameLayer();
-		
+	mc.on("doubletap", function(ev) {
+		//
 	});
-	$('body').on('click', '#show-ui', function() {
-
-		showUi();
+	mc.on("singletap", function(ev) {
+		//
 	});
-
-
-	$('body').on('click', '#turnLeft', function() {
-		if (view != 'mobile')
-		{
-			rotateViewZlock (0, 90, 0 );
-			viewChessBoard();
-		}
-	});
-	$('body').on('click', '#turnRight', function() {
-		if (view != 'mobile')
-		{
-			rotateViewZlock (0, -90, 0 );
-			viewChessBoard();
-		}
-	});
-	$('body').on('click', '*', function() {
-
-		$('.banner').css('display', 'none');
-	});
-	$('body').on('click', '#toggleViewMobile', function() {
-
-
-			clearWayables ();
-	$('#toggleViewMobile').removeClass('selectedToggle');
-	$('#toggleViewDesktop').removeClass('selectedToggle');
-		$('#toggleViewMobile').addClass('selectedToggle');
-		view = 'mobile';
-		Cookies.set('vue','mobile' );
-		disposeapplicationlayers('mobile');
-	});
-	$('body').on('click', '#toggleViewDesktop', function() {
-
-			clearWayables ();
-	
-	$('#toggleViewMobile').removeClass('selectedToggle');
-	$('#toggleViewDesktop').removeClass('selectedToggle');
-		$('#toggleViewDesktop').addClass('selectedToggle');
-		view = 'desktop';
-		Cookies.set('vue', 'desktop');
-		disposeapplicationlayers('desktop');
-		
-	});
-	$('body').on('click', '#toggleViewAuto', function() {
-
-			clearWayables ();
-	$('#toggleViewMobile').removeClass('selectedToggle');
-	$('#toggleViewDesktop').removeClass('selectedToggle');
-		$('#toggleViewAuto').addClass('selectedToggle');
-		view = 'auto';
-		Cookies.set('vue', 'auto');
-		disposeapplicationlayers('auto');
-	});
-	$('body').on('click', '#resetBoard', function() {
-
-		chess.reset();
-			clearWayables ();
-
-		disposeapplicationlayers('desktop');
-		viewChessBoard();
-
-	});
-	$('#toggleViewMobile').removeClass('selectedToggle');
-	$('#toggleViewDesktop').removeClass('selectedToggle');
-	var tmp = Cookies.get('vue');
-	if (tmp == 'auto') $('#toggleViewAuto').addClass('selectedToggle');
-	if (tmp == 'mobile') $('#toggleViewMobile').addClass('selectedToggle');
-	if (tmp == 'desktop') $('#toggleViewDesktop').addClass('selectedToggle');
-	
-	$('body').on('click', '#toggleThemeCapucino', function() {
-
-			$('svg').attr('shape-rendering', 'geometricPrecision')
-		document.getElementById("banquise").disabled = true;
-		document.getElementById("cappuccino").disabled = false;
-		document.getElementById("bois").disabled = true;
-		$('#toggleThemeBois').removeClass('selectedToggle');
-		$('#toggleThemeBanquise').removeClass('selectedToggle');
-		$('#toggleThemeCapucino').addClass('selectedToggle');
-		viewChessBoard();
-
-	});
-	$('body').on('click', '#toggleThemeBanquise', function() {
-			
-			$('svg').attr('shape-rendering', 'geometricPrecision')
-		document.getElementById("banquise").disabled = false;
-		document.getElementById("cappuccino").disabled = true;
-		document.getElementById("bois").disabled = true;
-		$('#toggleThemeBois').removeClass('selectedToggle');
-		$('#toggleThemeBanquise').addClass('selectedToggle');
-		$('#toggleThemeCapucino').removeClass('selectedToggle');
-		viewChessBoard();
-
-	});
-	$('body').on('click', '#toggleRenderingLow', function() {
-		$('svg').attr('shape-rendering', 'optimisedSpeed')
-		$('#toggleRenderingHight').removeClass('selectedToggle');
-		$('#toggleRenderingMiddle').removeClass('selectedToggle');
-		$('#toggleRenderingLow').addClass('selectedToggle');
-		viewChessBoard();
-	});
-	$('body').on('click', '#toggleRenderingMiddle', function() {
-		$('svg').attr('shape-rendering', 'crispEdges')
-		$('#toggleRenderingLow').removeClass('selectedToggle');
-		$('#toggleRenderingHight').removeClass('selectedToggle');
-		$('#toggleRenderingMiddle').addClass('selectedToggle');
-		viewChessBoard();
-	});
-	$('body').on('click', '#toggleRenderingHight', function() {
-			$('svg').attr('shape-rendering', 'geometricPrecision')
-		$('#toggleRenderingLow').removeClass('selectedToggle');
-		$('#toggleRenderingMiddle').removeClass('selectedToggle');
-		$('#toggleRenderingHight').addClass('selectedToggle');
-		viewChessBoard();
-	});
-	$('body').on('click', '#toggleThemeBois', function() {
-
-		document.getElementById("banquise").disabled = true;
-		document.getElementById("cappuccino").disabled = true;
-		document.getElementById("bois").disabled = false;
-		$('#toggleThemeBois').addClass('selectedToggle');
-		$('#toggleThemeBanquise').removeClass('selectedToggle');
-		$('#toggleThemeCapucino').removeClass('selectedToggle');
-		viewChessBoard();
-
-	});
-
-/*
+	/*
 	var singleTap = new Hammer.Tap({
 		event: 'singletap'
 	});
@@ -543,141 +408,247 @@ $(window).on("load", function() {
 	
 	*/
 	//hammertime.get('pinch').set({ enable: true });
-	var myElement = document.getElementById('svg8');
-	var mc = new Hammer(myElement);
-	mc.get('pan').set({
-		direction: Hammer.DIRECTION_ALL
-	});
-	mc.on("doubletap", function(ev) {
-		//
-	});
-	mc.on("singletap", function(ev) {
-		//
+	/*======================================================================
+	/***********************************************************************
 	
+		Évenements fenetre
+		
+	***********************************************************************/
+	$(window).on('resize', function() {
+		clearWayables();
+		disposeapplicationlayers(Cookies.get('vue'));
 	});
+	/*======================================================================
+	/***********************************************************************
+	
+		interactions UI  ( interface textuelle )
+		
+	***********************************************************************/
+	$('body').on('click', '#uiLayerFooter', function() {
+		closeUi();
+	});
+	$('body').on('click', '#endGameLayerFooter', function() {
+		closeEndGameLayer();
+	});
+	$('body').on('click', '#show-ui', function() {
+		showUi();
+	});
+	$('body').on('click', '#turnLeft', function() {
+		if (view != 'mobile') {
+			rotateViewZlock(0, 90, 0);
+			viewChessBoard();
+		}
+	});
+	$('body').on('click', '#turnRight', function() {
+		if (view != 'mobile') {
+			rotateViewZlock(0, -90, 0);
+			viewChessBoard();
+		}
+	});
+	$('body').on('click', '*', function() {
+		$('.banner').css('display', 'none');
+	});
+	$('body').on('click', '#toggleViewMobile', function() {
+		clearWayables();
+		$('#toggleViewMobile').removeClass('selectedToggle');
+		$('#toggleViewDesktop').removeClass('selectedToggle');
+		$('#toggleViewMobile').addClass('selectedToggle');
+		view = 'mobile';
+		Cookies.set('vue', 'mobile');
+		disposeapplicationlayers('mobile');
+	});
+	$('body').on('click', '#toggleViewDesktop', function() {
+		clearWayables();
+		$('#toggleViewMobile').removeClass('selectedToggle');
+		$('#toggleViewDesktop').removeClass('selectedToggle');
+		$('#toggleViewDesktop').addClass('selectedToggle');
+		view = 'desktop';
+		Cookies.set('vue', 'desktop');
+		disposeapplicationlayers('desktop');
+	});
+	$('body').on('click', '#toggleViewAuto', function() {
+		clearWayables();
+		$('#toggleViewMobile').removeClass('selectedToggle');
+		$('#toggleViewDesktop').removeClass('selectedToggle');
+		$('#toggleViewAuto').addClass('selectedToggle');
+		view = 'auto';
+		Cookies.set('vue', 'auto');
+		disposeapplicationlayers('auto');
+	});
+	$('body').on('click', '#resetBoard', function() {
+		chess.reset();
+		clearWayables();
+		disposeapplicationlayers('desktop');
+		viewChessBoard();
+	});
+	$('#toggleViewMobile').removeClass('selectedToggle');
+	$('#toggleViewDesktop').removeClass('selectedToggle');
+	var tmp = Cookies.get('vue');
+	if (tmp == 'auto') $('#toggleViewAuto').addClass('selectedToggle');
+	if (tmp == 'mobile') $('#toggleViewMobile').addClass('selectedToggle');
+	if (tmp == 'desktop') $('#toggleViewDesktop').addClass('selectedToggle');
+	$('body').on('click', '#toggleThemeCapucino', function() {
+		$('svg').attr('shape-rendering', 'geometricPrecision')
+		document.getElementById("banquise").disabled = true;
+		document.getElementById("cappuccino").disabled = false;
+		document.getElementById("bois").disabled = true;
+		$('#toggleThemeBois').removeClass('selectedToggle');
+		$('#toggleThemeBanquise').removeClass('selectedToggle');
+		$('#toggleThemeCapucino').addClass('selectedToggle');
+		viewChessBoard();
+	});
+	$('body').on('click', '#toggleThemeBanquise', function() {
+		$('svg').attr('shape-rendering', 'geometricPrecision')
+		document.getElementById("banquise").disabled = false;
+		document.getElementById("cappuccino").disabled = true;
+		document.getElementById("bois").disabled = true;
+		$('#toggleThemeBois').removeClass('selectedToggle');
+		$('#toggleThemeBanquise').addClass('selectedToggle');
+		$('#toggleThemeCapucino').removeClass('selectedToggle');
+		viewChessBoard();
+	});
+	$('body').on('click', '#toggleRenderingLow', function() {
+		$('svg').attr('shape-rendering', 'optimisedSpeed')
+		$('#toggleRenderingHight').removeClass('selectedToggle');
+		$('#toggleRenderingMiddle').removeClass('selectedToggle');
+		$('#toggleRenderingLow').addClass('selectedToggle');
+		viewChessBoard();
+	});
+	$('body').on('click', '#toggleRenderingMiddle', function() {
+		$('svg').attr('shape-rendering', 'crispEdges')
+		$('#toggleRenderingLow').removeClass('selectedToggle');
+		$('#toggleRenderingHight').removeClass('selectedToggle');
+		$('#toggleRenderingMiddle').addClass('selectedToggle');
+		viewChessBoard();
+	});
+	$('body').on('click', '#toggleRenderingHight', function() {
+		$('svg').attr('shape-rendering', 'geometricPrecision')
+		$('#toggleRenderingLow').removeClass('selectedToggle');
+		$('#toggleRenderingMiddle').removeClass('selectedToggle');
+		$('#toggleRenderingHight').addClass('selectedToggle');
+		viewChessBoard();
+	});
+	$('body').on('click', '#toggleThemeBois', function() {
+		document.getElementById("banquise").disabled = true;
+		document.getElementById("cappuccino").disabled = true;
+		document.getElementById("bois").disabled = false;
+		$('#toggleThemeBois').addClass('selectedToggle');
+		$('#toggleThemeBanquise').removeClass('selectedToggle');
+		$('#toggleThemeCapucino').removeClass('selectedToggle');
+		viewChessBoard();
+	});
+	/*======================================================================
+	/***********************************************************************
+	
+		interactions Plateau
+		
+	***********************************************************************/
 	mc.on("pan", function(ev) {
-		if (view != 'mobile')
-		{
-			rotateViewZlock (ev.velocityY*15, ev.velocityX*15, 0 );
+		if (view != 'mobile') {
+			rotateViewZlock(ev.velocityY * 15, ev.velocityX * 15, 0);
 			viewChessBoard();
 		}
 	});
 	$('body').on('click', '#QueenPromotion', function() {
-	
-
-		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'q'});
-		buildPieces ();
+		var mv = chess.move({
+			from: promotmp2.f,
+			to: promotmp2.t,
+			promotion: 'q'
+		});
+		buildPieces();
 		selectedPiece = "none";
 		clearWayables();
 		viewChessBoard();
-		checkGameState ();
+		checkGameState();
 		closePromotionUI();
 	});
-
 	$('body').on('click', '#RookPromotion', function() {
-	
-
-		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'r'});
-		buildPieces ();
+		var mv = chess.move({
+			from: promotmp2.f,
+			to: promotmp2.t,
+			promotion: 'r'
+		});
+		buildPieces();
 		selectedPiece = "none";
 		clearWayables();
 		viewChessBoard();
-		checkGameState ();
+		checkGameState();
 		closePromotionUI();
 	});
 	$('body').on('click', '#KnightPromotion', function() {
-
-		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'n'});
-		buildPieces ();
+		var mv = chess.move({
+			from: promotmp2.f,
+			to: promotmp2.t,
+			promotion: 'n'
+		});
+		buildPieces();
 		selectedPiece = "none";
 		clearWayables();
 		viewChessBoard();
-		checkGameState ();
+		checkGameState();
 		closePromotionUI();
 	});
 	$('body').on('click', '#BishopPromotion', function() {
-	
-		var mv = chess.move({from:promotmp2.f, to: promotmp2.t, promotion: 'b'});
-		buildPieces ();
+		var mv = chess.move({
+			from: promotmp2.f,
+			to: promotmp2.t,
+			promotion: 'b'
+		});
+		buildPieces();
 		selectedPiece = "none";
 		clearWayables();
 		viewChessBoard();
-		checkGameState ();
+		checkGameState();
 		closePromotionUI();
 	});
 	$('body').on('click', '.piece', function() {
-	
-		var id = getFaceId(this);		
-		if ( chess.turn() == Pieces[id].color )
-		{
-			clearWayables ();
-			switchMaterialWavefront (Pieces[id].w, "selectedPiece");
-
-			if (selectedPiece != "none")
-			{
-				if (Pieces[selectedPiece].color == 'w')
-					switchMaterialWavefront (Pieces[selectedPiece].w, 'blancs');
-				if (Pieces[selectedPiece].color == 'b')
-					switchMaterialWavefront (Pieces[selectedPiece].w, 'noirs');
-		
+		var id = getFaceId(this);
+		if (chess.turn() == Pieces[id].color) {
+			clearWayables();
+			switchMaterialWavefront(Pieces[id].w, "selectedPiece");
+			if (selectedPiece != "none") {
+				if (Pieces[selectedPiece].color == 'w') switchMaterialWavefront(Pieces[selectedPiece].w, 'blancs');
+				if (Pieces[selectedPiece].color == 'b') switchMaterialWavefront(Pieces[selectedPiece].w, 'noirs');
 			}
-			switchMaterialWavefront (Pieces[id].w, "selectedPiece");
+			switchMaterialWavefront(Pieces[id].w, "selectedPiece");
 			selectedPiece = id;
 			showWay(selectedPiece);
 			viewChessBoard();
 		}
 	});
 	$('body').on('click', '.way', function() {
-
 		var id = getFaceId(this);
 		var tmp = $(this).attr('class');
-		
-		var tmp2 = tmp.match(/way\d+/)+"";
+		var tmp2 = tmp.match(/way\d+/) + "";
 		selectedway = parseInt(tmp2.match(/\d+/));
-
-		if (isPromotionMove(way[selectedway].move))
-		{
+		if (isPromotionMove(way[selectedway].move)) {
 			promotmp = selectedPiece;
-			promotmp2 = {f:Pieces[selectedPiece].square, t:way[selectedway].square};
-			if ( chess.turn() == 'w' ) $('.pce').addClass('blancs');
-			if ( chess.turn() == 'b' ) $('.pce').addClass('noirs');
-			showPromotionUI ();		
-		}
-		else
-		{		
+			promotmp2 = {
+				f: Pieces[selectedPiece].square,
+				t: way[selectedway].square
+			};
+			if (chess.turn() == 'w') $('.pce').addClass('blancs');
+			if (chess.turn() == 'b') $('.pce').addClass('noirs');
+			showPromotionUI();
+		} else {
 			var move = chess.move(way[selectedway].move);
-			if ( move.flags == 'e' ) audiocapture.play();
-			if ( move.flags == 'c' ) audiocapture.play();
-			if ( move.flags == 'cp' ) audioenpassant.play();
-			if ( move.flags == 'q' | move.flags == 'k' ) audio.castle();
-
-			buildPieces ();
+			if (move.flags == 'n') audiomove.play();
+			if (move.flags == 'e') audiocapture.play();
+			if (move.flags == 'c') audiocapture.play();
+			if (move.flags == 'cp') audioenpassant.play();
+			if (move.flags == 'q' | move.flags == 'k') audiocastle.play();
+			buildPieces();
 			selectedPiece = "none";
 			clearWayables();
 			viewChessBoard();
-			checkGameState ();
+			checkGameState();
 			Cookies.set('fen', chess.fen());
 		}
 	});
-
 	$('#svg8').on('mousewheel', function(event) {
-	if (view != 'mobile')
-	{
-		translateView (0, 0, event.deltaY*event.deltaFactor );
-		viewChessBoard();
-	}
+		if (view != 'mobile') {
+			translateView(0, 0, event.deltaY * event.deltaFactor);
+			viewChessBoard();
+		}
 	});
-	$(window).on('resize', function() {
-		clearWayables ();
-		disposeapplicationlayers(Cookies.get('vue'));
-	});
-	
-	//	playspin = setInterval(spinview, 50);
-	
-	function spinview(){	
-		
-		 rotateViewZlock (0, 0.2, 0 );
-		 viewChessBoard()
-	 }
-
 });
