@@ -17,6 +17,11 @@ var Pieces = [];
 var audiostart = new Audio('chesssound/start1.ogg');
 var audiomove = new Audio('chesssound/move1.ogg');
 var audiocapture = new Audio('chesssound/capture1.ogg');
+var audiocheck = new Audio('chesssound/ckeck1.ogg');
+var audiocastle = new Audio('chesssound/castle.ogg');
+var audioenpassant = new Audio('chesssound/move2.ogg');
+var audiowin = new Audio('chesssound/win1.ogg');
+var audiodraw = new Audio('chesssound/draw1.ogg');
 
 
 function buildPieces ()
