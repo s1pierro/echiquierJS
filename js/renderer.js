@@ -11,8 +11,11 @@ var ZlockANGx = 222;
 var ZlockANGy = 230;
 var ZlockANGz = 0;
 var zoom = 1600;
+var renderProcess = [genfmat,	drawboard, drawpiecesWriteIdDisplayExperimentalLighted ];
+
 
 container = document.getElementById("renderbox");
+
 
 
 function createClass(name,rules){
@@ -75,13 +78,20 @@ function initViewZlock(x, y, z, zm)
 }
 function viewChessBoard()
 {
+	renderProcess[0]();
+	renderProcess[1]();
+	renderProcess[2]();
+}/*
+
+function viewChessBoard()
+{
 	genfmat();
 	drawboard();
 	if ( view == 'mobile') drawpiecesWriteIdMobileDisplay();
 //	else drawpiecesWriteIdDisplayExperimental();
 	else drawpiecesWriteIdDisplayExperimentalLighted();
 
-}
+}*/
 function rotateViewZlock(x, y)
 {
 	ZlockANGy -= y;

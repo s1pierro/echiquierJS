@@ -169,42 +169,6 @@ function geninterpmat(a, b)
 window['geninterpmat'] = geninterpmat;
 
 
-/*
-function frustum(l, r, b, t, n, f) {
-	var m = genimat();
-
-  m[0] = 2 * n / (r - l);
-  m[1] = 0;
-  m[2] = (r + l) / (r - l);
-  m[3] = 0;
-
-  m[4] = 0;
-  m[5] = 2 * n / (t - b);
-  m[6] = (t + b) / (t - b);
-  m[7] = 0;
-
-  m[8] = 0;
-  m[9] = 0;
-  m[10] = -(f + n) / (f - n);
-  m[11] = -2 * f * n / (f - n);
-
-  m[12] = 0;
-  m[13] = 0;
-  m[14] = -1;
-  m[15] = 0;
-
-  return m;
-};
-
-function genperspectivematrix(fov, aspect, near, far)
-{
-  var y = Math.tan(fov * Math.PI / 360) * near;
-  var x = y * aspect;
-  return frustum(-x, x, -y, y, near, far);
-};
-
-*/
-
 function matrixinverse(m) {
 
   var r = genimat();

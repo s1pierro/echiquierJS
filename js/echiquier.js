@@ -454,6 +454,8 @@ $(window).on("load", function() {
 		$('#toggleViewDesktop').removeClass('selectedToggle');
 		$('#toggleViewMobile').addClass('selectedToggle');
 		view = 'mobile';
+		//TODO write a understandable function in renderer.js to modify rendering process 
+		renderProcess[2] = drawpiecesWriteIdMobileDisplay;
 		Cookies.set('vue', 'mobile');
 		disposeapplicationlayers('mobile');
 	});
@@ -463,6 +465,8 @@ $(window).on("load", function() {
 		$('#toggleViewDesktop').removeClass('selectedToggle');
 		$('#toggleViewDesktop').addClass('selectedToggle');
 		view = 'desktop';
+		//TODO write a understandable function in renderer.js to modify rendering process 
+		renderProcess[2] = drawpiecesWriteIdDisplayExperimentalLighted;
 		Cookies.set('vue', 'desktop');
 		disposeapplicationlayers('desktop');
 	});

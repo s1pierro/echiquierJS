@@ -1,18 +1,31 @@
 body {
 	color: #fff;
+	background: –moz-linear-gradient ( bottom, rgb(8,5,2), rgb(60,60,60));
+	background: -webkit-linear-gradient(bottom, rgb(8,5,2), rgb(60,60,60));
+	background: -webkit-gradient(bottom, rgb(8,5,2), rgb(65,64,63));
+	background: -ms-linear-gradient(bottom, rgb(8,5,2), rgb(60,60,60));
 }
 a
 {
-	color: #08d;
+	color: rgb(159, 152, 117);
 }
+h4
+{
+	color: #777;
+}
+h2
+{
 
+	border-width: 0px 0px 0.1em 0px;
+	border-color: #000;
+}
 #navhelper {
 	color: #000;
 	background-color: #0000 !important;
 	opacity: 0.8;
 }
 #navhelper a {
-	color: #ddd;
+	color: #888;
 }
 #navhelper a:hover {
 	color: #fff;
@@ -20,7 +33,7 @@ a
 
 .selectedToggle
 {
-	border-color: #eee;
+	border-color: #666;
 }
 
 .layer
@@ -34,13 +47,13 @@ a
 
 .layerFooter
 {
-	color: #000;
-	background-color: #ccc !important;
+	color: #555;
+	background-color: rgb(59, 42, 17) !important;
 	opacity: 1.0;
 }
 .layerFooter:hover {
-	color: #0d0;
-	background-color: #eee !important;
+	color: #fff;
+	background-color:  rgb(59, 42, 17) !important;
 }
 
 
