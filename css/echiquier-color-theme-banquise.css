@@ -58,9 +58,9 @@ a
 .piece.lineMask {
 	fill: none !important;
 	opacity: 1.0 !important;
-	stroke: #000 !important;
+	stroke: #006 !important;
 	 stroke-linejoin: round;
-	stroke-width: 1.4px !important;
+	stroke-width: 0.2px !important;
 }
 .selectedPiece.lineMask {
 	fill: none !important;
