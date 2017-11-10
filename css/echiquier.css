@@ -2,11 +2,12 @@
 	font-family: 'Cantarel';
 	src: url('../font/Cantarell-Regular.ttf');
 }
+
 body {
 	font: 400 1em Cantarel, sans-serif;
 	line-height: 1.3;
 	margin: 0px !important;
-	overflow: hidden;
+	overflow: auto;
 }
 a
 {
@@ -39,11 +40,16 @@ p
 	font-size: 1em;
 	text-align: justify;
 }
+#DVIEW
+{
+
+
+}
 #navhelper {
 
-	font: 400 1.3em Cantarel, sans-serif !important;
+	font: 400 1.4em Cantarel, sans-serif !important;
 	line-height: 1.4;
-	position: fixed;
+	position: absolute;
 	top: 0;
 	left: 0;
 	z-index: 1000;
@@ -131,20 +137,18 @@ p.toggleArea
 
 .layerContainer
 {
-	position: fixed;
 	z-index: 1100;
 	padding: 0px;
 
 	width: 100%;
 	height: 100%;
-	top:0px;
 
 	overflow: auto !important;
 }
 .layerFooter
 {
 
-	font: 800 1.6em Cantarel, sans-serif !important;
+	font: 400 1em Cantarel, sans-serif !important;
   line-height: 1.5em; /* hauteur de ligne (identique) */
 	padding: 1em;
 

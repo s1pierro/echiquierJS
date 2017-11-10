@@ -11,7 +11,7 @@ var ZlockANGx = 222;
 var ZlockANGy = 230;
 var ZlockANGz = 0;
 var zoom = 1600;
-var renderProcess = [genfmat,	drawboard, drawpiecesWriteIdDisplayExperimentalLighted ];
+var renderProcess = [genfmat, drawboard, drawpiecesWriteIdDisplayExperimentalLighted,	adjustRenderFrame ];
 
 
 container = document.getElementById("renderbox");
@@ -66,7 +66,7 @@ $('#ui').append(cssRule);
 function initViewZlock(x, y, z, zm)
 {
 	zoom = zm;
-	pmat = gentmat(0, 22, 0);
+	pmat = gentmat(0, 0, 0);
 	tmat = gentmat(0, 0, zoom);
 	ZlockANGx = x;
 	ZlockANGy = y;
@@ -79,25 +79,35 @@ function initViewZlock(x, y, z, zm)
 function viewChessBoard()
 {
 	renderProcess[0]();
+	renderProcess[3]();
 	renderProcess[1]();
 	renderProcess[2]();
-}/*
+}
+	
 
-function viewChessBoard()
+
+function adjustRenderFrame()
 {
-	genfmat();
-	drawboard();
-	if ( view == 'mobile') drawpiecesWriteIdMobileDisplay();
-//	else drawpiecesWriteIdDisplayExperimental();
-	else drawpiecesWriteIdDisplayExperimentalLighted();
 
-}*/
+	var w = $(window).width();
+	var h = $(window).height();
+	var zoom = 100;
+
+ 		var coef = ((ZlockANGx-190)/15)*(2*(h/3))+h/3;
+
+		if (coef > h) coef=h;
+		if (coef < h/3) coef=h/3;
+		$('#svg8').attr('width', w);
+		$('#svg8').attr('height', coef);//(ZlockANGx/240));	
+		$("#svg8").attr('viewBox', '-'+zoom/2+' -'+coef/14+' '+zoom+' '+coef/7);
+}
+
 function rotateViewZlock(x, y)
 {
 	ZlockANGy -= y;
 	ZlockANGx += x;
 
-	if ( ZlockANGx < 190 ) ZlockANGx = 190;
+	if ( ZlockANGx < 190 ) ZlockANGx = 191;
 	
 	if ( ZlockANGx > 270 ) ZlockANGx = 270;
 	

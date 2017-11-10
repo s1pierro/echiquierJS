@@ -13,7 +13,7 @@ var hand = "w";
 var chess = new Chess();
 var view = 'auto';
 var Pieces = [];
-
+var playspin;
 var audiostart = new Audio('chesssound/start1.ogg');
 var audiomove = new Audio('chesssound/move1.ogg');
 var audiocapture = new Audio('chesssound/capture1.ogg');
@@ -226,16 +226,6 @@ function addToWayables (x, y, i)
 	boardbuffer = $.extend(true, {}, boardwvft);
 
 }
-function showUi ()
-{		
-	$('#ui').css('display' , 'block' );
-	$('#navhelper').css('display' , 'none' );
-}
-function closeUi ()
-{
-	$('#ui').css('display' , 'none' );
-	$('#navhelper').css('display' , 'block' );
-}
 function showPromotionUI ()
 {		
 	$('#PromotionUI').css('display' , 'block' );
@@ -291,7 +281,7 @@ function disposeapplicationlayers (option)
 	}
 	else {
 		buildPieces ();
-		initViewZlock(220, 90, 0, 690);
+		initViewZlock(220, 90, 0, 790);
 	}
 }
 function checkGameState() {
@@ -424,14 +414,8 @@ $(window).on("load", function() {
 		interactions UI  ( interface textuelle )
 		
 	***********************************************************************/
-	$('body').on('click', '#uiLayerFooter', function() {
-		closeUi();
-	});
 	$('body').on('click', '#endGameLayerFooter', function() {
 		closeEndGameLayer();
-	});
-	$('body').on('click', '#show-ui', function() {
-		showUi();
 	});
 	$('body').on('click', '#turnLeft', function() {
 		if (view != 'mobile') {
@@ -551,6 +535,8 @@ $(window).on("load", function() {
 		if (view != 'mobile') {
 			rotateViewZlock(ev.velocityY * 15, ev.velocityX * 15, 0);
 			viewChessBoard();
+			
+
 		}
 	});
 	$('body').on('click', '#QueenPromotion', function() {
@@ -650,10 +636,17 @@ $(window).on("load", function() {
 			Cookies.set('fen', chess.fen());
 		}
 	});
-	$('#svg8').on('mousewheel', function(event) {
+	/*$('#svg8').on('mousewheel', function(event) {
 		if (view != 'mobile') {
 			translateView(0, 0, event.deltaY * event.deltaFactor);
 			viewChessBoard();
 		}
-	});
+	});*/
+	//playspin = setInterval(spinview, 250);
+	
+	function spinview(){	
+		
+		 rotateViewZlock (0, 0.01, 0 );
+		 viewChessBoard();
+	 }
 });
