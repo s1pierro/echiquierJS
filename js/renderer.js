@@ -7,7 +7,7 @@ var ts1 = Date.now();
 var ts2 = Date.now();
 var increment = 0.0;
 
-var ZlockANGx = 222;
+var ZlockANGx = 196;
 var ZlockANGy = 230;
 var ZlockANGz = 0;
 var zoom = 1600;

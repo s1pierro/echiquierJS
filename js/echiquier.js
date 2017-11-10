@@ -281,7 +281,7 @@ function disposeapplicationlayers (option)
 	}
 	else {
 		buildPieces ();
-		initViewZlock(220, 90, 0, 790);
+		initViewZlock(192, 90, 0, 790);
 	}
 }
 function checkGameState() {
