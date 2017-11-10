@@ -348,8 +348,8 @@ $(window).on("load", function() {
 	 ***********************************************************************/
 	if (Cookies.get('fen') != undefined) chess.load(Cookies.get('fen'));
 	if (Cookies.get('vue') == undefined) {
-		view = 'auto';
-		Cookies.set('vue', 'auto');
+		view = 'desktop';
+		Cookies.set('vue', 'desktop');
 		Log('setting cookie vue');
 	} else {
 		if (Cookies.get('vue') == 'auto') view = 'auto';
