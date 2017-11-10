@@ -342,8 +342,8 @@ $(window).on("load", function() {
 		
 	***********************************************************************/
 	document.getElementById("banquise").disabled = true;
-	document.getElementById("cappuccino").disabled = false;
-	document.getElementById("bois").disabled = true;
+	document.getElementById("cappuccino").disabled = true;
+	document.getElementById("bois").disabled = false;
 	/*  Recuperation des Parametres client
 	 ***********************************************************************/
 	if (Cookies.get('fen') != undefined) chess.load(Cookies.get('fen'));

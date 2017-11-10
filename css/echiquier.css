@@ -46,7 +46,10 @@ p
 
 }
 #navhelper {
-
+-webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
 	font: 400 1.4em Cantarel, sans-serif !important;
 	line-height: 1.4;
 	position: absolute;
