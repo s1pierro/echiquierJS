@@ -93,7 +93,7 @@ function adjustRenderFrame()
 	var h = $(window).height();
 	var zoom = 100;
 
- 		var coef = ((ZlockANGx-190)/15)*(2*(h/3))+h/3;
+ 		var coef = ((ZlockANGx-190)/22)*(2*(h/3))+h/3;
 
 		if (coef > h) coef=h;
 		if (coef < h/3) coef=h/3;
