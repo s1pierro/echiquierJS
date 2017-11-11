@@ -373,34 +373,40 @@ $(window).on("load", function() {
 	 ***********************************************************************/
 	var myElement = document.getElementById('svg8');
 	var mc = new Hammer(myElement);
+// Tap recognizer with minimal 2 taps
+mc.add( new Hammer.Tap({ event: 'doubletap', taps: 2 }) );
+// Single tap recognizer
+mc.add( new Hammer.Tap({ event: 'singletap' }) );
+
+
+// we want to recognize this simulatenous, so a quadrupletap will be detected even while a tap has been recognized.
+mc.get('doubletap').recognizeWith('singletap');
+// we only want to trigger a tap, when we don't have detected a doubletap
+mc.get('singletap').requireFailure('doubletap');
+
+	 
+	mc.get('pan').set({
+		direction: Hammer.DIRECTION_ALL
+	});
+
+
+
+
+/*	var myElement = document.getElementById('svg8');
+	var mc = new Hammer(myElement);
+	
+	
+	
 	mc.get('pan').set({
 		direction: Hammer.DIRECTION_ALL
 	});
 	mc.on("doubletap", function(ev) {
 		//
 	});
-	mc.on("singletap", function(ev) {
-		//
+*/	mc.on("singletap", function(ev) {
+		Log('tap');
 	});
-	/*
-	var singleTap = new Hammer.Tap({
-		event: 'singletap'
-	});
-	var doubleTap = new Hammer.Tap({
-		event: 'doubletap',
-		taps: 2
-	});
-	var tripleTap = new Hammer.Tap({
-		event: 'tripletap',
-		taps: 3
-	});
-	tripleTap.recognizeWith([doubleTap, singleTap]);
-	doubleTap.recognizeWith(singleTap);
-	doubleTap.requireFailure(tripleTap);
-	singleTap.requireFailure([tripleTap, doubleTap]);
-	
-	*/
-	//hammertime.get('pinch').set({ enable: true });
+
 	/*======================================================================
 	/***********************************************************************
 	

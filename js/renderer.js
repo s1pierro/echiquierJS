@@ -66,7 +66,7 @@ $('#ui').append(cssRule);
 function initViewZlock(x, y, z, zm)
 {
 	zoom = zm;
-	pmat = gentmat(0, 10, 0);
+	pmat = gentmat(0, 0, 0);
 	tmat = gentmat(0, 0, zoom);
 	ZlockANGx = x;
 	ZlockANGy = y;
@@ -255,7 +255,7 @@ function drawpiecesWriteIdMobileDisplay() {
 		var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
 		var trigon = buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][1];
       svg.setAttribute('points',trigon);
-       svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id piece flatLineMask');
+       svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id lineMask');
 
 		container.appendChild(svg);
 
@@ -281,13 +281,14 @@ function drawpiecesWriteIdMobileDisplay() {
 	ts1 = Date.now();
 }
 
-function drawpiecesWriteIdDisplayExperimentalLighted() {
+function drawpiecesWriteIdDisplayExperimentalLighted() {  //optimised speed ( cut in lightening acuracy )
 	
+	
+	ts1 = Date.now();
 	var tmpWvft2 = {};
 	genPpcszmap(Pieces);
 	for ( var v = 0 ; v < Pieces.zmap.length ; v++ )
 	{
-
 		var u = Pieces.zmap[v][0];	
 
 		var tmpWvft = Pieces[u].w;
@@ -296,28 +297,26 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {
 		for (var i = 0; i < tmpWvft.vertices.length; i++)
 			buffer.vertices[i] = applymatNpersp(fmat, tmpWvft.vertices[i]);
 		for (var i = 0; i < tmpWvft.triangles.length; i++)
-		{
 			buffer.triangles[i].n = applymat(rmat, tmpWvft.triangles[i].n);
-		}
+		genzmap(buffer);
 		for (var j = 0; j < tmpWvft.triangles.length ; j++)
 		{
+		
 			var n = buffer.triangles[ j ].n[2];
 			if (n>-0.3)
 			{
 				var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
-				if  (buffer.triangles[ j ].length == 3)
-				var trigon = buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][1];
-				if  (buffer.triangles[ j ].length == 4)
-				var trigon = buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][0] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][1] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][2] - 1 ][1] + ' ' + buffer.vertices[ tmpWvft.triangles[ j ][3] - 1 ][0] + ',' + buffer.vertices[ tmpWvft.triangles[ j ][3] - 1 ][1];
-		      svg.setAttribute('points',trigon);
-		       svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id lineMask');
-
+				buffer.triangles[ j ].trigon = buffer.vertices[tmpWvft.triangles[j][0]-1][0]+','+buffer.vertices[tmpWvft.triangles[j][0]-1 ][1];
+				for ( var k = 1 ; k < tmpWvft.triangles[j].length ; k++)
+					buffer.triangles[ j ].trigon+= ' '+buffer.vertices[tmpWvft.triangles[j][k]-1][0]+','+buffer.vertices[tmpWvft.triangles[j][k]-1 ][1];
+				svg.setAttribute('points',buffer.triangles[ j ].trigon);
+				svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id lineMask');
 				container.appendChild(svg);
-				buffer.triangles[ j ].trigon = trigon;
 			}
 		}
-		for (var j = 0; j < tmpWvft.triangles.length ; j++)
+		for (var i = 0; i < tmpWvft.triangles.length ; i++)
 		{
+			var j = buffer.zmap[i][0];
 			var n = buffer.triangles[ j ].n[2];
 			if (n>0.8)
 			{
@@ -334,7 +333,10 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {
 				container.appendChild(svg);
 			}
 		}
-	}
+	}	
+	ts2 = Date.now();
+	
+	console.log ( 'perf : '+(ts2-ts1));
 }
 
 function drawboard() {
