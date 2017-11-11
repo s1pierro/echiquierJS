@@ -70,8 +70,11 @@ function buildPieces ()
 					translateWavefront (tmpWvft2, 0, -13, 20);
 				else translateWavefront (tmpWvft2, 0, -13, 23)
 			else
+			{
 				if ( chess.get(square).color == 'w')
 					rotateWavefront (tmpWvft2, 0, 180, 0);
+				translateWavefront (tmpWvft2, 0, 0, 0);
+			}
 			translateWavefront (tmpWvft2, -v*64+224, 0, -u*64+224 );
 			altPiece.w = $.extend(true, {},tmpWvft2 );
 			Pieces.push(altPiece);
@@ -80,9 +83,9 @@ function buildPieces ()
 }
 function getTargetFromMove (a)
 {
-	if (a.includes('+') | a.includes('#')  )
+	if (a.includes('+') || a.includes('#')  )
 		a = a.slice (0, a.length-1);
-	if (a.includes('=R') | a.includes('=Q') | a.includes('=R') | a.includes('=B') | a.includes('=N')  )
+	if (a.includes('=R') || a.includes('=Q') || a.includes('=R') || a.includes('=B') || a.includes('=N')  )
 		a = a.slice (0, a.length-2);	
 	if ( a == 'O-O-O')
 	{
@@ -152,7 +155,7 @@ function SquareToXY (s)
 }
 function isPromotionMove(a)
 {
-	if (a.includes('=R') | a.includes('=Q') | a.includes('=R') | a.includes('=B') | a.includes('=N')  )
+	if (a.includes('=R') || a.includes('=Q') || a.includes('=R') || a.includes('=B') || a.includes('=N')  )
 	return true;
 	else return false;
 }
@@ -408,24 +411,47 @@ $(window).on("load", function() {
 		clearWayables();
 		disposeapplicationlayers(Cookies.get('vue'));
 	});
+	
 	/*======================================================================
 	/***********************************************************************
 	
 		interactions UI  ( interface textuelle )
 		
-	***********************************************************************/
+	/* togglable item render engine */
+	$('body').on('click', '.toggle', function() {
+
+		$( this ).parent('.toggleArea').children('.selectedToggle').removeClass('selectedToggle');
+		$( this ).addClass('selectedToggle');
+	});
+	
+	/**********************************************************************/
+	
+	
+	$('body').on('click', '#toggleCelShaderUltraThin', function() {
+		renderProcessConfig ('celShader', 'ultrathin');
+	});
+	$('body').on('click', '#toggleCelShaderThin', function() {
+		renderProcessConfig ('celShader', 'thin');
+	});
+	$('body').on('click', '#toggleCelShaderMedium', function() {
+		renderProcessConfig ('celShader', 'medium');
+	});
+	$('body').on('click', '#toggleCelShaderLarge', function() {
+		renderProcessConfig ('celShader', 'large');
+	});
+	
 	$('body').on('click', '#endGameLayerFooter', function() {
 		closeEndGameLayer();
 	});
 	$('body').on('click', '#turnLeft', function() {
 		if (view != 'mobile') {
-			rotateViewZlock(0, 90, 0);
+			rotateViewZlock(0, 45, 0);
 			viewChessBoard();
 		}
 	});
 	$('body').on('click', '#turnRight', function() {
 		if (view != 'mobile') {
-			rotateViewZlock(0, -90, 0);
+			rotateViewZlock(0, -45, 0);
 			viewChessBoard();
 		}
 	});
@@ -434,10 +460,8 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#toggleViewMobile', function() {
 		clearWayables();
-		$('#toggleViewMobile').removeClass('selectedToggle');
-		$('#toggleViewDesktop').removeClass('selectedToggle');
-		$('#toggleViewMobile').addClass('selectedToggle');
 		view = 'mobile';
+		renderProcessConfig ('renderType', '2d');
 		//TODO write a understandable function in renderer.js to modify rendering process 
 		renderProcess[2] = drawpiecesWriteIdMobileDisplay;
 		Cookies.set('vue', 'mobile');
@@ -445,10 +469,8 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#toggleViewDesktop', function() {
 		clearWayables();
-		$('#toggleViewMobile').removeClass('selectedToggle');
-		$('#toggleViewDesktop').removeClass('selectedToggle');
-		$('#toggleViewDesktop').addClass('selectedToggle');
 		view = 'desktop';
+		renderProcessConfig ('renderType', '3d');
 		//TODO write a understandable function in renderer.js to modify rendering process 
 		renderProcess[2] = drawpiecesWriteIdDisplayExperimentalLighted;
 		Cookies.set('vue', 'desktop');
@@ -456,9 +478,6 @@ $(window).on("load", function() {
 	});
 	$('body').on('click', '#toggleViewAuto', function() {
 		clearWayables();
-		$('#toggleViewMobile').removeClass('selectedToggle');
-		$('#toggleViewDesktop').removeClass('selectedToggle');
-		$('#toggleViewAuto').addClass('selectedToggle');
 		view = 'auto';
 		Cookies.set('vue', 'auto');
 		disposeapplicationlayers('auto');
@@ -475,54 +494,37 @@ $(window).on("load", function() {
 	if (tmp == 'auto') $('#toggleViewAuto').addClass('selectedToggle');
 	if (tmp == 'mobile') $('#toggleViewMobile').addClass('selectedToggle');
 	if (tmp == 'desktop') $('#toggleViewDesktop').addClass('selectedToggle');
+	
+	/* Theme selector */
 	$('body').on('click', '#toggleThemeCapucino', function() {
-		$('svg').attr('shape-rendering', 'geometricPrecision')
 		document.getElementById("banquise").disabled = true;
 		document.getElementById("cappuccino").disabled = false;
 		document.getElementById("bois").disabled = true;
-		$('#toggleThemeBois').removeClass('selectedToggle');
-		$('#toggleThemeBanquise').removeClass('selectedToggle');
-		$('#toggleThemeCapucino').addClass('selectedToggle');
 		viewChessBoard();
 	});
 	$('body').on('click', '#toggleThemeBanquise', function() {
-		$('svg').attr('shape-rendering', 'geometricPrecision')
 		document.getElementById("banquise").disabled = false;
 		document.getElementById("cappuccino").disabled = true;
 		document.getElementById("bois").disabled = true;
-		$('#toggleThemeBois').removeClass('selectedToggle');
-		$('#toggleThemeBanquise').addClass('selectedToggle');
-		$('#toggleThemeCapucino').removeClass('selectedToggle');
-		viewChessBoard();
-	});
-	$('body').on('click', '#toggleRenderingLow', function() {
-		$('svg').attr('shape-rendering', 'optimisedSpeed')
-		$('#toggleRenderingHight').removeClass('selectedToggle');
-		$('#toggleRenderingMiddle').removeClass('selectedToggle');
-		$('#toggleRenderingLow').addClass('selectedToggle');
-		viewChessBoard();
-	});
-	$('body').on('click', '#toggleRenderingMiddle', function() {
-		$('svg').attr('shape-rendering', 'crispEdges')
-		$('#toggleRenderingLow').removeClass('selectedToggle');
-		$('#toggleRenderingHight').removeClass('selectedToggle');
-		$('#toggleRenderingMiddle').addClass('selectedToggle');
-		viewChessBoard();
-	});
-	$('body').on('click', '#toggleRenderingHight', function() {
-		$('svg').attr('shape-rendering', 'geometricPrecision')
-		$('#toggleRenderingLow').removeClass('selectedToggle');
-		$('#toggleRenderingMiddle').removeClass('selectedToggle');
-		$('#toggleRenderingHight').addClass('selectedToggle');
 		viewChessBoard();
 	});
 	$('body').on('click', '#toggleThemeBois', function() {
 		document.getElementById("banquise").disabled = true;
 		document.getElementById("cappuccino").disabled = true;
 		document.getElementById("bois").disabled = false;
-		$('#toggleThemeBois').addClass('selectedToggle');
-		$('#toggleThemeBanquise').removeClass('selectedToggle');
-		$('#toggleThemeCapucino').removeClass('selectedToggle');
+		viewChessBoard();
+	});
+	/* Render quality */
+	$('body').on('click', '#toggleRenderingLow', function() {
+		renderProcessConfig ('quality', 'low');
+		viewChessBoard();
+	});
+	$('body').on('click', '#toggleRenderingMiddle', function() {
+		renderProcessConfig ('quality', 'medium');
+		viewChessBoard();
+	});
+	$('body').on('click', '#toggleRenderingHight', function() {
+		renderProcessConfig ('quality', 'hight');
 		viewChessBoard();
 	});
 	/*======================================================================
@@ -535,8 +537,6 @@ $(window).on("load", function() {
 		if (view != 'mobile') {
 			rotateViewZlock(ev.velocityY * 15, ev.velocityX * 15, 0);
 			viewChessBoard();
-			
-
 		}
 	});
 	$('body').on('click', '#QueenPromotion', function() {
@@ -627,7 +627,7 @@ $(window).on("load", function() {
 			if (move.flags == 'e') audiocapture.play();
 			if (move.flags == 'c') audiocapture.play();
 			if (move.flags == 'cp') audioenpassant.play();
-			if (move.flags == 'q' | move.flags == 'k') audiocastle.play();
+			if (move.flags == 'q' || move.flags == 'k') audiocastle.play();
 			buildPieces();
 			selectedPiece = "none";
 			clearWayables();
@@ -642,11 +642,11 @@ $(window).on("load", function() {
 			viewChessBoard();
 		}
 	});*/
-	//playspin = setInterval(spinview, 250);
+	//var playspin = setInterval(spinview, 10);
 	
 	function spinview(){	
 		
-		 rotateViewZlock (0, 0.01, 0 );
+		 rotateViewZlock (0, 0.1, 0 );
 		 viewChessBoard();
 	 }
 });

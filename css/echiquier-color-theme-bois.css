@@ -57,27 +57,6 @@ h4
 	fill: #d00 !important;
 	opacity: 1.0 !important;
 }
-.piece.lineMask {
-	fill: none !important;
-	opacity: 1.0 !important;
-	stroke: #000 !important;
-	 stroke-linejoin: round;
-	stroke-width: 1.4px !important;
-}
-.selectedPiece.lineMask {
-	fill: none !important;
-	opacity: 1.0 !important;
-	stroke: #000 !important;
-	 stroke-linejoin: round;
-	stroke-width: 3.0px !important;
-}
-.piece.flatLineMask {
-	fill: none !important;
-	opacity: 1.0 !important;
-	stroke: #000 !important;
-	 stroke-linejoin: round;
-	stroke-width: 0.6px !important;
-}
 .square {
 	stroke: #000 !important;
 	 stroke-linejoin: round;

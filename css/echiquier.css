@@ -8,6 +8,10 @@ body {
 	line-height: 1.3;
 	margin: 0px !important;
 	overflow: auto;
+	-webkit-user-select: none; /* Safari */        
+-moz-user-select: none; /* Firefox */
+-ms-user-select: none; /* IE10+/Edge */
+user-select: none; /* Standard */
 }
 a
 {
@@ -46,10 +50,7 @@ p
 
 }
 #navhelper {
--webkit-user-select: none; /* Safari */        
--moz-user-select: none; /* Firefox */
--ms-user-select: none; /* IE10+/Edge */
-user-select: none; /* Standard */
+
 	font: 400 1.4em Cantarel, sans-serif !important;
 	line-height: 1.4;
 	position: absolute;
@@ -67,6 +68,17 @@ user-select: none; /* Standard */
 #navhelper a:hover {
 	text-decoration: none;
 }
+
+
+.lineMask {
+	fill: none !important;
+	opacity: 1.0 !important;
+	stroke: #000 !important;
+	 stroke-linejoin: round;
+
+}
+
+
 .right-side {
 	float: right;
 	margin-right: 0.5em;
@@ -98,6 +110,10 @@ p.toggleArea
 
 .layer
 {
+	-webkit-user-select: none; /* Safari */        
+	-moz-user-select: none; /* Firefox */
+	-ms-user-select: none; /* IE10+/Edge */
+	user-select: none; /* Standard */
 	opacity: 0.94;
 	font: 400 1.2em Cantarel, sans-serif !important;
 	min-height: 86vh;
