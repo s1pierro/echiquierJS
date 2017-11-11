@@ -18,7 +18,10 @@ a
 	font-weight: 600;
 	text-decoration: none;
 }
-
+.unactive
+{
+	color: #555;
+}
 h1{
 	font: 600 1.6em Cantarel, sans-serif;
 
