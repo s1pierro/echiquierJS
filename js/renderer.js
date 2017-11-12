@@ -146,7 +146,7 @@ function adjustRenderFrame()
 	var w = $(window).width();
 	var h = $(window).height();
 	var ratio = w/h;
-	var zooom = (97.5/ratio);
+	var zooom = (110/ratio);
 
  		var coef = ((ZlockANGx-190)/22)*(2*(h/3))+h/3;
 

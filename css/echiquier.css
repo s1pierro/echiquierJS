@@ -47,12 +47,16 @@ p
 	font-size: 1em;
 	text-align: justify;
 }
+.clearfix {
+  overflow: auto;
+}
 #DVIEW
 {
 
 
 }
 #navhelper {
+text-shadow: 2px 2px 1em #000000;
 
 	font: 400 1.4em Cantarel, sans-serif !important;
 	line-height: 1.4;
