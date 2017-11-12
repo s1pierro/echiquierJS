@@ -28,7 +28,7 @@ h2
 	opacity: 0.8;
 }
 #navhelper a {
-	color: #888;
+	color: rgb(159, 152, 117);
 }
 #navhelper a:hover {
 	color: #fff;
@@ -51,12 +51,11 @@ h2
 .layerFooter
 {
 	color: #555;
-	background-color: rgb(59, 42, 17) !important;
 	opacity: 1.0;
 }
 .layerFooter:hover {
 	color: #fff;
-	background-color:  rgb(59, 42, 17) !important;
+
 }
 
 

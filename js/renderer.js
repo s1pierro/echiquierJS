@@ -10,7 +10,7 @@ var increment = 0.0;
 var ZlockANGx = 196;
 var ZlockANGy = 230;
 var ZlockANGz = 0;
-var zoom = 1600;
+var zoom = 1000;
 
 
 
@@ -65,7 +65,7 @@ $('#ui').append(cssRule);
 
 function initViewZlock(x, y, z, zm)
 {
-	zoom = zm;
+	//zoom = zm;
 	pmat = gentmat(0, 0, 0);
 	tmat = gentmat(0, 0, zoom);
 	ZlockANGx = x;
@@ -145,15 +145,26 @@ function adjustRenderFrame()
 
 	var w = $(window).width();
 	var h = $(window).height();
-	var zoom = 100;
+	var ratio = w/h;
+	var zooom = (97.5/ratio);
 
  		var coef = ((ZlockANGx-190)/22)*(2*(h/3))+h/3;
 
+
+		console.log ('ZlockANGx : '+ZlockANGx+' h :'+coef);
 		if (coef > h) coef=h;
+		if (coef > w) coef=w;
+		
 		if (coef < h/3) coef=h/3;
+		console.log ('ZlockANGx : '+ZlockANGx+' checked h :'+coef);
 		$('#svg8').attr('width', w);
 		$('#svg8').attr('height', coef);//(ZlockANGx/240));	
-		$("#svg8").attr('viewBox', '-'+zoom/2+' -'+coef/14+' '+zoom+' '+coef/7);
+		if (w > h) $("#svg8").attr('viewBox', '-'+(zooom*ratio)/2+' -'+((coef/h)*zooom)/2+' '+(zooom*ratio)+' '+(coef/h)*zooom);
+		else
+		{
+		zooom=97.5;
+		$("#svg8").attr('viewBox', '-'+(zooom)/2+' -'+((coef/h)*zooom)/2+' '+(zooom)+' '+(coef/h)*zooom);
+		}
 }
 
 function rotateViewZlock(x, y)
@@ -161,9 +172,9 @@ function rotateViewZlock(x, y)
 	ZlockANGy -= y;
 	ZlockANGx += x;
 
-	if ( ZlockANGx < 190 ) ZlockANGx = 191;
+	if ( ZlockANGx < 190 ) ZlockANGx = 190;
 	
-	if ( ZlockANGx > 270 ) ZlockANGx = 270;
+	if ( ZlockANGx > 220 ) ZlockANGx = 220;
 	
 	rmat = genrmat( ZlockANGx, ZlockANGy, ZlockANGz);
 }
@@ -284,7 +295,7 @@ function drawpiecesWriteIdMobileDisplay() {
 function drawpiecesWriteIdDisplayExperimentalLighted() {  //optimised speed ( cut in lightening acuracy )
 	
 	
-	ts1 = Date.now();
+	//ts1 = Date.now();
 	var tmpWvft2 = {};
 	genPpcszmap(Pieces);
 	for ( var v = 0 ; v < Pieces.zmap.length ; v++ )
@@ -334,9 +345,9 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {  //optimised speed ( cu
 			}
 		}
 	}	
-	ts2 = Date.now();
+	/*ts2 = Date.now();
 	
-	console.log ( 'perf : '+(ts2-ts1));
+	console.log ( 'perf : '+(ts2-ts1));*/
 }
 
 function drawboard() {

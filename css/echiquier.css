@@ -170,11 +170,11 @@ p.toggleArea
 .layerFooter
 {
 
-	font: 400 1.3em Cantarel, sans-serif !important;
-  line-height: 1.5em; /* hauteur de ligne (identique) */
+	font: 400 1em Cantarel, sans-serif !important;
+ 	 line-height: 1.5em; /* hauteur de ligne (identique) */
 	padding: 1em;
 
-	text-align: right;
+	text-align: center;
 
 
 
