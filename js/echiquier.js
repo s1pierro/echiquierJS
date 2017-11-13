@@ -1,3 +1,5 @@
+var userdata = new Array();
+
 
 var Pwvft = {};
 var Rwvft = {};
@@ -326,13 +328,13 @@ function checkGameState() {
 	if (chess.in_check()) {
 		if (chess.turn() == 'w') switchMaterialInWavefrontById(buffer, 'wk', 'incheck');
 		if (chess.turn() == 'b') switchMaterialInWavefrontById(buffer, 'bk', 'incheck');
-		viewChessBoard(container);
+
 		audiocheck.play();
 	}
 	if (chess.game_over()) {
 		$('#endGameLayer').css('display', 'block');
 		$('#navhelper').css('display', 'none');
-		viewChessBoard(container);
+
 	}
 }
 
@@ -340,7 +342,120 @@ function closeEndGameLayer() {
 	$('#endGameLayer').css('display', 'none');
 	$('#navhelper').css('display', 'block');
 }
+function readCookie(name) {
+   var nameEQ = name + "=";
+   var ca = document.cookie.split(';');
+   for (var i = 0; i < ca.length; i++) {
+       var c = ca[i];
+       while (c.charAt(0) == ' ') c = c.substring(1, c.length);
+       if (c.indexOf(nameEQ) == 0) return c.substring(nameEQ.length, c.length);
+   }
+   return null;
+}
+function eraseCookie(name) {
+   createCookie(name, "", -1);
+}
+// Create the XHR object.
+function createCORSRequest(method, url) {
+  var xhr = new XMLHttpRequest();
+  if ("withCredentials" in xhr) {
+    // XHR for Chrome/Firefox/Opera/Safari.
+    xhr.open(method, url, true);
+
+
+ } else if (typeof XDomainRequest != "undefined") {
+    // XDomainRequest for IE.
+    xhr = new XDomainRequest();
+    xhr.open(method, url);
+  } else {
+    // CORS not supported.
+    xhr = null;
+  }
+  return xhr;
+}
+
+// Helper method to parse the title tag from the response.
+function getTitle(text) {
+  return text.match('<title>(.*)?</title>')[1];
+}
+
+// Make the actual CORS request.
+function makeCorsRequest(key) {
+  // This is a sample server that supports CORS.
+  var url = 'http://s1pierro.free.fr/echiquierJS/acces.php?key='+key;
+
+  var xhr = createCORSRequest('GET', url);
+  if (!xhr) {
+    alert('CORS not supported');
+    return;
+  }
+
+  // Response handlers.
+  xhr.onload = function() {
+    var text = xhr.responseText;
+	userdata = JSON.parse(text);
+      logCallBack (JSON.parse(text));
+  };
+
+  xhr.onerror = function() {
+    alert('Woops, there was an error making the request.');
+  };
+ 
+  xhr.send();
+}
+
+function logCallBack (b)
+{  
+
+	var a = new Date(b.date*1000);
+var months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+  var year = a.getFullYear();
+  var month = months[a.getMonth()];
+  var date = a.getDate();
+  var hour = a.getHours();
+  var min = a.getMinutes();
+  var sec = a.getSeconds();
+  var time = date + ' ' + month + ' ' + year + ' ' + hour + ':' + min + ':' + sec ;
+  
+	$('.layerFooter').prepend(b.key+'<br>'+b.pseudo+'<br>'+'derniere connexion : '+time+'<br>');
+	console.log ('key found : '+b.key);
+	console.log ('last log : '+time);
+	Cookies.set('key', b.key);
+}
+
 $(window).on("load", function() {
+
+
+	/*======================================================================
+	/***********************************************************************
+	
+		Identification
+		
+	***********************************************************************/
+
+	var terminalkey = Cookies.get('key');
+	console.log('cookies key : '+terminalkey)
+	makeCorsRequest(terminalkey);
+	
+	
+
+
+/*	$.ajax({
+		url: 'http://s1pierro.free.fr/acces.php',
+		dataType: 'json',
+		type: 'POST',
+		data: 'cookie=' + terminalkey,
+		success: function(data) {
+			userdata=data;
+			loads1pnav();
+			if ( userdata["cookie_adv"] == 1 )
+			$('#cookie_adv').show();
+		}
+	});
+	console.log ('terminalkey : '+terminalkey)
+
+*/
+
 	/*======================================================================
 	/***********************************************************************
 	
@@ -439,6 +554,15 @@ mc.get('singletap').requireFailure('doubletap');
 	});
 	
 	/**********************************************************************/
+	$('body').on('click', '#toggleWww', function() {
+		$('#config').css('display', 'none');
+		$('#www').css('display', 'block');
+	});
+	
+	$('body').on('click', '#toggleConfig', function() {
+		$('#config').css('display', 'block');
+		$('#www').css('display', 'none');
+	});
 	
 	
 	$('body').on('click', '#toggleCelShaderUltraThin', function() {

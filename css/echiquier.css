@@ -103,7 +103,32 @@ p
 	padding: 0.4em;
 
 }
-p.toggleArea
+#navmenu > p > .toggle
+{
+	white-space: nowrap;	
+	cursor: pointer;
+	padding: 0.2em;
+	color: #aaa;
+}
+#navmenu > p > .selectedToggle
+{
+	border: none;
+	border-width: 0px 0px medium 0px;
+	padding: 0.5em;
+	
+	background: #eee;
+	color: #000;
+
+	
+}
+#navmenu > p
+{
+		margin: 0em;	
+	padding: 0em;
+
+	
+}
+.toggleArea
 {
 
 	line-height: 2em; /* hauteur de ligne (identique) */
@@ -143,7 +168,12 @@ p.toggleArea
 	
 }
 @media screen and (min-width: 1000px) {
+	#navmenu
+	{
+		margin-left: 20vh;	
+		margin-right: 20vh;	
 
+	}
 	.layer
 	{
 			padding-left: 20vh;

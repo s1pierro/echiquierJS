@@ -1,5 +1,4 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html><html>
 <head>
 
 
@@ -191,49 +190,52 @@
 </div>
 
 
+<div id="navmenu"  >
+			<p  class="clearfix toggleArea right-side">
+				<span id="toggleWww" class="toggle" >www</span>
+				<span id="toggleGame" class="toggle" >jeu</span>
+				<span id="toggleAbout" class="toggle" >à propos</span>
+				<span id="toggleConfig" class="toggle selectedToggle" >préférences</span>
 
-
-
-
+			</p>
+</div>
 	<div id="ui" class="layerContainer" >
 		<div  class="layer" id="config" >
 
 			<!--h4><a id="resetBoard"><i class="icon-trash"></i> réinitialiser le plateau </a></h4-->
-<div class="clearfix">
-			<h5 class = "right-side"><span class = "unactive"><i class="icon-globe"></i>www <i class="icon-king"></i>Jeu <i class="icon-info"></i>À propos</span> <i class="icon-sliders"></i>Préférences</h5>
-</div>			<h4>Affichage</h4>
+			<h4>Affichage</h4>
 			<p class="toggleArea">
 
 	
 			
-			<span id="toggleViewDesktop" class="toggle selectedToggle" ></i>Vue 3d ( experimental ).</span>
+			<span id="toggleViewDesktop" class="toggle selectedToggle" >Vue 3d ( experimental ).</span>
 		
 		
-			<span id="toggleViewMobile" class="toggle" ></i>Vue  low-cost.</span>
+			<span id="toggleViewMobile" class="toggle" >Vue  low-cost.</span>
 			<br>
 			</p>
 			<h4>Qualité</h4>
 			<p class="toggleArea">
-			<span id="toggleRenderingLow" class="toggle selectedToggle" ></i>Basse.</span>
-			<span id="toggleRenderingMiddle" class="toggle" ></i>Moyenne.</span>
-			<span id="toggleRenderingHight" class="toggle" ></i>Élevée.</span>
+			<span id="toggleRenderingLow" class="toggle selectedToggle" >Basse.</span>
+			<span id="toggleRenderingMiddle" class="toggle" >Moyenne.</span>
+			<span id="toggleRenderingHight" class="toggle" >Élevée.</span>
 
 			<br>
 			</p>
 			<h4>Cel-shading</h4>
 			<p class="toggleArea">
-			<span id="toggleCelShaderUltraThin" class="toggle" ></i>Très fin.</span>
-			<span id="toggleCelShaderThin" class="toggle" ></i>Fin.</span>
-			<span id="toggleCelShaderMedium" class="toggle selectedToggle" ></i>Moyen.</span>
-			<span id="toggleCelShaderLarge" class="toggle" ></i>Épais.</span>
+			<span id="toggleCelShaderUltraThin" class="toggle" >Très fin.</span>
+			<span id="toggleCelShaderThin" class="toggle" >Fin.</span>
+			<span id="toggleCelShaderMedium" class="toggle selectedToggle" >Moyen.</span>
+			<span id="toggleCelShaderLarge" class="toggle" >Épais.</span>
 			<br>
 			</p>
 			<h4>Thème</h4>
 			<p class="toggleArea">
 
 			<span id="toggleThemeCapucino" class="toggle selectedToggle" ></i>Cappuccino.</span>
-			<span id="toggleThemeBanquise" class="toggle" ></i>Banquise.</span>
-			<span id="toggleThemeBois" class="toggle" ></i>Bois.</span>
+			<span id="toggleThemeBanquise" class="toggle" >Banquise.</span>
+			<span id="toggleThemeBois" class="toggle" >Bois.</span>
 			<br>
 			<br>
 			</p>
@@ -243,12 +245,8 @@
 
 			<h1>HTML / SVG / CSS / js CHESSBOARD</h1>
 			<!--h4><a id="resetBoard"><i class="icon-trash"></i> réinitialiser le plateau </a></h4-->
-<div class="clearfix">
-			<h5 class = "right-side"><span class = "unactive"><i class="icon-globe"></i>www <i class="icon-king"></i>Jeu <i class="icon-info"></i>À propos</span> <i class="icon-sliders"></i>Préférences</h5>
-</div>			<p class="toggleArea">
 
-	
-				</p>
+
 		</div>
 		<div class="layerFooter" >
 			<span>
@@ -952,6 +950,13 @@ f 15 82 16 17
 	
 <script type="text/javascript">
    Log('demo wavefront loaded');
+   
+   function jsoncallback(data){
+console.log('userkey : '+data.userkey);
+}
+
+ 	$.getJSON("http://s1pierro.free.fr/acces.php?jsoncallback=?");
+
 </script>
 
 </body>
