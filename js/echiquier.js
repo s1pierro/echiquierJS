@@ -505,12 +505,6 @@ mc.get('singletap').requireFailure('doubletap');
 		disposeapplicationlayers('desktop');
 		viewChessBoard(container);
 	});
-	$('#toggleViewMobile').removeClass('selectedToggle');
-	$('#toggleViewDesktop').removeClass('selectedToggle');
-	var tmp = Cookies.get('vue');
-	if (tmp == 'auto') $('#toggleViewAuto').addClass('selectedToggle');
-	if (tmp == 'mobile') $('#toggleViewMobile').addClass('selectedToggle');
-	if (tmp == 'desktop') $('#toggleViewDesktop').addClass('selectedToggle');
 	
 	/* Theme selector */
 	$('body').on('click', '#toggleThemeCapucino', function() {

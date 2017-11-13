@@ -295,6 +295,9 @@ function drawpiecesWriteIdDisplayExperimentalLighted(container) {  //optimised s
 				var svg = document.createElementNS("http://www.w3.org/2000/svg",'polygon');
 				svg.setAttribute('points',buffer.triangles[j].trigon);
 				svg.setAttribute('class', 'id'+tmpWvft.triangles[ j ].id+'id piece '+tmpWvft.triangles[j].mat);
+				//svg.setAttribute('fill', 'url(#pattern2296)');
+				
+				
 				container.appendChild(svg);
 			}
 		}
