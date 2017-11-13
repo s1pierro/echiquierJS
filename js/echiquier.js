@@ -24,6 +24,7 @@ var audiowin = new Audio('chesssound/win1.ogg');
 var audiodraw = new Audio('chesssound/draw1.ogg');
 
 
+
 function buildPieces ()
 {
 	if ( view != 'mobile' ) 
@@ -168,8 +169,8 @@ function showWay(p)
 
 	for (var i = 0 ; i < moves.length ; i++)
 	{
-		addToWayables(	SquareToXY (getTargetFromMove(moves[i])).x, 
-				SquareToXY (getTargetFromMove(moves[i])).y, 0 );	
+		addToWayables(getTargetFromMove(moves[i]));
+			
 		var aWay = { square: getTargetFromMove(moves[i]), move: moves[i] };
 		if (chess.get(aWay.square) != null )
 		{
@@ -195,8 +196,10 @@ function clearWayables ()
 	}
 	way.splice(0, way.length );
 }
-function addToWayables (x, y, i)
+function addToWayables (sqr)
 {
+	var x = SquareToXY (sqr).x;
+	var y = SquareToXY (sqr).y;
 	var xs = 224;
 	var ys = 224;
 	var mrg = 32;
@@ -280,11 +283,11 @@ function disposeapplicationlayers (option)
 	if ( view == 'mobile' )
 	{
 		buildPieces ();
-		initViewZlock(270, 0, 0, 770);
+		initViewZlock(270, 0, 0, 800);
 	}
 	else {
 		buildPieces ();
-		initViewZlock(192, 90, 0, 790);
+		initViewZlock(192, 90, 0, 1000);
 	}
 }
 function checkGameState() {
@@ -323,13 +326,13 @@ function checkGameState() {
 	if (chess.in_check()) {
 		if (chess.turn() == 'w') switchMaterialInWavefrontById(buffer, 'wk', 'incheck');
 		if (chess.turn() == 'b') switchMaterialInWavefrontById(buffer, 'bk', 'incheck');
-		viewChessBoard();
+		viewChessBoard(container);
 		audiocheck.play();
 	}
 	if (chess.game_over()) {
 		$('#endGameLayer').css('display', 'block');
 		$('#navhelper').css('display', 'none');
-		viewChessBoard();
+		viewChessBoard(container);
 	}
 }
 
@@ -344,9 +347,13 @@ $(window).on("load", function() {
 		Initialisations
 		
 	***********************************************************************/
+	var container = document.getElementById("renderbox");
+	var bannercontainer = document.getElementById("bannerRenderbox");
+	
+	
 	document.getElementById("banquise").disabled = true;
-	document.getElementById("cappuccino").disabled = true;
-	document.getElementById("bois").disabled = false;
+	document.getElementById("cappuccino").disabled = false;
+	document.getElementById("bois").disabled = true;
 	/*  Recuperation des Parametres client
 	 ***********************************************************************/
 	if (Cookies.get('fen') != undefined) chess.load(Cookies.get('fen'));
@@ -368,7 +375,7 @@ $(window).on("load", function() {
 	/*  Mise en page de l'application
 	 ***********************************************************************/
 	disposeapplicationlayers(view);
-	viewChessBoard();
+	viewChessBoard(container);
 	/*  configuration hammerJS
 	 ***********************************************************************/
 	var myElement = document.getElementById('svg8');
@@ -416,6 +423,7 @@ mc.get('singletap').requireFailure('doubletap');
 	$(window).on('resize', function() {
 		clearWayables();
 		disposeapplicationlayers(Cookies.get('vue'));
+		viewChessBoard(container);
 	});
 	
 	/*======================================================================
@@ -452,13 +460,13 @@ mc.get('singletap').requireFailure('doubletap');
 	$('body').on('click', '#turnLeft', function() {
 		if (view != 'mobile') {
 			rotateViewZlock(0, 45, 0);
-			viewChessBoard();
+			viewChessBoard(container);
 		}
 	});
 	$('body').on('click', '#turnRight', function() {
 		if (view != 'mobile') {
 			rotateViewZlock(0, -45, 0);
-			viewChessBoard();
+			viewChessBoard(container);
 		}
 	});
 	$('body').on('click', '*', function() {
@@ -472,6 +480,7 @@ mc.get('singletap').requireFailure('doubletap');
 		renderProcess[2] = drawpiecesWriteIdMobileDisplay;
 		Cookies.set('vue', 'mobile');
 		disposeapplicationlayers('mobile');
+		viewChessBoard(container);
 	});
 	$('body').on('click', '#toggleViewDesktop', function() {
 		clearWayables();
@@ -481,18 +490,20 @@ mc.get('singletap').requireFailure('doubletap');
 		renderProcess[2] = drawpiecesWriteIdDisplayExperimentalLighted;
 		Cookies.set('vue', 'desktop');
 		disposeapplicationlayers('desktop');
+		viewChessBoard(container);
 	});
 	$('body').on('click', '#toggleViewAuto', function() {
 		clearWayables();
 		view = 'auto';
 		Cookies.set('vue', 'auto');
 		disposeapplicationlayers('auto');
+		viewChessBoard(container);
 	});
 	$('body').on('click', '#resetBoard', function() {
 		chess.reset();
 		clearWayables();
 		disposeapplicationlayers('desktop');
-		viewChessBoard();
+		viewChessBoard(container);
 	});
 	$('#toggleViewMobile').removeClass('selectedToggle');
 	$('#toggleViewDesktop').removeClass('selectedToggle');
@@ -506,32 +517,32 @@ mc.get('singletap').requireFailure('doubletap');
 		document.getElementById("banquise").disabled = true;
 		document.getElementById("cappuccino").disabled = false;
 		document.getElementById("bois").disabled = true;
-		viewChessBoard();
+		viewChessBoard(container);
 	});
 	$('body').on('click', '#toggleThemeBanquise', function() {
 		document.getElementById("banquise").disabled = false;
 		document.getElementById("cappuccino").disabled = true;
 		document.getElementById("bois").disabled = true;
-		viewChessBoard();
+		viewChessBoard(container);
 	});
 	$('body').on('click', '#toggleThemeBois', function() {
 		document.getElementById("banquise").disabled = true;
 		document.getElementById("cappuccino").disabled = true;
 		document.getElementById("bois").disabled = false;
-		viewChessBoard();
+		viewChessBoard(container);
 	});
 	/* Render quality */
 	$('body').on('click', '#toggleRenderingLow', function() {
 		renderProcessConfig ('quality', 'low');
-		viewChessBoard();
+		viewChessBoard(container);
 	});
 	$('body').on('click', '#toggleRenderingMiddle', function() {
 		renderProcessConfig ('quality', 'medium');
-		viewChessBoard();
+		viewChessBoard(container);
 	});
 	$('body').on('click', '#toggleRenderingHight', function() {
 		renderProcessConfig ('quality', 'hight');
-		viewChessBoard();
+		viewChessBoard(container);
 	});
 	/*======================================================================
 	/***********************************************************************
@@ -542,7 +553,10 @@ mc.get('singletap').requireFailure('doubletap');
 	mc.on("pan", function(ev) {
 		if (view != 'mobile') {
 			rotateViewZlock(ev.velocityY * 15, ev.velocityX * 15, 0);
-			viewChessBoard();
+			viewChessBoard(container);
+		}
+		else {
+			window.scrollBy(0,-ev.velocityY*20);
 		}
 	});
 	$('body').on('click', '#QueenPromotion', function() {
@@ -554,7 +568,7 @@ mc.get('singletap').requireFailure('doubletap');
 		buildPieces();
 		selectedPiece = "none";
 		clearWayables();
-		viewChessBoard();
+		viewChessBoard(container);
 		checkGameState();
 		closePromotionUI();
 	});
@@ -567,7 +581,7 @@ mc.get('singletap').requireFailure('doubletap');
 		buildPieces();
 		selectedPiece = "none";
 		clearWayables();
-		viewChessBoard();
+		viewChessBoard(container);
 		checkGameState();
 		closePromotionUI();
 	});
@@ -580,7 +594,7 @@ mc.get('singletap').requireFailure('doubletap');
 		buildPieces();
 		selectedPiece = "none";
 		clearWayables();
-		viewChessBoard();
+		viewChessBoard(container);
 		checkGameState();
 		closePromotionUI();
 	});
@@ -593,7 +607,7 @@ mc.get('singletap').requireFailure('doubletap');
 		buildPieces();
 		selectedPiece = "none";
 		clearWayables();
-		viewChessBoard();
+		viewChessBoard(container);
 		checkGameState();
 		closePromotionUI();
 	});
@@ -609,7 +623,7 @@ mc.get('singletap').requireFailure('doubletap');
 			switchMaterialWavefront(Pieces[id].w, "selectedPiece");
 			selectedPiece = id;
 			showWay(selectedPiece);
-			viewChessBoard();
+			viewChessBoard(container);
 		}
 	});
 	$('body').on('click', '.way', function() {
@@ -637,7 +651,7 @@ mc.get('singletap').requireFailure('doubletap');
 			buildPieces();
 			selectedPiece = "none";
 			clearWayables();
-			viewChessBoard();
+			viewChessBoard(container);
 			checkGameState();
 			Cookies.set('fen', chess.fen());
 		}
@@ -645,14 +659,14 @@ mc.get('singletap').requireFailure('doubletap');
 	/*$('#svg8').on('mousewheel', function(event) {
 		if (view != 'mobile') {
 			translateView(0, 0, event.deltaY * event.deltaFactor);
-			viewChessBoard();
+			viewChessBoard(container);
 		}
 	});*/
-	//var playspin = setInterval(spinview, 10);
+	//playspin = setInterval(spinview, 10);
 	
 	function spinview(){	
 		
 		 rotateViewZlock (0, 0.1, 0 );
-		 viewChessBoard();
+		 viewChessBoard(container);
 	 }
 });

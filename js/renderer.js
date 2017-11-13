@@ -1,71 +1,18 @@
+var zoom = 1000;
 var viewangle = 140;
-var fmat = genimat();
-var rmat = genimat();
-var tmat = gentmat(0, 0, 100);
-var pmat = gentmat(0, 0, 0);
-var ts1 = Date.now();
-var ts2 = Date.now();
-var increment = 0.0;
-
-var ZlockANGx = 196;
+var ZlockANGx = 190;
 var ZlockANGy = 230;
 var ZlockANGz = 0;
-var zoom = 1000;
+var fmat = genimat();
+var rmat = genimat();
+var tmat = genimat();
+var pmat = genimat();
 
-
-
-container = document.getElementById("renderbox");
-
-
-
-function createClass(name,rules){
-	var style = document.createElement('style');
-	style.type = 'text/css';
-	document.getElementsByTagName('head')[0].appendChild(style);
-	if(!(style.sheet||{}).insertRule) 
-		(style.styleSheet || style.sheet).addRule(name, rules);
-	else
-		style.sheet.insertRule(name+"{"+rules+"}",0);
-}
-function generateMaterialsCSS (name, difuse)
-{
-/*
-createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.75)+', '+Math.floor( difuse.g*0.75)+', '+Math.floor( difuse.b*0.75)+');');
-//createClass('.'+name,'fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');');
-
-
-// Warning On Chromium web browser, framerate is dramaticaly affected by css rules quantity.
-/*
-createClass('.'+name+'-step-0', ' fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-1', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-2', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-3', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-4', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-5', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-6', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-7', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-8', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-9', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-10', 'fill: rgb('+Math.floor( difuse.r*0.5)+', '+Math.floor( difuse.g*0.5)+', '+Math.floor( difuse.b*0.5)+');');
-createClass('.'+name+'-step-11', 'fill: rgb('+Math.floor( difuse.r*0.96)+', '+Math.floor( difuse.g*0.96)+', '+Math.floor( difuse.b*0.96)+');');
-createClass('.'+name+'-step-12', 'fill: rgb('+Math.floor( difuse.r*0.97)+', '+Math.floor( difuse.g*0.97)+', '+Math.floor( difuse.b*0.97)+');');
-createClass('.'+name+'-step-13', 'fill: rgb('+Math.floor( difuse.r*0.98)+', '+Math.floor( difuse.g*0.98)+', '+Math.floor( difuse.b*0.98)+');');
-createClass('.'+name+'-step-14', 'fill: rgb('+Math.floor( difuse.r*0.99)+', '+Math.floor( difuse.g*0.99)+', '+Math.floor( difuse.b*0.99)+');');
-createClass('.'+name+'-step-15', 'fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');');*/
-var cssRule =  '\n.'+name+'\n{\n	fill: rgb('+Math.floor( difuse.r*0.6)+', '+Math.floor( difuse.g*0.6)+', '+Math.floor( difuse.b*0.6)+');\n}';
-cssRule +=  '\n.'+name+'-step-15\n{\n	fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');\n}';
-cssRule +=  '\n.'+name+'-step-14\n{\n	fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');\n}';
-cssRule +=  '\n.'+name+'-step-13\n{\n	fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');\n}';
-cssRule +=  '\n.'+name+'-step-12\n{\n	fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');\n}';
-cssRule +=  '\n.'+name+'-step-11\n{\n	fill: rgb('+Math.floor( difuse.r*1.0)+', '+Math.floor( difuse.g*1.0)+', '+Math.floor( difuse.b*1.0)+');\n}';
-
-console.log (cssRule);
-$('#ui').append(cssRule);
-}
+//var container = document.getElementById("renderbox");
 
 function initViewZlock(x, y, z, zm)
 {
-	//zoom = zm;
+	zoom = zm;
 	pmat = gentmat(0, 0, 0);
 	tmat = gentmat(0, 0, zoom);
 	ZlockANGx = x;
@@ -74,9 +21,8 @@ function initViewZlock(x, y, z, zm)
 	
 	rmat = genrmat( x, y, z);
 	genfmat();
-	viewChessBoard();
+	//viewChessBoard();
 }
-
 
 var renderProcess = [genfmat, drawboard, drawpiecesWriteIdDisplayExperimentalLighted, adjustRenderFrame ];
 function initRenderer (attr, value)
@@ -117,11 +63,11 @@ function renderProcessConfig (attr, value)
 		if ( value == 'hight') $('svg').attr('shape-rendering', 'geometricPrecision');		
 	}
 }
-function viewChessBoard()
+function viewChessBoard(container)
 {
-	renderProcess[0]();
-	renderProcess[1]();
-	renderProcess[2]();
+	renderProcess[0](container);
+	renderProcess[1](container);
+	renderProcess[2](container);
 	if ( ZlockANGx < 230 && ZlockANGx > 190 ) renderProcess[3]();
 }
 	
@@ -151,12 +97,12 @@ function adjustRenderFrame()
  		var coef = ((ZlockANGx-190)/22)*(2*(h/3))+h/3;
 
 
-		console.log ('ZlockANGx : '+ZlockANGx+' h :'+coef);
+	//	console.log ('ZlockANGx : '+ZlockANGx+' h :'+coef);
 		if (coef > h) coef=h;
 		if (coef > w) coef=w;
 		
 		if (coef < h/3) coef=h/3;
-		console.log ('ZlockANGx : '+ZlockANGx+' checked h :'+coef);
+		//console.log ('ZlockANGx : '+ZlockANGx+' checked h :'+coef);
 		$('#svg8').attr('width', w);
 		$('#svg8').attr('height', coef);//(ZlockANGx/240));	
 		if (w > h) $("#svg8").attr('viewBox', '-'+(zooom*ratio)/2+' -'+((coef/h)*zooom)/2+' '+(zooom*ratio)+' '+(coef/h)*zooom);
@@ -187,7 +133,7 @@ function genfmat() {
 	var mat = multiplymatrix(rmat, pmat);
 	fmat = multiplymatrix(tmat, mat);
 }
-function drawpieces() {
+function drawpieces(container) {
 	
 
 	for (var i = 0; i < wvft.vertices.length; i++)
@@ -213,7 +159,7 @@ function drawpieces() {
 	increment = -(ts2-ts1)/1000;
 	ts1 = Date.now();
 }
-function drawpiecesWriteId() {
+function drawpiecesWriteId(container) {
 	
 
 	for (var i = 0; i < wvft.vertices.length; i++)
@@ -241,7 +187,7 @@ function drawpiecesWriteId() {
 	increment = -(ts2-ts1)/1000;
 	ts1 = Date.now();
 }
-function drawpiecesWriteIdMobileDisplay() {
+function drawpiecesWriteIdMobileDisplay(container) {
 	
 	var tmpWvft2 = {};
 	genPpcszmap(Pieces);
@@ -257,6 +203,9 @@ function drawpiecesWriteIdMobileDisplay() {
 	for (var i = 0; i < tmpWvft.triangles.length; i++)
 		buffer.triangles[i].n = applymat(rmat, tmpWvft.triangles[i].n);
 
+	//FIXME 
+//	collectBufferMinMax ();
+	//FIXME 
 
 	for (var j = 0; j < tmpWvft.triangles.length ; j++)
 	{
@@ -286,13 +235,14 @@ function drawpiecesWriteIdMobileDisplay() {
 
 	}
 }
+	//FIXME 
+/*	var r = (xMax-xMin)/(yMax-yMin);
+	console.log ( 'anlge X :'+ZlockANGx+' - ratio : '+r+' | w : '+(xMax-xMin)+' h : '+(yMax-yMin));
+*/	//FIXME 
 
-	ts2 = Date.now();
-	increment = -(ts2-ts1)/1000;
-	ts1 = Date.now();
 }
 
-function drawpiecesWriteIdDisplayExperimentalLighted() {  //optimised speed ( cut in lightening acuracy )
+function drawpiecesWriteIdDisplayExperimentalLighted(container) {  //optimised speed ( cut in lightening acuracy )
 	
 	
 	//ts1 = Date.now();
@@ -310,6 +260,10 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {  //optimised speed ( cu
 		for (var i = 0; i < tmpWvft.triangles.length; i++)
 			buffer.triangles[i].n = applymat(rmat, tmpWvft.triangles[i].n);
 		genzmap(buffer);
+	//FIXME 
+//	collectBufferMinMax ();
+	//FIXME 
+
 		for (var j = 0; j < tmpWvft.triangles.length ; j++)
 		{
 		
@@ -345,13 +299,20 @@ function drawpiecesWriteIdDisplayExperimentalLighted() {  //optimised speed ( cu
 			}
 		}
 	}	
+	//FIXME 
+//	var r = (xMax-xMin)/(yMax-yMin);
+	//FIXME 
+//	console.log ( '###########################\nanlge X :'+ZlockANGx+'\nratio : '+r+'\nw : '+(xMax-xMin)+'\nh : '+(yMax-yMin));
 	/*ts2 = Date.now();
 	
 	console.log ( 'perf : '+(ts2-ts1));*/
 }
 
-function drawboard() {
-	
+function drawboard(container) {
+
+	//FIXME 
+//	razCollectMinMax();
+	//FIXME 
 	for (var i = 0; i < boardwvft.vertices.length; i++)
 		boardbuffer.vertices[i] = applymatNpersp(fmat, boardwvft.vertices[i]);
    	container.innerHTML = "";
@@ -370,4 +331,30 @@ function drawboard() {
 		container.appendChild(svg);
 	}
 }
+var xMin ,xMax ,yMin ,yMax ,zMin ,zMax;
+function razCollectMinMax ()
+{
+	xMin = 100000;
+	xMax = -100000;
+	yMin = 100000;
+	yMax = -100000;
+	zMin = 100000;
+	zMax = -100000;
+}
+function collectBufferMinMax ()
+{
+	for ( var i = 0 ; i < buffer.vertices.length ; i ++ )
+	{
+		var v = buffer.vertices[i]
+		if ( v[0] < xMin ) xMin = v[0];
+		if ( v[1] < yMin ) yMin = v[1];
+		if ( v[2] < zMin ) zMin = v[2];
+		if ( v[0] > xMax ) xMax = v[0];
+		if ( v[1] > yMax ) yMax = v[1];
+		if ( v[2] > zMax ) zMax = v[2];
+	}	
+}
+
+
+
 

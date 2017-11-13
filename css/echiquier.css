@@ -23,7 +23,7 @@ a
 	color: #555;
 }
 h1{
-	font: 600 1.6em Cantarel, sans-serif;
+	font: 400 1.6em Cantarel, sans-serif;
 
 }
 h2
@@ -56,9 +56,9 @@ p
 
 }
 #navhelper {
-text-shadow: 2px 2px 1em #000000;
 
-	font: 400 1.4em Cantarel, sans-serif !important;
+
+	font: 600 1.4em Cantarel, sans-serif !important;
 	line-height: 1.4;
 	position: absolute;
 	top: 0;
